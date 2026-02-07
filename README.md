@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <strong>Tracking 24,557 players across 46,227 games from 887 organisations in Victorian basketball</strong>
+  <strong>Tracking 31K+ players across 52K+ games with 235K+ stat lines from 887 organisations in Victorian basketball</strong>
 </p>
 
 ---
@@ -55,13 +55,31 @@ The data feeds into a **SQLite database**, a **Python analysis pipeline** (regre
 
 | Feature | Description |
 |---------|-------------|
-| **Player Search** | Find any player across 24,557 profiles and view full stat lines |
-| **Team Analysis** | Compare team performance across 2,231 teams and 2,628 grades |
+| **Player Search** | Find any player across 31K+ profiles and view full stat lines |
+| **Team Analysis** | Compare team performance across thousands of teams and grades |
 | **Leaderboards** | Top scorers, 3PT leaders, and efficiency rankings by age group |
 | **Player Comparison** | Side-by-side comparison of any two players |
+| **Scouting Reports** | In-depth player scouting reports with strengths, weaknesses, and projections |
+| **Player Archetypes** | K-Means clustering to identify distinct player archetypes |
 | **Organisation Directory** | Browse 887 basketball organisations across Victoria |
-| **ML Models** | Linear regression (R²=0.989), Random Forest, K-Means clustering |
+| **ML Models** | Linear Regression, Random Forest, K-Means Clustering, XGBoost |
 | **Age Group Benchmarks** | Percentile rankings — what's "good" for U12 vs U16? |
+
+---
+
+## 📓 Notebooks
+
+Seven Jupyter notebooks covering the full analytical journey:
+
+| # | Notebook | Description |
+|---|----------|-------------|
+| 01 | [Exploratory Analysis](notebooks/01_exploratory_analysis.ipynb) | Initial data exploration — distributions, missing data, summary statistics across 31K+ players |
+| 02 | [Player Development](notebooks/02_player_development.ipynb) | Tracking player growth over time — season-over-season progression and development curves |
+| 03 | [Predictive Modeling](notebooks/03_predictive_modeling.ipynb) | Regression and classification models to predict player performance |
+| 04 | [Team & Venue Analysis](notebooks/04_team_and_venue_analysis.ipynb) | Team-level analytics and home/away venue effects on performance |
+| 05 | [Advanced ML](notebooks/05_advanced_ml.ipynb) | Advanced machine learning — XGBoost, feature importance, hyperparameter tuning |
+| 06 | [Joshua Dworkin](notebooks/06_joshua_dworkin.ipynb) | Deep-dive case study tracking a single player's development journey |
+| 07 | [Player Comparison](notebooks/07_player_comparison.ipynb) | Head-to-head player comparison framework with percentile overlays |
 
 ---
 
@@ -72,7 +90,7 @@ PlayHQ GraphQL API          Node.js Scraper          SQLite Database
 ┌─────────────────┐    ┌─────────────────────┐    ┌──────────────────┐
 │ discoverOrgs     │───▶│ playhq-scraper.js   │───▶│ playhq.db (44MB) │
 │ discoverSeasons  │    │ victoria-wide-scrape │    │ 10 tables        │
-│ gradePlayerStats │    │ better-sqlite3       │    │ 138K stat lines  │
+│ gradePlayerStats │    │ better-sqlite3       │    │ 235K+ stat lines │
 │ discoverFixture  │    └─────────────────────┘    └────────┬─────────┘
 └─────────────────┘                                         │
                                                             ▼
@@ -86,6 +104,7 @@ PlayHQ GraphQL API          Node.js Scraper          SQLite Database
                                          ┌──────────────────────────────┐
                                          │ Interactive exploration       │
                                          │ Charts · Tables · Comparisons │
+                                         │ Scouting Reports · Archetypes │
                                          └──────────────────────────────┘
 ```
 
@@ -97,12 +116,11 @@ PlayHQ GraphQL API          Node.js Scraper          SQLite Database
 
 | Stat | Value |
 |------|-------|
-| **Highest season scorer** | Holly Miller — 323 pts in 13 games (24.8 PPG) |
-| **Most prolific 3PT shooter** | Craig Whelan — 52 threes in 14 games (3.7 per game) |
-| **Average PPG across all players** | 4.0 PPG |
-| **Total stat lines tracked** | 138,175 individual player-grade records |
+| **Total players tracked** | 31,000+ |
+| **Total stat lines** | 235,000+ individual player-grade records |
+| **Total games** | 52,000+ |
 | **Regression model accuracy** | R² = 0.989 (games played → total points) |
-| **Player clusters identified** | 3 distinct archetypes via K-Means |
+| **Player clusters identified** | Distinct archetypes via K-Means |
 
 ---
 
@@ -114,7 +132,8 @@ PlayHQ GraphQL API          Node.js Scraper          SQLite Database
 | **Database** | SQLite (44MB, zero config, portable) |
 | **Analysis** | Python 3.12 · pandas · scikit-learn · scipy · matplotlib · seaborn |
 | **Dashboard** | Streamlit · Plotly |
-| **ML Models** | Linear Regression · Random Forest · K-Means Clustering |
+| **Notebooks** | Jupyter · 7 analytical notebooks |
+| **ML Models** | Linear Regression · Random Forest · K-Means Clustering · XGBoost |
 | **Version Control** | Git · GitHub |
 
 ---
@@ -137,6 +156,9 @@ cd ..
 pip install -r requirements.txt
 python analysis.py                        # Run statistical analysis
 python advanced_analysis.py               # ML models & clustering
+
+# --- Notebooks ---
+jupyter notebook notebooks/               # Explore all 7 notebooks
 
 # --- Dashboard ---
 streamlit run streamlit_app.py            # Launch the interactive dashboard
@@ -161,6 +183,14 @@ FullCourtVision/
 │   └── package.json
 ├── data/
 │   └── playhq.db                 # SQLite database (44MB)
+├── notebooks/                    # Jupyter analysis notebooks
+│   ├── 01_exploratory_analysis.ipynb
+│   ├── 02_player_development.ipynb
+│   ├── 03_predictive_modeling.ipynb
+│   ├── 04_team_and_venue_analysis.ipynb
+│   ├── 05_advanced_ml.ipynb
+│   ├── 06_joshua_dworkin.ipynb
+│   └── 07_player_comparison.ipynb
 ├── analysis_output/              # Generated charts & visualisations
 ├── analysis.py                   # Core statistical analysis
 ├── advanced_analysis.py          # ML models (RF, clustering)
@@ -178,10 +208,10 @@ FullCourtVision/
 
 See **[ROADMAP.md](ROADMAP.md)** for the full project roadmap, including:
 
-- Phase 1: Expand data collection beyond EDJBA
-- Phase 2: Advanced ML models (XGBoost, feature importance)
+- Phase 1: Expand data collection beyond EDJBA ✅
+- Phase 2: Advanced ML models (XGBoost, feature importance) ✅
 - Phase 3: Personal analytics tracker
-- Phase 4: Full Streamlit dashboard
+- Phase 4: Full Streamlit dashboard ✅
 
 ---
 

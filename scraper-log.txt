@@ -180,4 +180,37 @@
     [99/106] Sunday U18 Girls Div  3... 99 players, 52 games ✓
     [100/106] Sunday U18 Girls Div  4... 90 players, 51 games ✓
     [101/106] Sunday U18 Girls Div  5... 48 players, 36 games ✓
-    [102/106] Sunday U20 Boys Div  1... 
+    [102/106] Sunday U20 Boys Div  1... 49 players, 38 games ✓
+    [103/106] Sunday U20 Boys Div  2... 80 players, 52 games ✓
+    [104/106] Sunday U20 Boys Div  3... 109 players, 53 games ✓
+    [105/106] Sunday U20 Boys Div  4... 104 players, 60 games ✓
+    [106/106] Sunday U20 Boys Div  5... 53 players, 39 games ✓
+  'Victorian Oral & Facial Surgeons' Junior Domestic (U8-U20) / Winter 2025: 97 grades
+    [1/97] Saturday U8 Mixed BLUE Loans on the Run... 117 players, 74 games ✓
+    [2/97] Saturday U8 Mixed RED Loans on the Run... 103 players, 65 games ✓
+    [3/97] Saturday U8 Mixed YELLOW Loans on the Run... 37 players, 37 games ✓
+    [4/97] Saturday U10 Boys Div  1... 77 players, 50 games ✓
+    [5/97] Saturday U10 Boys Div  2... 90 players, 55 games ✓
+    [6/97] Saturday U10 Boys Div  3... 70 players, 45 games ✓
+    [7/97] Saturday U10 Boys Div  4... 76 players, 45 games ✓
+    [8/97] Saturday U10 Boys Div  5... 98 players, 59 games ✓
+    [9/97] Saturday U10 Boys Div  6... 105 players, 61 games ✓
+    [10/97] Saturday U10 Boys Div  7... 127 players, 65 games ✓
+    [11/97] Saturday U10 Boys Div  8... 105 players, 55 games ✓
+    [12/97] Saturday U10 Boys Div  9 Modified... 75 players, 44 games ✓
+    [13/97] Saturday U12 Boys Div  1... 85 players, 75 games ✓
+    [14/97] Saturday U12 Boys Div  2... 88 players, 58 games ✓
+    [15/97] Saturday U12 Boys Div  3... 79 players, 47 games ✓
+    [16/97] Saturday U12 Boys Div  4... 86 players, 48 games ✓
+    [17/97] Saturday U12 Boys Div  5... 90 players, 56 games ✓
+    [18/97] Saturday U12 Boys Div  6... 87 players, 48 games ✓
+    [19/97] Saturday U12 Boys Div  7... 89 players, 57 games ✓
+    [20/97] Saturday U12 Boys Div  8... 76 players, 46 games ✓
+    [21/97] Saturday U12 Boys Div  9... 95 players, 45 games ✓
+    [22/97] Saturday U12 Boys Div 10... 109 players, 47 games ✓
+    [23/97] Saturday U12 Boys Div 11... 97 players, 48 games ✓
+    [24/97] Saturday U12 Boys Div 12... 85 players, 70 games ✓
+    [25/97] Saturday U14 Boys Div  1... 93 players, 73 games ✓
+    [26/97] Saturday U14 Boys Div  2... 91 players, 56 games ✓
+    [27/97] Saturday U14 Boys Div  3... 107 players, 56 games ✓
+    [28/97] Saturday U14 Boys Div  4... 
