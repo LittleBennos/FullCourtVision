@@ -1,0 +1,183 @@
+╔════════════════════════════════════════════════╗
+║  FullCourtVision — Victoria-Wide Scraper       ║
+║  887 organisations to process              ║
+╚════════════════════════════════════════════════╝
+
+
+[1/887] ABA Wolverines Basketball Club (a46d910a)
+  15 competition-seasons
+  'Victorian Oral & Facial Surgeons' Junior Domestic (U8-U20) / Winter 2023: 82 grades
+    [12/82] Saturday U12 Boys 10... 129 players, 57 games ✓
+    [13/82] Saturday U12 Boys 11... 41 players, 31 games ✓
+    [14/82] Saturday U12 Boys 2... 78 players, 49 games ✓
+    [15/82] Saturday U12 Boys 3... 80 players, 59 games ✓
+    [16/82] Saturday U12 Boys 4... 79 players, 51 games ✓
+    [17/82] Saturday U12 Boys 5... 93 players, 58 games ✓
+    [18/82] Saturday U12 Boys 6... 105 players, 56 games ✓
+    [19/82] Saturday U12 Boys 7... 98 players, 60 games ✓
+    [20/82] Saturday U12 Boys 8... 114 players, 52 games ✓
+    [21/82] Saturday U12 Boys 9... 138 players, 63 games ✓
+    [22/82] Saturday U14 Boys 1... 82 players, 62 games ✓
+    [23/82] Saturday U14 Boys 1 / 2... 99 players, 46 games ✓
+    [24/82] Saturday U14 Boys 10... 169 players, 66 games ✓
+    [25/82] Saturday U14 Boys 11... 102 players, 44 games ✓
+    [26/82] Saturday U14 Boys 12... 62 players, 54 games ✓
+    [27/82] Saturday U14 Boys 3... 107 players, 49 games ✓
+    [28/82] Saturday U14 Boys 4... 121 players, 41 games ✓
+    [29/82] Saturday U14 Boys 5... 145 players, 68 games ✓
+    [30/82] Saturday U14 Boys 6... 133 players, 57 games ✓
+    [31/82] Saturday U14 Boys 7... 166 players, 54 games ✓
+    [32/82] Saturday U14 Boys 8... 167 players, 72 games ✓
+    [33/82] Saturday U14 Boys 9... 150 players, 52 games ✓
+    [34/82] Saturday U16 Boys 1... 66 players, 45 games ✓
+    [35/82] Saturday U16 Boys 10... 54 players, 39 games ✓
+    [36/82] Saturday U16 Boys 2... 86 players, 59 games ✓
+    [37/82] Saturday U16 Boys 3... 61 players, 45 games ✓
+    [38/82] Saturday U16 Boys 4... 98 players, 65 games ✓
+    [39/82] Saturday U16 Boys 5... 122 players, 66 games ✓
+    [40/82] Saturday U16 Boys 5B... 88 players, 62 games ✓
+    [41/82] Saturday U16 Boys 6... 114 players, 53 games ✓
+    [42/82] Saturday U16 Boys 7... 123 players, 75 games ✓
+    [43/82] Saturday U16 Boys 8... 109 players, 55 games ✓
+    [44/82] Saturday U16 Boys 9... 103 players, 49 games ✓
+    [45/82] Saturday U18 Boys 1 / 2... 70 players, 62 games ✓
+    [46/82] Saturday U18 Boys 3... 90 players, 73 games ✓
+    [47/82] Saturday U18 Boys 4... 104 players, 67 games ✓
+    [48/82] Saturday U18 Boys 4B... 63 players, 45 games ✓
+    [49/82] Saturday U18 Boys 5... 84 players, 67 games ✓
+    [50/82] Saturday U18 Boys 6... 88 players, 48 games ✓
+    [51/82] Saturday U18 Boys 7... 88 players, 54 games ✓
+    [52/82] Saturday U18 Boys 8... 50 players, 9 games ✓
+    [53/82] Sunday U10 Girls 1... 58 players, 46 games ✓
+    [54/82] Sunday U10 Girls 2... 96 players, 47 games ✓
+    [55/82] Sunday U10 Girls 3... 82 players, 39 games ✓
+    [56/82] Sunday U10 Girls 4... 88 players, 47 games ✓
+    [57/82] Sunday U10 Girls 5... 39 players, 31 games ✓
+    [58/82] Sunday U12 Girls 1... 72 players, 57 games ✓
+    [59/82] Sunday U12 Girls 2... 77 players, 54 games ✓
+    [60/82] Sunday U12 Girls 3... 84 players, 48 games ✓
+    [61/82] Sunday U12 Girls 4... 89 players, 47 games ✓
+    [62/82] Sunday U12 Girls 5... 114 players, 57 games ✓
+    [63/82] Sunday U12 Girls 5B... 40 players, 31 games ✓
+    [64/82] Sunday U12 Girls 6... 85 players, 49 games ✓
+    [65/82] Sunday U14 Girls 1... 62 players, 46 games ✓
+    [66/82] Sunday U14 Girls 2... 67 players, 45 games ✓
+    [67/82] Sunday U14 Girls 3... 94 players, 61 games ✓
+    [68/82] Sunday U14 Girls 4... 102 players, 69 games ✓
+    [69/82] Sunday U14 Girls 5... 75 players, 49 games ✓
+    [70/82] Sunday U14 Girls 6... 70 players, 58 games ✓
+    [71/82] Sunday U16 Girls 1... 55 players, 34 games ✓
+    [72/82] Sunday U16 Girls 2... 78 players, 57 games ✓
+    [73/82] Sunday U16 Girls 3... 110 players, 50 games ✓
+    [74/82] Sunday U16 Girls 3B... 48 players, 39 games ✓
+    [75/82] Sunday U16 Girls 4... 97 players, 70 games ✓
+    [76/82] Sunday U16 Girls 5... 57 players, 36 games ✓
+    [77/82] Sunday U18 Girls 1... 53 players, 35 games ✓
+    [78/82] Sunday U18 Girls 2 / 3... 76 players, 57 games ✓
+    [79/82] Sunday U18 Girls 3... 30 players, 4 games ✓
+    [80/82] Sunday U20 Boys 1... 51 players, 48 games ✓
+    [81/82] Sunday U20 Boys 2... 77 players, 49 games ✓
+    [82/82] Sunday U20 Boys 3... 54 players, 43 games ✓
+  'Victorian Oral & Facial Surgeons' Junior Domestic (U8-U20) / Summer 2025/26: 106 grades
+    [1/106] Saturday U8 Mixed RED Loans on the Run... 68 players, 48 games ✓
+    [2/106] Saturday U8 Mixed YELLOW Loans on the Run... 77 players, 78 games ✓
+    [3/106] Saturday U10 Boys (Grading Rd 1) Div  8 Modified... 50 players, 4 games ✓
+    [4/106] Saturday U10 Boys (Grading Rd 1) Div  9 Modified... 41 players, 3 games ✓
+    [5/106] Saturday U10 Boys Div  1... 73 players, 38 games ✓
+    [6/106] Saturday U10 Boys Div  2... 108 players, 63 games ✓
+    [7/106] Saturday U10 Boys Div  3... 115 players, 48 games ✓
+    [8/106] Saturday U10 Boys Div  4... 126 players, 53 games ✓
+    [9/106] Saturday U10 Boys Div  5... 127 players, 48 games ✓
+    [10/106] Saturday U10 Boys Div  6... 126 players, 59 games ✓
+    [11/106] Saturday U10 Boys Div  7... 139 players, 49 games ✓
+    [12/106] Saturday U10 Boys Div  8... 115 players, 51 games ✓
+    [13/106] Saturday U10 Boys Div  9 Modified... 108 players, 55 games ✓
+    [14/106] Saturday U10 Boys Div 10 Modified... 94 players, 59 games ✓
+    [15/106] Saturday U12 Boys (Grading Round 3) Div 14... 26 players, 2 games ✓
+    [16/106] Saturday U12 Boys (Grading Rounds 2-4) Div 13... 73 players, 10 games ✓
+    [17/106] Saturday U12 Boys Div  1... 74 players, 67 games ✓
+    [18/106] Saturday U12 Boys Div  2... 84 players, 51 games ✓
+    [19/106] Saturday U12 Boys Div  3... 126 players, 73 games ✓
+    [20/106] Saturday U12 Boys Div  4... 111 players, 60 games ✓
+    [21/106] Saturday U12 Boys Div  5... 104 players, 51 games ✓
+    [22/106] Saturday U12 Boys Div  6... 160 players, 50 games ✓
+    [23/106] Saturday U12 Boys Div  7... 162 players, 56 games ✓
+    [24/106] Saturday U12 Boys Div  8... 170 players, 64 games ✓
+    [25/106] Saturday U12 Boys Div  9... 182 players, 53 games ✓
+    [26/106] Saturday U12 Boys Div 10... 195 players, 64 games ✓
+    [27/106] Saturday U12 Boys Div 11... 188 players, 64 games ✓
+    [28/106] Saturday U12 Boys Div 12... 176 players, 54 games ✓
+    [29/106] Saturday U12 Boys Div 13... 46 players, 36 games ✓
+    [30/106] Saturday U12 Boys Div 14... 62 players, 47 games ✓
+    [31/106] Saturday U14 Boys Div  1... 74 players, 59 games ✓
+    [32/106] Saturday U14 Boys Div  2... 101 players, 51 games ✓
+    [33/106] Saturday U14 Boys Div  3... 119 players, 71 games ✓
+    [34/106] Saturday U14 Boys Div  4... 125 players, 61 games ✓
+    [35/106] Saturday U14 Boys Div  5... 168 players, 53 games ✓
+    [36/106] Saturday U14 Boys Div  6... 172 players, 64 games ✓
+    [37/106] Saturday U14 Boys Div  7... 163 players, 57 games ✓
+    [38/106] Saturday U14 Boys Div  8... 185 players, 80 games ✓
+    [39/106] Saturday U14 Boys Div  9... 159 players, 66 games ✓
+    [40/106] Saturday U14 Boys Div 10... 138 players, 63 games ✓
+    [41/106] Saturday U14 Boys Div 11... 170 players, 63 games ✓
+    [42/106] Saturday U14 Boys Div 12... 144 players, 53 games ✓
+    [43/106] Saturday U14 Boys Div 13... 130 players, 49 games ✓
+    [44/106] Saturday U14 Boys Div 14... 57 players, 36 games ✓
+    [45/106] Saturday U16 Boys Div  1... 56 players, 36 games ✓
+    [46/106] Saturday U16 Boys Div  2... 97 players, 61 games ✓
+    [47/106] Saturday U16 Boys Div  3... 137 players, 64 games ✓
+    [48/106] Saturday U16 Boys Div  4... 154 players, 63 games ✓
+    [49/106] Saturday U16 Boys Div  5... 183 players, 67 games ✓
+    [50/106] Saturday U16 Boys Div  6... 155 players, 64 games ✓
+    [51/106] Saturday U16 Boys Div  7... 136 players, 50 games ✓
+    [52/106] Saturday U16 Boys Div  8... 134 players, 68 games ✓
+    [53/106] Saturday U16 Boys Div  9... 153 players, 65 games ✓
+    [54/106] Saturday U16 Boys Div 10... 157 players, 68 games ✓
+    [55/106] Saturday U16 Boys Div 11... 165 players, 72 games ✓
+    [56/106] Saturday U16 Boys Div 12... 137 players, 69 games ✓
+    [57/106] Saturday U16 Boys Div 13... 72 players, 54 games ✓
+    [58/106] Saturday U18 Boys Div  1... 59 players, 37 games ✓
+    [59/106] Saturday U18 Boys Div  2... 82 players, 72 games ✓
+    [60/106] Saturday U18 Boys Div  3... 80 players, 63 games ✓
+    [61/106] Saturday U18 Boys Div  4... 88 players, 60 games ✓
+    [62/106] Saturday U18 Boys Div  5... 75 players, 50 games ✓
+    [63/106] Saturday U18 Boys Div  6... 116 players, 71 games ✓
+    [64/106] Saturday U18 Boys Div  7... 133 players, 55 games ✓
+    [65/106] Saturday U18 Boys Div  8... 91 players, 62 games ✓
+    [66/106] Saturday U18 Boys Div  9... 75 players, 51 games ✓
+    [67/106] Sunday U8 Girls Loans on the Run... 49 players, 56 games ✓
+    [68/106] Sunday U10 Girls Div  1... 84 players, 50 games ✓
+    [69/106] Sunday U10 Girls Div  2... 133 players, 75 games ✓
+    [70/106] Sunday U10 Girls Div  3... 143 players, 62 games ✓
+    [71/106] Sunday U10 Girls Div  4... 144 players, 42 games ✓
+    [72/106] Sunday U10 Girls Div  5... 98 players, 48 games ✓
+    [73/106] Sunday U10 Girls Div  6... 38 players, 26 games ✓
+    [74/106] Sunday U12 Girls Div  1... 81 players, 57 games ✓
+    [75/106] Sunday U12 Girls Div  2... 106 players, 57 games ✓
+    [76/106] Sunday U12 Girls Div  3... 134 players, 54 games ✓
+    [77/106] Sunday U12 Girls Div  4... 149 players, 64 games ✓
+    [78/106] Sunday U12 Girls Div  5... 147 players, 59 games ✓
+    [79/106] Sunday U12 Girls Div  6... 144 players, 51 games ✓
+    [80/106] Sunday U12 Girls Div  7... 94 players, 45 games ✓
+    [81/106] Sunday U12 Girls Div  8... 47 players, 36 games ✓
+    [82/106] Sunday U14 Girls Div  1... 59 players, 48 games ✓
+    [83/106] Sunday U14 Girls Div  2... 93 players, 52 games ✓
+    [84/106] Sunday U14 Girls Div  3... 100 players, 61 games ✓
+    [85/106] Sunday U14 Girls Div  4... 140 players, 67 games ✓
+    [86/106] Sunday U14 Girls Div  5... 131 players, 53 games ✓
+    [87/106] Sunday U14 Girls Div  6... 116 players, 52 games ✓
+    [88/106] Sunday U14 Girls Div  7... 115 players, 61 games ✓
+    [89/106] Sunday U14 Girls Div  8... 56 players, 39 games ✓
+    [90/106] Sunday U16 Girls Div  1... 90 players, 65 games ✓
+    [91/106] Sunday U16 Girls Div  2... 76 players, 50 games ✓
+    [92/106] Sunday U16 Girls Div  3... 109 players, 75 games ✓
+    [93/106] Sunday U16 Girls Div  4... 105 players, 52 games ✓
+    [94/106] Sunday U16 Girls Div  5... 132 players, 68 games ✓
+    [95/106] Sunday U16 Girls Div  6... 108 players, 53 games ✓
+    [96/106] Sunday U16 Girls Div  7... 41 players, 39 games ✓
+    [97/106] Sunday U18 Girls Div  1... 52 players, 48 games ✓
+    [98/106] Sunday U18 Girls Div  2... 88 players, 51 games ✓
+    [99/106] Sunday U18 Girls Div  3... 99 players, 52 games ✓
+    [100/106] Sunday U18 Girls Div  4... 90 players, 51 games ✓
+    [101/106] Sunday U18 Girls Div  5... 48 players, 36 games ✓
+    [102/106] Sunday U20 Boys Div  1... 

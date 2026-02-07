@@ -8,6 +8,8 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 DB_PATH = os.path.join(os.path.dirname(__file__), "data", "playhq.db")
 
@@ -28,7 +30,7 @@ st.sidebar.title("🏀 FullCourtVision")
 page = st.sidebar.radio(
     "Navigate",
     ["Home", "Player Search", "Team Search", "Leaderboards",
-     "Grade Browser", "Player Comparison", "Scouting Report", "Organisations"],
+     "Grade Browser", "Player Comparison", "Scouting Report", "Player Archetypes", "Organisations"],
 )
 
 st.sidebar.divider()
@@ -698,6 +700,222 @@ elif page == "Scouting Report":
                         st.info("Could not compute similarity — player not in peer group.")
                 else:
                     st.info("Not enough peers for similarity analysis.")
+
+# ── PLAYER ARCHETYPES ──
+elif page == "Player Archetypes":
+    st.header("🧬 Player Archetypes")
+    st.markdown("K-means clustering on per-game stats to classify players into 5 archetypes.")
+
+    ARCHETYPE_NAMES = {0: "Sharpshooter", 1: "Inside Scorer", 2: "High Volume", 3: "Physical", 4: "Balanced"}
+    ARCHETYPE_COLORS = {"Sharpshooter": "#ffc300", "Inside Scorer": "#e94560", "High Volume": "#00d2ff",
+                        "Physical": "#7b2ff7", "Balanced": "#2ecc71"}
+    ARCHETYPE_ICONS = {"Sharpshooter": "🎯", "Inside Scorer": "💪", "High Volume": "🔥",
+                       "Physical": "🛡️", "Balanced": "⚖️"}
+
+    @st.cache_data(ttl=3600)
+    def compute_archetypes():
+        # Aggregate per-game stats per player (min 5 GP)
+        df = q("""
+            SELECT ps.player_id,
+                   p.first_name || ' ' || p.last_name as player_name,
+                   SUM(ps.games_played) as gp,
+                   SUM(ps.total_points) as pts,
+                   SUM(ps.one_point) as ft,
+                   SUM(ps.two_point) as fg2,
+                   SUM(ps.three_point) as fg3,
+                   SUM(ps.total_fouls) as fouls
+            FROM player_stats ps
+            JOIN players p ON ps.player_id = p.id
+            GROUP BY ps.player_id
+            HAVING SUM(ps.games_played) >= 5
+        """)
+        df['ppg'] = df['pts'] / df['gp']
+        df['ft_pg'] = df['ft'] / df['gp']
+        df['fg2_pg'] = df['fg2'] / df['gp']
+        df['fg3_pg'] = df['fg3'] / df['gp']
+        df['fpg'] = df['fouls'] / df['gp']
+
+        features = ['ppg', 'ft_pg', 'fg2_pg', 'fg3_pg', 'fpg']
+        X = df[features].fillna(0).values
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+
+        kmeans = KMeans(n_clusters=5, random_state=42, n_init=10)
+        df['cluster'] = kmeans.fit_predict(X_scaled)
+
+        # Assign archetype names by cluster characteristics
+        cluster_means = df.groupby('cluster')[features].mean()
+        # Sharpshooter: highest fg3_pg
+        # Inside Scorer: highest fg2_pg relative to fg3_pg
+        # High Volume: highest ppg
+        # Physical: highest fpg
+        # Balanced: remaining
+        assigned = {}
+        remaining_clusters = set(range(5))
+
+        # High Volume = highest ppg
+        c = cluster_means['ppg'].idxmax()
+        assigned[c] = "High Volume"
+        remaining_clusters.discard(c)
+
+        # Sharpshooter = highest fg3_pg (among remaining)
+        c = cluster_means.loc[list(remaining_clusters), 'fg3_pg'].idxmax()
+        assigned[c] = "Sharpshooter"
+        remaining_clusters.discard(c)
+
+        # Physical = highest fpg (among remaining)
+        c = cluster_means.loc[list(remaining_clusters), 'fpg'].idxmax()
+        assigned[c] = "Physical"
+        remaining_clusters.discard(c)
+
+        # Inside Scorer = highest fg2_pg (among remaining)
+        c = cluster_means.loc[list(remaining_clusters), 'fg2_pg'].idxmax()
+        assigned[c] = "Inside Scorer"
+        remaining_clusters.discard(c)
+
+        # Balanced = whatever's left
+        c = remaining_clusters.pop()
+        assigned[c] = "Balanced"
+
+        df['archetype'] = df['cluster'].map(assigned)
+        return df, features
+
+    arch_df, feature_cols = compute_archetypes()
+
+    # Summary metrics
+    st.subheader("📊 Overview")
+    cols = st.columns(5)
+    for i, (arch, count) in enumerate(arch_df['archetype'].value_counts().items()):
+        icon = ARCHETYPE_ICONS.get(arch, "")
+        cols[i % 5].metric(f"{icon} {arch}", f"{count:,} players")
+
+    st.divider()
+
+    # ── Scatter Plot ──
+    st.subheader("🗺️ Player Archetype Map")
+    x_axis = st.selectbox("X Axis", feature_cols, index=0)
+    y_axis = st.selectbox("Y Axis", feature_cols, index=3)
+
+    fig = px.scatter(
+        arch_df, x=x_axis, y=y_axis, color="archetype",
+        color_discrete_map=ARCHETYPE_COLORS,
+        hover_data=["player_name", "gp", "ppg"],
+        title="Players by Archetype",
+        opacity=0.6,
+    )
+    fig.update_layout(template="plotly_dark", height=600)
+    st.plotly_chart(fig, use_container_width=True)
+
+    st.divider()
+
+    # ── Player Search ──
+    st.subheader("🔍 Find a Player's Archetype")
+    search = st.text_input("Search player name", key="arch_search")
+    if search and len(search) >= 2:
+        matches = arch_df[arch_df['player_name'].str.contains(search, case=False, na=False)].head(20)
+        if matches.empty:
+            st.info("No players found (must have 5+ games).")
+        else:
+            sel = st.selectbox("Select player", matches['player_name'].tolist(), key="arch_sel")
+            row = matches[matches['player_name'] == sel].iloc[0]
+            arch = row['archetype']
+
+            st.markdown(f"""
+            <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                        padding: 20px; border-radius: 15px; margin: 10px 0; border: 2px solid {ARCHETYPE_COLORS[arch]};">
+                <h2 style="color: {ARCHETYPE_COLORS[arch]}; margin:0;">{ARCHETYPE_ICONS[arch]} {sel}</h2>
+                <h3 style="color: #ccc; margin:5px 0;">Archetype: {arch}</h3>
+                <p style="color: #a8a8a8;">GP: {int(row['gp'])} | PPG: {row['ppg']:.1f} | 3PT/G: {row['fg3_pg']:.1f} | 2PT/G: {row['fg2_pg']:.1f} | FT/G: {row['ft_pg']:.1f} | FPG: {row['fpg']:.1f}</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Radar chart: player vs archetype average
+            arch_avg = arch_df[arch_df['archetype'] == arch][feature_cols].mean()
+            player_vals = [row[c] for c in feature_cols]
+            avg_vals = [arch_avg[c] for c in feature_cols]
+
+            # Normalize by global max for radar
+            global_max = arch_df[feature_cols].quantile(0.95)
+            p_norm = [min(v / max(m, 0.01) * 100, 100) for v, m in zip(player_vals, global_max)]
+            a_norm = [min(v / max(m, 0.01) * 100, 100) for v, m in zip(avg_vals, global_max)]
+
+            labels = ['PPG', 'FT/G', '2PT/G', '3PT/G', 'FPG']
+            fig_r = go.Figure()
+            fig_r.add_trace(go.Scatterpolar(
+                r=p_norm + [p_norm[0]], theta=labels + [labels[0]],
+                fill='toself', name=sel, line_color=ARCHETYPE_COLORS[arch],
+                fillcolor=ARCHETYPE_COLORS[arch].replace(')', ',0.3)').replace('rgb', 'rgba') if 'rgb' in ARCHETYPE_COLORS[arch] else f"{ARCHETYPE_COLORS[arch]}4D"
+            ))
+            fig_r.add_trace(go.Scatterpolar(
+                r=a_norm + [a_norm[0]], theta=labels + [labels[0]],
+                fill='toself', name=f'{arch} Avg', line_color='#888',
+                fillcolor='rgba(136,136,136,0.15)'
+            ))
+            fig_r.update_layout(
+                template='plotly_dark', height=450,
+                polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
+                title=f'{sel} vs {arch} Average'
+            )
+            st.plotly_chart(fig_r, use_container_width=True)
+
+    st.divider()
+
+    # ── Archetype Distribution by Organisation ──
+    st.subheader("🏢 Archetype Distribution by Organisation")
+
+    # Link players to orgs via player_stats.team_name → teams.name → teams.organisation_id
+    @st.cache_data(ttl=3600)
+    def archetype_by_org():
+        # Get player → org mapping (most common org per player)
+        player_org = q("""
+            SELECT ps.player_id, o.name as org_name, COUNT(*) as cnt
+            FROM player_stats ps
+            JOIN teams t ON ps.team_name = t.name
+            JOIN organisations o ON t.organisation_id = o.id
+            GROUP BY ps.player_id, o.name
+        """)
+        if player_org.empty:
+            return pd.DataFrame()
+        # Keep most common org per player
+        idx = player_org.groupby('player_id')['cnt'].idxmax()
+        player_org = player_org.loc[idx, ['player_id', 'org_name']]
+        merged = arch_df.merge(player_org, on='player_id', how='inner')
+        return merged
+
+    org_df = archetype_by_org()
+    if org_df.empty:
+        st.info("Could not link players to organisations.")
+    else:
+        # Filter to orgs with enough players
+        org_counts = org_df['org_name'].value_counts()
+        min_players = st.slider("Minimum players per org", 5, 100, 20)
+        valid_orgs = org_counts[org_counts >= min_players].index.tolist()
+
+        if valid_orgs:
+            dist = org_df[org_df['org_name'].isin(valid_orgs)].groupby(['org_name', 'archetype']).size().reset_index(name='count')
+            fig_org = px.bar(
+                dist, x='org_name', y='count', color='archetype',
+                color_discrete_map=ARCHETYPE_COLORS,
+                title=f'Archetype Distribution ({len(valid_orgs)} orgs with {min_players}+ players)',
+                barmode='stack',
+            )
+            fig_org.update_layout(template='plotly_dark', xaxis_tickangle=-45, height=500)
+            st.plotly_chart(fig_org, use_container_width=True)
+
+            # Percentage view
+            pct = dist.copy()
+            totals = pct.groupby('org_name')['count'].transform('sum')
+            pct['pct'] = (pct['count'] / totals * 100).round(1)
+            fig_pct = px.bar(
+                pct, x='org_name', y='pct', color='archetype',
+                color_discrete_map=ARCHETYPE_COLORS,
+                title='Archetype Distribution (% of players)',
+                barmode='stack',
+            )
+            fig_pct.update_layout(template='plotly_dark', xaxis_tickangle=-45, height=500)
+            st.plotly_chart(fig_pct, use_container_width=True)
+        else:
+            st.info(f"No organisations with {min_players}+ classified players.")
 
 # ── ORGANISATIONS ──
 elif page == "Organisations":
