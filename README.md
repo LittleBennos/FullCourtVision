@@ -78,7 +78,7 @@ Seven Jupyter notebooks covering the full analytical journey:
 | 03 | [Predictive Modeling](notebooks/03_predictive_modeling.ipynb) | Regression and classification models to predict player performance |
 | 04 | [Team & Venue Analysis](notebooks/04_team_and_venue_analysis.ipynb) | Team-level analytics and home/away venue effects on performance |
 | 05 | [Advanced ML](notebooks/05_advanced_ml.ipynb) | Advanced machine learning — XGBoost, feature importance, hyperparameter tuning |
-| 06 | [Joshua Dworkin](notebooks/06_joshua_dworkin.ipynb) | Deep-dive case study tracking a single player's development journey |
+| 06 | [Player Case Study](notebooks/06_player_case_study.ipynb) | Deep-dive case study tracking a single player's development journey |
 | 07 | [Player Comparison](notebooks/07_player_comparison.ipynb) | Head-to-head player comparison framework with percentile overlays |
 
 ---
@@ -189,7 +189,7 @@ FullCourtVision/
 │   ├── 03_predictive_modeling.ipynb
 │   ├── 04_team_and_venue_analysis.ipynb
 │   ├── 05_advanced_ml.ipynb
-│   ├── 06_joshua_dworkin.ipynb
+│   ├── 06_player_case_study.ipynb
 │   └── 07_player_comparison.ipynb
 ├── analysis_output/              # Generated charts & visualisations
 ├── analysis.py                   # Core statistical analysis

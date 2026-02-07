@@ -128,11 +128,6 @@ Teams use `DiscoverPossibleTeam` union — need inline fragments for `DiscoverTe
 - Diamond Valley BA: `4ba8bc5d`
 - Doncaster BA: `02357c83`
 
-### Joshua Dworkin
-- Profile ID: `f1fa18fc-a93f-45b9-ac91-f70652744dd7`
-- Current team: Eltham U16 Boys 07 (EDJBA, Summer 2025/26)
-- Previous team: Eltham U14 Boys 06 (EDJBA, Summer 2024/25)
-
 ## Rate Limiting
 No explicit rate limits observed, but be respectful. The API serves the PlayHQ/MyHoops mobile app and website.
 Recommend: 100-200ms delay between requests.

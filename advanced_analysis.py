@@ -445,51 +445,6 @@ def age_group_percentiles(df_detailed):
 
 
 # =============================================================================
-# 4. JOSHUA DWORKIN ANALYSIS (Preview)
-# =============================================================================
-def joshua_analysis(df_detailed, age_agg):
-    """Quick analysis of Joshua Dworkin's stats and percentile rankings."""
-    print("\n" + "=" * 70)
-    print("JOSHUA DWORKIN — Career Analysis Preview")
-    print("=" * 70)
-
-    josh = df_detailed[df_detailed["player_name"] == "Joshua Dworkin"].copy()
-    if josh.empty:
-        print("Joshua Dworkin not found in dataset.")
-        return
-
-    # Aggregate per season
-    josh_seasons = josh.groupby(["season_name", "age_group"]).agg({
-        "games_played": "sum",
-        "total_points": "sum",
-        "free_throws": "sum",
-        "two_pt_made": "sum",
-        "three_pt_made": "sum",
-        "total_fouls": "sum",
-        "season_order": "first"
-    }).reset_index().sort_values("season_order")
-
-    josh_seasons["ppg"] = josh_seasons["total_points"] / josh_seasons["games_played"]
-    josh_seasons["fpg"] = josh_seasons["total_fouls"] / josh_seasons["games_played"]
-
-    print(f"\n{'Season':<20} {'Age Grp':<8} {'GP':>4} {'PTS':>5} {'PPG':>6} {'FPG':>6} {'FT':>4} {'2PT':>4} {'3PT':>4}")
-    print("-" * 70)
-    for _, row in josh_seasons.iterrows():
-        print(f"{row['season_name']:<20} {row['age_group']:<8} {int(row['games_played']):>4} {int(row['total_points']):>5} {row['ppg']:>6.1f} {row['fpg']:>6.1f} {int(row['free_throws']):>4} {int(row['two_pt_made']):>4} {int(row['three_pt_made']):>4}")
-
-    # Percentile rankings from age_agg
-    josh_pcts = age_agg[age_agg["player_name"] == "Joshua Dworkin"]
-    if not josh_pcts.empty:
-        print(f"\nPercentile Rankings:")
-        for _, row in josh_pcts.iterrows():
-            print(f"  {row['age_group']} ({row['gender']}): PPG={row['ppg']:.1f} -> {row['ppg_percentile']:.0f}th percentile")
-
-    # Save
-    josh_seasons.to_csv(os.path.join(OUTPUT_DIR, "joshua_dworkin_career.csv"), index=False)
-    print(f"\nSaved: joshua_dworkin_career.csv")
-
-
-# =============================================================================
 # MAIN
 # =============================================================================
 def main():
@@ -505,8 +460,6 @@ def main():
     model_results = random_forest_comparison(df_agg)
     dev_df = player_development_tracking(df_detailed)
     age_agg, benchmarks = age_group_percentiles(df_detailed)
-    joshua_analysis(df_detailed, age_agg)
-
     # Summary
     print("\n" + "=" * 70)
     print("ANALYSIS COMPLETE — Summary")

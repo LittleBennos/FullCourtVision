@@ -6,7 +6,6 @@
   "scripts": {
     "scrape:orgs": "node playhq-scraper.js orgs",
     "scrape:assoc": "node playhq-scraper.js assoc",
-    "scrape:joshua": "node playhq-joshua-fast.js",
     "stats": "node playhq-scraper.js stats"
   },
   "keywords": ["basketball", "playhq", "scraper", "analytics"],

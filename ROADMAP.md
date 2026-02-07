@@ -53,15 +53,15 @@
 
 ---
 
-## Phase 3: Personal Analytics — Joshua Dworkin Tracker
+## Phase 3: Personal Analytics — Player Tracker
 
-**Goal:** Dedicated analysis for Joshua (profile ID: `f1fa18fc-a93f-45b9-ac91-f70652744dd7`).
+**Goal:** Dedicated analysis for tracking any individual player's development.
 
 | Task | Status | Notes |
 |------|--------|-------|
 | Career progression dashboard | ⬜ | PPG, FPG, shooting splits over time |
-| Percentile ranking vs age group peers | ⬜ | Where does Joshua sit in U16? |
-| Comparison to top performers at same age | ⬜ | "At U14, the top 10% scored X PPG — Joshua scored Y" |
+| Percentile ranking vs age group peers | ⬜ | Where does the player sit in their age group? |
+| Comparison to top performers at same age | ⬜ | "At U14, the top 10% scored X PPG — player scored Y" |
 | Career trajectory projection | ⬜ | ML-based: if current trend continues, project U18 stats |
 | Strengths/weaknesses profile | ⬜ | Radar chart of key metrics vs peer averages |
 | Game-by-game tracker (requires fixture data) | ⬜ | Depends on Phase 1 |
@@ -77,7 +77,7 @@
 | Player search and comparison tool | ⬜ | Search by name, compare side-by-side |
 | Season-over-season trend charts | ⬜ | Line charts, sparklines |
 | Team rankings and strength of schedule | ⬜ | Based on opponent quality |
-| Joshua's personal dashboard page | ⬜ | Dedicated tab |
+| Individual player dashboard page | ⬜ | Dedicated tab |
 | Interactive cluster visualisation | ⬜ | Plotly scatter with hover info |
 | Age group leaderboards | ⬜ | Filter by U10/U12/U14/U16/U18 |
 | Export to PDF/image | ⬜ | For sharing |
