@@ -29,18 +29,88 @@ page = st.sidebar.radio(
      "Grade Browser", "Player Comparison", "Organisations"],
 )
 
+st.sidebar.divider()
+st.sidebar.subheader("About")
+st.sidebar.markdown(
+    "**FullCourtVision** is an open-source Victorian basketball analytics platform. "
+    "It scrapes PlayHQ data to provide player stats, team standings, leaderboards, "
+    "and historical performance tracking across multiple organisations and seasons."
+)
+st.sidebar.markdown("[GitHub Repository](https://github.com/LittleBennos/FullCourtVision)")
+
 # ── HOME ──
 if page == "Home":
     st.markdown("# 🏀 FullCourtVision")
     st.markdown("### Victorian Basketball Analytics")
     st.divider()
 
-    counts = q("SELECT (SELECT COUNT(*) FROM players) as players, (SELECT COUNT(*) FROM games) as games, (SELECT COUNT(*) FROM organisations) as orgs, (SELECT COUNT(*) FROM seasons) as seasons")
-    c1, c2, c3, c4 = st.columns(4)
+    # Dynamic hero stats from DB
+    counts = q("""
+        SELECT
+            (SELECT COUNT(*) FROM players) as players,
+            (SELECT COUNT(*) FROM player_stats) as stat_lines,
+            (SELECT COUNT(*) FROM games) as games,
+            (SELECT COUNT(*) FROM organisations) as orgs,
+            (SELECT COUNT(*) FROM seasons) as seasons
+    """)
+    c1, c2, c3, c4, c5 = st.columns(5)
     c1.metric("Players", f"{counts['players'][0]:,}")
-    c2.metric("Games", f"{counts['games'][0]:,}")
-    c3.metric("Organisations", f"{counts['orgs'][0]:,}")
-    c4.metric("Seasons", f"{counts['seasons'][0]:,}")
+    c2.metric("Stat Lines", f"{counts['stat_lines'][0]:,}")
+    c3.metric("Games", f"{counts['games'][0]:,}")
+    c4.metric("Organisations", f"{counts['orgs'][0]:,}")
+    c5.metric("Seasons", f"{counts['seasons'][0]:,}")
+
+    st.divider()
+
+    # ── Featured Player: Joshua Dworkin Career Profile ──
+    st.subheader("⭐ Featured Player: Joshua Dworkin")
+
+    josh_id = "f1fa18fc-a93f-45b9-ac91-f70652744dd7"
+    josh_stats = q("""
+        SELECT ps.team_name, g.name as grade, s.name as season,
+               ps.games_played, ps.total_points, ps.one_point, ps.two_point, ps.three_point,
+               ps.total_fouls, ps.ranking, s.start_date
+        FROM player_stats ps
+        JOIN grades g ON ps.grade_id = g.id
+        JOIN seasons s ON g.season_id = s.id
+        WHERE ps.player_id = ?
+        ORDER BY s.start_date DESC
+    """, [josh_id])
+
+    if not josh_stats.empty:
+        # Career totals
+        tot = josh_stats[['games_played', 'total_points', 'one_point', 'two_point', 'three_point', 'total_fouls']].sum()
+        gp = max(int(tot['games_played']), 1)
+
+        jc1, jc2, jc3, jc4, jc5 = st.columns(5)
+        jc1.metric("Career Games", int(tot['games_played']))
+        jc2.metric("Career Points", int(tot['total_points']))
+        jc3.metric("Career PPG", round(tot['total_points'] / gp, 1))
+        jc4.metric("3-Pointers", int(tot['three_point']))
+        jc5.metric("Career FPG", round(tot['total_fouls'] / gp, 1))
+
+        # Season-by-season table (exclude start_date)
+        display = josh_stats.drop(columns=['start_date'])
+        display['PPG'] = (display['total_points'] / display['games_played'].replace(0, 1)).round(1)
+        st.dataframe(display, use_container_width=True, hide_index=True)
+
+        # Scoring chart by season
+        # Aggregate by season for chart
+        by_season = josh_stats.groupby('season').agg(
+            total_points=('total_points', 'sum'),
+            one_point=('one_point', 'sum'),
+            two_point=('two_point', 'sum'),
+            three_point=('three_point', 'sum'),
+            games_played=('games_played', 'sum'),
+        ).reset_index()
+        fig = px.bar(
+            by_season, x="season", y=["one_point", "two_point", "three_point"],
+            title="Joshua Dworkin — Scoring Breakdown by Season",
+            labels={"value": "Makes", "variable": "Shot Type"},
+            barmode="group",
+        )
+        fig.update_layout(template="plotly_dark")
+        st.plotly_chart(fig, use_container_width=True)
 
     st.divider()
     st.markdown("Use the sidebar to explore players, teams, leaderboards, competitions, and more.")
@@ -139,20 +209,6 @@ elif page == "Team Search":
             ORDER BY g.date
         """, [tid, tid])
         if not games.empty:
-            # W/L
-            def result(row):
-                if row['home_team'] == st.session_state.get('selected_team_name', '').split(' (')[0]:
-                    return 'W' if row['home_score'] > row['away_score'] else ('L' if row['home_score'] < row['away_score'] else 'D')
-                return 'W' if row['away_score'] > row['home_score'] else ('L' if row['away_score'] < row['home_score'] else 'D')
-
-            # Try to compute W/L from team id
-            wins = losses = draws = 0
-            for _, g in games.iterrows():
-                if g['home_score'] is not None and g['away_score'] is not None:
-                    # Determine if this team is home or away
-                    # We use the query param tid
-                    pass
-            # Simpler: re-query with team id logic
             wl = q("""
                 SELECT
                     SUM(CASE WHEN (home_team_id = ? AND home_score > away_score) OR (away_team_id = ? AND away_score > home_score) THEN 1 ELSE 0 END) as wins,
@@ -352,7 +408,6 @@ elif page == "Player Comparison":
         fig2 = go.Figure()
         for _, row in comp.iterrows():
             vals = [float(row['points'] or 0), float(row['games'] or 0), float(row['ft'] or 0), float(row['fg2'] or 0), float(row['fg3'] or 0)]
-            # Normalize to max
             fig2.add_trace(go.Scatterpolar(r=vals + [vals[0]], theta=categories + [categories[0]], fill='toself', name=row['player']))
         fig2.update_layout(template='plotly_dark', title='Career Totals Radar')
         st.plotly_chart(fig2, use_container_width=True)
