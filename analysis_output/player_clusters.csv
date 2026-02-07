@@ -1,0 +1,560 @@
+player_name,games_played,ppg,fpg,shot_efficiency,cluster,cluster_label
+Ralph Balamban,5,7.0,2.0,1.75,0,High Scorers
+Cruz Hammon,6,11.833333333333334,1.5,1.7317073170731707,0,High Scorers
+Harley O’Brien,5,10.4,3.8,1.6774193548387097,0,High Scorers
+Owen Davies,6,12.666666666666666,0.16666666666666666,1.853658536585366,1,Mid-Range
+Juno Lee,6,5.5,0.6666666666666666,1.9411764705882353,1,Mid-Range
+William Clyde,9,3.2222222222222223,2.0,1.8125,0,High Scorers
+Alex Ka Weng Yee,6,1.8333333333333333,0.8333333333333334,1.8333333333333333,1,Mid-Range
+Noah Leening,5,8.6,0.4,2.15,1,Mid-Range
+Jacob Lum,5,0.8,0.8,2.0,1,Mid-Range
+Jayden xu,5,5.4,1.8,1.6875,0,High Scorers
+Jaxon Pearce,5,0.4,1.2,2.0,1,Mid-Range
+Archer van Beek,5,0.0,0.4,0.0,2,Low Volume
+Filippo Ciancimino-Piedimonte,6,0.6666666666666666,0.5,2.0,1,Mid-Range
+Satoshi Shoji,13,3.3076923076923075,0.7692307692307693,2.0476190476190474,1,Mid-Range
+Angus Cahir,6,5.166666666666667,1.0,2.066666666666667,1,Mid-Range
+Wesley Hyland,5,4.0,0.8,2.0,1,Mid-Range
+Yong kang Chong Chico,9,3.3333333333333335,2.2222222222222223,1.7647058823529411,0,High Scorers
+James Borysiewicz,5,2.4,0.8,2.0,1,Mid-Range
+Sebastian Symons,5,9.0,1.4,1.8,0,High Scorers
+Joshua Chipchase,6,13.333333333333334,1.0,1.8181818181818181,0,High Scorers
+Ethan Greig,5,2.2,1.4,1.8333333333333333,1,Mid-Range
+Paxton Lee,10,6.1,1.0,1.7428571428571429,1,Mid-Range
+Max Dimitropoulos,10,9.9,2.3,2.020408163265306,0,High Scorers
+Archer Bryant,5,6.6,0.8,2.2,1,Mid-Range
+Levi Taylor,5,8.4,1.2,2.210526315789474,1,Mid-Range
+Flynn Ross,5,7.6,1.4,1.9,0,High Scorers
+Oscar Ma,5,9.2,1.8,1.5862068965517242,0,High Scorers
+James Pierik,5,3.4,2.6,1.8888888888888888,0,High Scorers
+Lewis Hamilton,5,9.6,1.0,1.8461538461538463,1,Mid-Range
+Aidan Maguire,11,14.818181818181818,1.2727272727272727,1.9176470588235295,0,High Scorers
+William Thornton,6,11.333333333333334,0.5,1.6585365853658536,1,Mid-Range
+Cooper Bertram,5,5.8,1.0,1.5263157894736843,1,Mid-Range
+Elijah Peters,10,0.6,1.5,1.5,1,Mid-Range
+Nicholas Christodoulou,5,3.4,1.6,1.8888888888888888,1,Mid-Range
+Eton Tsang,5,7.8,1.2,2.1666666666666665,1,Mid-Range
+Joshua Gilligan,6,5.833333333333333,2.3333333333333335,1.5909090909090908,0,High Scorers
+Max Cai,6,2.0,1.5,2.4,1,Mid-Range
+Riley Hanna,11,4.909090909090909,3.909090909090909,1.9285714285714286,0,High Scorers
+Xavier Singh,5,5.2,1.0,2.0,1,Mid-Range
+Hash Hegazy,11,3.909090909090909,1.6363636363636365,2.388888888888889,1,Mid-Range
+Sachira Welungoda,6,8.833333333333334,1.0,2.12,1,Mid-Range
+Benjamin Richardson,5,18.2,1.6,2.022222222222222,0,High Scorers
+Brody Cameron,5,1.6,1.8,2.0,1,Mid-Range
+Paolo Giuliano,6,6.666666666666667,2.3333333333333335,1.6666666666666667,0,High Scorers
+Noah Quinn,5,6.2,0.4,2.3846153846153846,1,Mid-Range
+Miller Ramsay,5,2.8,2.6,2.0,0,High Scorers
+Linus Pfister,5,5.6,0.4,1.75,1,Mid-Range
+Reece Richardson,11,6.454545454545454,2.6363636363636362,2.088235294117647,0,High Scorers
+Liam Thanos,5,1.0,0.6,1.6666666666666667,1,Mid-Range
+Harrison Jones,6,14.166666666666666,1.3333333333333333,2.0238095238095237,0,High Scorers
+Hugo Vrailas,5,1.2,1.6,2.0,1,Mid-Range
+Zac Grech,5,2.0,1.6,2.0,1,Mid-Range
+Ari French,5,6.8,1.2,2.0,1,Mid-Range
+Edward Hadley,5,1.2,1.8,2.0,1,Mid-Range
+Evan Koutsaplis,5,1.6,1.2,2.0,1,Mid-Range
+James Murto,6,8.833333333333334,2.5,1.8275862068965518,0,High Scorers
+Jake McConnell,5,9.4,2.6,1.8076923076923077,0,High Scorers
+Benjamin Yao,5,1.4,1.4,1.4,1,Mid-Range
+Aleksandr Fedorov,5,3.6,1.6,1.8,1,Mid-Range
+Oscar Howie,5,1.2,0.6,2.0,1,Mid-Range
+Henry Mclaren,5,5.8,3.2,1.9333333333333333,0,High Scorers
+Will McKernan,15,8.066666666666666,1.0666666666666667,2.2830188679245285,1,Mid-Range
+Campbell Parsons,10,2.7,0.7,1.6875,1,Mid-Range
+William Holston,5,2.4,3.6,1.5,0,High Scorers
+Patrick Watson,10,7.1,2.5,1.9189189189189189,0,High Scorers
+Arki Senathi-Raja,5,3.2,0.4,1.7777777777777777,1,Mid-Range
+Evan Wilson,5,2.8,2.2,1.75,0,High Scorers
+Nate Gayed,5,0.2,2.2,1.0,2,Low Volume
+James Vetere,5,15.4,2.2,1.673913043478261,0,High Scorers
+Gene Cuberes,6,8.0,1.1666666666666667,2.4,1,Mid-Range
+Tayden Jax Ryan,5,4.0,0.8,2.0,1,Mid-Range
+Alex Bai,9,2.6666666666666665,2.0,1.7142857142857142,0,High Scorers
+Callum McLauchlan,6,13.5,2.1666666666666665,1.8,0,High Scorers
+Levi Joules,5,10.0,1.0,1.6129032258064515,0,High Scorers
+Liam Reilly,6,5.333333333333333,1.6666666666666667,2.0,1,Mid-Range
+Cooper Jennings,5,1.4,1.4,1.1666666666666667,1,Mid-Range
+Marcus Rocca,6,15.0,2.3333333333333335,1.836734693877551,0,High Scorers
+Dylan Lawrie,5,3.4,1.0,2.125,1,Mid-Range
+Samuel Maguire,6,5.0,2.5,1.5789473684210527,0,High Scorers
+Xen Dimitropoulos,8,5.875,1.875,2.1363636363636362,0,High Scorers
+Nash Ries,6,4.0,1.3333333333333333,2.1818181818181817,1,Mid-Range
+Baran Yegen,10,7.5,2.8,1.9736842105263157,0,High Scorers
+Elliott Todd,6,4.0,0.0,1.8461538461538463,1,Mid-Range
+Benjamin Lopez Flamengo,5,0.0,2.0,0.0,2,Low Volume
+Harrison King,5,15.4,1.6,1.711111111111111,0,High Scorers
+Avery Doran,5,0.8,1.8,2.0,1,Mid-Range
+cooper gatt,5,5.0,1.6,1.9230769230769231,1,Mid-Range
+Ryan McIntosh,6,4.666666666666667,0.3333333333333333,2.0,1,Mid-Range
+Fraser Ford,6,10.666666666666666,1.6666666666666667,1.9393939393939394,0,High Scorers
+Marley Gregory,5,7.0,1.4,1.9444444444444444,1,Mid-Range
+Roy Maguire,6,7.833333333333333,0.3333333333333333,1.7407407407407407,1,Mid-Range
+Harley Paton,5,12.2,1.4,1.7941176470588236,0,High Scorers
+Fraser Willey,10,5.4,2.9,1.8620689655172413,0,High Scorers
+Lucas Gibellini,6,9.666666666666666,1.3333333333333333,1.9333333333333333,0,High Scorers
+Fitzroy Clarke,6,7.5,2.6666666666666665,1.8,0,High Scorers
+Thomas Grant,5,5.2,1.0,1.8571428571428572,1,Mid-Range
+Brody O'Meara,5,3.2,0.4,2.0,1,Mid-Range
+Christopher Mott,8,3.75,1.375,1.7647058823529411,1,Mid-Range
+Hugh Goodyear,10,5.3,1.2,1.7096774193548387,1,Mid-Range
+Marcus Ngu,6,4.666666666666667,0.3333333333333333,1.8666666666666667,1,Mid-Range
+Samuel Lin,5,2.6,1.6,1.8571428571428572,1,Mid-Range
+Dylan Milanese,6,13.166666666666666,1.0,1.9268292682926829,0,High Scorers
+Darcy Webb,5,3.0,2.8,1.5,0,High Scorers
+Devon Lee,6,12.833333333333334,2.0,2.2,0,High Scorers
+Rafael Seymour,11,7.545454545454546,2.5454545454545454,1.8043478260869565,0,High Scorers
+Matthew Searies,5,9.0,1.6,1.9565217391304348,0,High Scorers
+Henry Sill,5,5.6,1.6,1.8666666666666667,1,Mid-Range
+Jonah Mai,10,4.9,1.5,2.130434782608696,1,Mid-Range
+Sebastian Di Valentino,5,4.2,0.8,2.3333333333333335,1,Mid-Range
+Jake Chudasama,5,1.6,2.6,1.6,0,High Scorers
+Jacob El khodr,11,10.818181818181818,2.090909090909091,1.7761194029850746,0,High Scorers
+James Litchfield,5,9.4,2.0,1.88,0,High Scorers
+Sebastian Luz,6,12.5,1.0,1.7857142857142858,0,High Scorers
+Hayden Stevenson,19,3.1578947368421053,1.368421052631579,2.4,1,Mid-Range
+Angus Mitchell,5,11.8,2.0,1.903225806451613,0,High Scorers
+Lachlan Spaulding,5,5.8,0.4,2.4166666666666665,1,Mid-Range
+Caden Lyons,6,5.0,1.1666666666666667,2.142857142857143,1,Mid-Range
+Ethan Lee,5,1.2,1.8,2.0,1,Mid-Range
+Noah Vassilacos,5,3.0,1.4,1.6666666666666667,1,Mid-Range
+Ezekiel Kyriacou,5,2.0,1.2,2.0,1,Mid-Range
+Alexander Lagogiannis,8,3.875,1.375,1.4761904761904763,1,Mid-Range
+Max Condon,6,4.666666666666667,2.1666666666666665,1.6470588235294117,0,High Scorers
+Pak Hei Loo,5,14.2,2.0,1.9189189189189189,0,High Scorers
+Hunter Furlan,9,5.333333333333333,2.3333333333333335,1.7777777777777777,0,High Scorers
+Trent Gilmour,6,1.8333333333333333,3.1666666666666665,1.8333333333333333,0,High Scorers
+Oscar Buultjens,6,12.166666666666666,1.1666666666666667,1.825,0,High Scorers
+Logan Toussaint,6,4.166666666666667,1.1666666666666667,1.6666666666666667,1,Mid-Range
+Javier Miller,6,13.333333333333334,2.5,2.2222222222222223,0,High Scorers
+Patrick DiFabio,5,8.4,1.0,2.0,1,Mid-Range
+Kye Gratton,6,10.5,2.3333333333333335,1.96875,0,High Scorers
+Hamish Paragreen,6,12.0,0.6666666666666666,2.057142857142857,1,Mid-Range
+Jaytin Kooyman,5,8.0,1.6,1.8181818181818181,0,High Scorers
+Mason Ballard,11,13.363636363636363,1.8181818181818181,1.9342105263157894,0,High Scorers
+Elliot Davis,5,10.6,2.0,2.0384615384615383,0,High Scorers
+Messef Alabdul Razzak,5,3.4,1.6,1.8888888888888888,1,Mid-Range
+Joshua Lin,6,1.1666666666666667,1.1666666666666667,1.75,1,Mid-Range
+Austin Baker,5,5.8,1.4,1.9333333333333333,1,Mid-Range
+Kye Wilkin,10,6.7,1.2,2.0303030303030303,1,Mid-Range
+Henry Stephens,5,1.6,1.2,1.6,1,Mid-Range
+Sebastian Liwanag,6,4.166666666666667,2.1666666666666665,1.9230769230769231,0,High Scorers
+Keegan Stammers,5,2.2,1.8,1.8333333333333333,1,Mid-Range
+Levison Ellis,5,1.6,1.0,2.0,1,Mid-Range
+Nathan Song,5,1.0,1.2,1.6666666666666667,1,Mid-Range
+Taj Trevascus,9,16.666666666666668,0.7777777777777778,2.1739130434782608,0,High Scorers
+Alexander Schoonderbeek,10,3.9,1.3,2.4375,1,Mid-Range
+Matteo Astegno,7,14.142857142857142,1.2857142857142858,1.9411764705882353,0,High Scorers
+Max Harris,6,4.666666666666667,3.0,1.75,0,High Scorers
+Kelly Glikmann-Johnston,5,2.4,0.2,2.4,1,Mid-Range
+Christopher Drisdale,5,11.8,1.8,1.84375,0,High Scorers
+Aiden Winiata,5,2.4,2.2,2.0,0,High Scorers
+Ishwar Malik,5,2.4,1.6,2.4,1,Mid-Range
+Josh Goodman,6,3.5,2.0,1.6153846153846154,0,High Scorers
+Jack Shoebridge,6,15.0,1.3333333333333333,1.836734693877551,0,High Scorers
+Louis Garden,5,0.6,1.8,1.5,1,Mid-Range
+Liam Jiao,5,0.0,2.0,0.0,2,Low Volume
+Darcy Keily,6,1.8333333333333333,0.5,1.8333333333333333,1,Mid-Range
+Lennox Bahar,11,16.90909090909091,1.5454545454545454,2.2142857142857144,0,High Scorers
+Harry Child,6,3.5,0.8333333333333334,1.6153846153846154,1,Mid-Range
+Harrison Fraser,5,1.4,1.4,1.75,1,Mid-Range
+Andrej Dimkovski,6,3.0,2.0,2.25,1,Mid-Range
+Lachlan Khoo,5,0.0,1.6,0.0,2,Low Volume
+Harvey Gould,6,4.333333333333333,1.3333333333333333,1.7333333333333334,1,Mid-Range
+Jack Langley,5,1.6,0.6,1.6,1,Mid-Range
+Ryan Mccabe,5,3.8,1.0,1.9,1,Mid-Range
+Fergus Brown,6,6.166666666666667,1.5,1.85,1,Mid-Range
+Sam Pascoe,5,12.0,1.0,2.4,0,High Scorers
+Lucas Yu,6,7.833333333333333,1.1666666666666667,1.8076923076923077,1,Mid-Range
+Hugo Kropp,5,4.2,1.8,1.9090909090909092,1,Mid-Range
+Jai Mullane,6,3.0,0.6666666666666666,2.0,1,Mid-Range
+Harry Futcher,5,1.6,2.4,2.0,0,High Scorers
+Clancy O'Duill,6,6.166666666666667,1.6666666666666667,1.9473684210526316,0,High Scorers
+Borong Zheng,5,1.6,1.8,2.0,1,Mid-Range
+Billy Hamilton,6,5.833333333333333,0.5,2.1875,1,Mid-Range
+Sebastian Dermansky,11,8.818181818181818,1.3636363636363635,2.1555555555555554,0,High Scorers
+Angus Paterson,10,2.5,0.4,2.0833333333333335,1,Mid-Range
+Elijah De Rooden,10,12.7,1.0,1.7162162162162162,0,High Scorers
+Sol O'Keeffe,6,5.0,1.6666666666666667,1.875,1,Mid-Range
+Jack Everett,5,5.0,3.6,2.0833333333333335,0,High Scorers
+Angus Draper,5,8.4,2.2,2.210526315789474,0,High Scorers
+Charlie Watts,5,1.2,2.2,1.5,0,High Scorers
+Cooper Bonazza,6,4.0,2.1666666666666665,2.0,0,High Scorers
+Greyson Yates-Hammond,9,4.444444444444445,0.5555555555555556,2.3529411764705883,1,Mid-Range
+Nicholas Drew,9,3.5555555555555554,0.8888888888888888,1.6,1,Mid-Range
+xiang Meng,6,3.3333333333333335,2.1666666666666665,1.8181818181818181,0,High Scorers
+Marco Manlio,5,3.4,1.6,2.125,1,Mid-Range
+Marshall Francis,11,6.090909090909091,1.5454545454545454,1.763157894736842,0,High Scorers
+Jagger Jerram,5,2.4,1.2,2.0,1,Mid-Range
+Remy Robertson,5,0.0,1.4,0.0,2,Low Volume
+Theodore Toohey,5,0.0,0.6,0.0,2,Low Volume
+Jasper Featherston,5,6.6,2.0,1.9411764705882353,0,High Scorers
+Nathan Drohomirecki,5,6.8,1.2,1.7894736842105263,1,Mid-Range
+Elias Harika,6,21.666666666666668,1.8333333333333333,1.7567567567567568,0,High Scorers
+Spencer Conboy,5,4.0,2.2,1.6666666666666667,0,High Scorers
+Charlie Camilleri,5,7.6,2.2,1.7272727272727273,0,High Scorers
+Archer Smith,5,5.0,0.6,1.4705882352941178,1,Mid-Range
+Ethan Sampimon,6,1.8333333333333333,2.0,1.8333333333333333,1,Mid-Range
+Aksel Hansen,5,14.4,1.2,1.565217391304348,0,High Scorers
+Kaiser Bugay,10,6.1,1.8,1.6944444444444444,0,High Scorers
+Mitchell Lawton,5,0.8,0.0,2.0,1,Mid-Range
+Julian Zaharijevski,5,9.4,1.0,1.88,1,Mid-Range
+Archie Watson,5,6.0,1.6,1.875,0,High Scorers
+Archie OBrien,9,8.666666666666666,1.5555555555555556,1.8571428571428572,0,High Scorers
+James Allen,5,5.4,0.4,1.8,1,Mid-Range
+Felix Hodge,5,5.2,1.4,2.3636363636363638,1,Mid-Range
+Zachary Horton,9,5.333333333333333,0.8888888888888888,2.0,1,Mid-Range
+Koby Gellie,6,3.0,3.0,2.0,0,High Scorers
+Junning zhai,6,5.833333333333333,0.5,1.8421052631578947,1,Mid-Range
+George Lueth,9,3.6666666666666665,0.7777777777777778,2.0625,1,Mid-Range
+Franklin Rodgers,5,12.0,0.6,1.7142857142857142,1,Mid-Range
+Ruben Coombe,10,4.0,0.5,1.8181818181818181,1,Mid-Range
+Charlie Stoilkovski,6,14.666666666666666,1.3333333333333333,1.9130434782608696,0,High Scorers
+Levi Fitzgerald,6,10.666666666666666,1.5,1.8823529411764706,0,High Scorers
+Blake Jeffrey,9,12.777777777777779,1.0,1.6911764705882353,0,High Scorers
+Jackson Hartley,11,14.545454545454545,1.9090909090909092,1.702127659574468,0,High Scorers
+Thomas Evans,6,13.333333333333334,3.1666666666666665,1.7777777777777777,0,High Scorers
+Harrison Park,5,2.0,1.0,1.6666666666666667,1,Mid-Range
+Jacob Rowe,5,3.0,2.8,2.142857142857143,0,High Scorers
+Quinn Thomson,7,0.2857142857142857,0.7142857142857143,2.0,1,Mid-Range
+Hunter Harper-Kerrigan,9,3.7777777777777777,2.4444444444444446,1.8888888888888888,0,High Scorers
+Lamar Packeer,6,0.3333333333333333,0.5,2.0,1,Mid-Range
+Harry Pittas,5,5.4,0.0,1.9285714285714286,1,Mid-Range
+Oliver Chuter,5,5.4,1.0,2.4545454545454546,1,Mid-Range
+Derek Wang,5,1.6,0.2,2.0,1,Mid-Range
+Benjamin Ruffell,5,2.4,2.0,1.7142857142857142,1,Mid-Range
+Dylan Tay,5,10.8,0.6,1.9285714285714286,1,Mid-Range
+Kevin Huang,6,0.3333333333333333,1.1666666666666667,2.0,1,Mid-Range
+Harvey Brewster,5,7.8,2.4,1.625,0,High Scorers
+Otis Beilin,5,0.0,0.6,0.0,2,Low Volume
+Dongchen Gao,8,11.25,2.375,1.836734693877551,0,High Scorers
+Casey Gray,5,4.8,1.4,2.0,1,Mid-Range
+Ollie Bernardus,6,0.6666666666666666,0.16666666666666666,2.0,1,Mid-Range
+Alex Lancaster,5,0.4,0.8,2.0,1,Mid-Range
+Gian Kim,5,2.8,0.8,2.8,1,Mid-Range
+Bryn Lennon,6,10.333333333333334,1.5,1.7714285714285714,0,High Scorers
+Jacob Zahlan,10,0.4,1.5,2.0,1,Mid-Range
+Aston Jackel,9,6.666666666666667,1.7777777777777777,1.935483870967742,0,High Scorers
+Jude Bell,11,2.6363636363636362,1.5454545454545454,1.9333333333333333,1,Mid-Range
+Xavier Kopczynski,14,1.2857142857142858,1.7857142857142858,2.25,1,Mid-Range
+Angus Hodgson,9,4.0,0.7777777777777778,1.894736842105263,1,Mid-Range
+Isaac Atley,5,4.4,0.8,1.8333333333333333,1,Mid-Range
+Jasper Keamy,6,2.5,0.5,1.875,1,Mid-Range
+Lucas Liu,5,7.0,2.2,1.5909090909090908,0,High Scorers
+William Trout,9,3.7777777777777777,1.2222222222222223,1.8888888888888888,1,Mid-Range
+James Oakey,5,12.2,0.8,1.7941176470588236,0,High Scorers
+Jonathan Ng,6,7.833333333333333,1.1666666666666667,1.88,1,Mid-Range
+Reece Thomas,5,0.4,1.6,2.0,1,Mid-Range
+Jack Renton,5,15.6,1.0,1.7333333333333334,0,High Scorers
+Tyler Duggan,9,1.1111111111111112,2.2222222222222223,2.0,1,Mid-Range
+Harper Lu,9,10.333333333333334,1.8888888888888888,1.7547169811320755,0,High Scorers
+Harley Smith,6,2.6666666666666665,1.6666666666666667,2.0,1,Mid-Range
+Oliver Stanley,6,8.0,1.3333333333333333,2.0,1,Mid-Range
+Luke Meilak,5,0.4,1.4,2.0,1,Mid-Range
+Braeden Buccella,9,7.555555555555555,1.6666666666666667,2.125,0,High Scorers
+Kevin Akoch,11,3.1818181818181817,1.7272727272727273,2.0588235294117645,1,Mid-Range
+Ford Feng,5,3.4,1.8,1.8888888888888888,1,Mid-Range
+Kaiwen Guo,5,1.6,0.4,1.6,1,Mid-Range
+Jude Lee,8,6.75,1.125,1.8,1,Mid-Range
+Daniel McLachlan,5,14.2,2.0,1.775,0,High Scorers
+Noah Labonté,5,0.8,0.8,2.0,1,Mid-Range
+Giacomo Webber,6,12.666666666666666,0.8333333333333334,1.8095238095238095,0,High Scorers
+kaibo kang,5,17.8,2.6,2.282051282051282,0,High Scorers
+Jaxon O'Brien,5,3.8,2.0,1.9,0,High Scorers
+Hugh Barnes,5,1.0,0.4,1.6666666666666667,1,Mid-Range
+Eric Jacob,5,2.0,0.8,2.0,1,Mid-Range
+Ryder Carlucci,5,9.2,2.2,1.84,0,High Scorers
+Charlie Sime,11,3.3636363636363638,1.7272727272727273,1.7619047619047619,1,Mid-Range
+Jesse Inglese,5,2.0,0.6,2.0,1,Mid-Range
+Cailen Pereira,6,2.3333333333333335,2.1666666666666665,2.0,0,High Scorers
+Thomas Stabb,6,1.5,1.1666666666666667,2.25,1,Mid-Range
+Chase Smith,5,4.8,1.4,1.7142857142857142,1,Mid-Range
+Logan Nitschke,5,4.6,1.0,1.7692307692307692,1,Mid-Range
+Joseph Hughes,10,9.5,2.6,1.9387755102040816,0,High Scorers
+Max Gu,5,0.4,2.2,2.0,1,Mid-Range
+George Derry,5,0.4,0.4,2.0,1,Mid-Range
+Niccolò Biancalani,6,11.333333333333334,2.0,2.125,0,High Scorers
+Arlo Valdes-McEvoy,5,18.8,0.8,1.8076923076923077,0,High Scorers
+Charlie Roberts,11,16.818181818181817,1.3636363636363635,1.8316831683168318,0,High Scorers
+Honam Chen,6,3.0,0.8333333333333334,2.25,1,Mid-Range
+Jack Krilis,5,7.6,2.4,1.9,0,High Scorers
+Max Rawlinson,6,4.833333333333333,0.8333333333333334,2.230769230769231,1,Mid-Range
+Rocky Quinn,5,3.6,1.2,1.8,1,Mid-Range
+Lex Riordan,5,2.8,0.4,2.0,1,Mid-Range
+Rhys Warmington,6,15.666666666666666,2.8333333333333335,1.9583333333333333,0,High Scorers
+Luca Joules,5,4.8,0.8,1.8461538461538463,1,Mid-Range
+Hugo Wasley,5,1.2,0.4,2.0,1,Mid-Range
+Ian Guan,5,0.2,0.0,1.0,2,Low Volume
+Max Duffy,5,8.8,0.8,1.76,1,Mid-Range
+Zidane Kassab,5,4.8,1.4,1.8461538461538463,1,Mid-Range
+Logan Giosis,22,2.227272727272727,2.6363636363636362,1.6896551724137931,0,High Scorers
+Cooper Tout,6,6.0,1.3333333333333333,2.5714285714285716,1,Mid-Range
+Oliver Clarke,5,3.0,2.2,1.875,0,High Scorers
+Angus Higgins,5,1.0,1.4,1.6666666666666667,1,Mid-Range
+Isaac Chan,5,4.0,0.6,2.0,1,Mid-Range
+Bailey Russell,5,16.6,2.8,1.9761904761904763,0,High Scorers
+Xavier Sibbing,7,5.428571428571429,2.7142857142857144,1.4615384615384615,0,High Scorers
+Joshua Sampson,6,5.666666666666667,1.0,2.0,1,Mid-Range
+Parker McCreadie,14,8.5,2.0,2.016949152542373,0,High Scorers
+Isaac Nayef,6,10.166666666666666,2.8333333333333335,2.1785714285714284,0,High Scorers
+Jaxson Brookes,11,9.909090909090908,1.6363636363636365,1.6515151515151516,0,High Scorers
+Harvey Enad,5,2.8,1.4,2.0,1,Mid-Range
+Reeve Drake,5,2.2,0.4,1.8333333333333333,1,Mid-Range
+Oliver Isherwood,14,1.5714285714285714,2.2142857142857144,1.6923076923076923,0,High Scorers
+Max Short,5,8.6,0.8,1.7916666666666667,1,Mid-Range
+Huxley Borgonha,5,1.6,2.4,2.0,0,High Scorers
+Lewis Zeffiro,6,2.8333333333333335,1.8333333333333333,2.125,1,Mid-Range
+Elijah King,8,5.25,0.25,2.625,1,Mid-Range
+James Karunanayake,10,4.4,1.6,1.76,1,Mid-Range
+Luca Spina,6,13.833333333333334,1.8333333333333333,2.128205128205128,0,High Scorers
+Fletcher Hewitt,5,3.2,1.8,1.7777777777777777,1,Mid-Range
+Jeremy Baldwin,10,1.8,2.2,1.6363636363636365,0,High Scorers
+Jensen Ward,5,5.2,0.6,2.1666666666666665,1,Mid-Range
+Walter Tyrrell,6,4.0,1.3333333333333333,2.0,1,Mid-Range
+Leonardo Briganti,7,7.285714285714286,2.0,1.9615384615384615,0,High Scorers
+Alex Power,6,4.833333333333333,0.8333333333333334,1.9333333333333333,1,Mid-Range
+William Harmer,5,8.8,2.0,1.9130434782608696,0,High Scorers
+Henry Stott,10,3.0,0.5,2.5,1,Mid-Range
+Alex Walker,5,14.2,2.8,1.775,0,High Scorers
+Josiah Sortino,5,1.8,1.0,2.25,1,Mid-Range
+Ali Halwani,8,5.125,1.375,2.5625,1,Mid-Range
+Anthony Salgadoe,14,13.571428571428571,2.142857142857143,1.7924528301886793,0,High Scorers
+Noah Pavlickovski,5,3.0,1.4,1.5,1,Mid-Range
+Leonardo Koukoullis,5,1.8,2.0,1.8,1,Mid-Range
+Max Vunivalu,5,5.2,0.8,2.0,1,Mid-Range
+Kaan Kocak,9,2.3333333333333335,2.3333333333333335,1.75,0,High Scorers
+Montgomery Findlay,5,3.8,1.2,2.111111111111111,1,Mid-Range
+Marcus Giakoumidis,9,6.444444444444445,1.6666666666666667,1.7575757575757576,0,High Scorers
+Alexander Cross,6,3.6666666666666665,1.5,1.6923076923076923,1,Mid-Range
+Zachariya Kassaby,8,4.25,0.5,1.7894736842105263,1,Mid-Range
+Julian Stephan,5,4.4,3.0,1.6923076923076923,0,High Scorers
+Oscar Codrington,6,2.3333333333333335,1.3333333333333333,2.0,1,Mid-Range
+Henry Byrne,5,5.4,1.6,1.8,1,Mid-Range
+Angus Moran,5,3.0,2.0,1.6666666666666667,0,High Scorers
+Oliver Hughes,11,11.636363636363637,2.3636363636363638,1.9393939393939394,0,High Scorers
+Joseph Dixon,6,10.333333333333334,2.5,2.0,0,High Scorers
+Ethan McLaughlin,5,7.4,1.4,2.176470588235294,1,Mid-Range
+Xavier Nikolakis,5,1.2,0.8,2.0,1,Mid-Range
+Joel Monsigneur,5,4.2,0.6,2.1,1,Mid-Range
+Jack Masciangioli,5,4.2,1.0,1.9090909090909092,1,Mid-Range
+Jake Vasiliou,5,1.0,0.4,1.6666666666666667,1,Mid-Range
+Michael Mai,5,6.6,0.6,1.8333333333333333,1,Mid-Range
+Justin DiBerardino,6,6.833333333333333,3.5,1.5769230769230769,0,High Scorers
+Tomas Endris,6,13.666666666666666,1.1666666666666667,2.1025641025641026,0,High Scorers
+Micah Gazeas,5,7.4,1.6,1.9473684210526316,0,High Scorers
+Andom Rendell,10,15.5,1.6,2.246376811594203,0,High Scorers
+Cooper Kay,5,11.8,1.4,2.5652173913043477,0,High Scorers
+Arden Cooperwaite,6,14.5,3.0,2.1219512195121952,0,High Scorers
+Emmett Whitcher,5,4.8,0.6,2.4,1,Mid-Range
+Hamish Freiberg,6,5.833333333333333,2.0,1.8421052631578947,0,High Scorers
+Phoenix Campanaro,13,7.6923076923076925,1.0769230769230769,1.9230769230769231,1,Mid-Range
+Perry Wallens,5,2.8,1.0,2.0,1,Mid-Range
+Robert Millgate,6,2.3333333333333335,1.5,2.0,1,Mid-Range
+dane roberts,5,10.2,3.2,2.217391304347826,0,High Scorers
+Xavier Elcheikh,6,5.833333333333333,1.3333333333333333,1.8421052631578947,1,Mid-Range
+Ben Nguyen,6,7.5,0.3333333333333333,2.25,1,Mid-Range
+Kevin Guo,5,1.4,0.8,1.75,1,Mid-Range
+Lochie Gleeson,9,8.11111111111111,1.5555555555555556,1.6590909090909092,0,High Scorers
+Oliver Hill,9,3.888888888888889,0.4444444444444444,2.0588235294117645,1,Mid-Range
+Roman Pritenang,5,8.0,2.0,2.1052631578947367,0,High Scorers
+Jesse MacDonald,11,1.5454545454545454,0.9090909090909091,1.7,1,Mid-Range
+Parker Gellard,6,5.833333333333333,0.8333333333333334,2.0588235294117645,1,Mid-Range
+Tristan Hill,5,4.8,1.6,2.0,1,Mid-Range
+Thomas Chandelia,8,5.875,1.25,1.88,1,Mid-Range
+Hugh Furlong,5,0.8,1.2,2.0,1,Mid-Range
+Yolotl Ochieng Dondo-Galan,6,1.0,0.16666666666666666,2.0,1,Mid-Range
+Ilia Zanjani,5,0.0,2.4,0.0,2,Low Volume
+Fletcher Sinicco,8,1.625,1.125,2.6,1,Mid-Range
+Harvey Butterworth,6,4.5,0.6666666666666666,1.6875,1,Mid-Range
+Bruce Zhang,9,7.777777777777778,1.5555555555555556,1.8421052631578947,0,High Scorers
+Luke Thomas,6,3.6666666666666665,3.0,1.8333333333333333,0,High Scorers
+Kyle Hsu,5,7.0,2.2,1.8421052631578947,0,High Scorers
+Henrik Konya,5,0.0,0.2,0.0,2,Low Volume
+Christian Chessum,5,7.8,1.0,2.0526315789473686,1,Mid-Range
+Louie Sugrue,5,2.4,1.4,2.0,1,Mid-Range
+Sebastian Tabuteau-Berk,5,0.8,1.2,2.0,1,Mid-Range
+Connor Beattie,6,0.6666666666666666,2.8333333333333335,2.0,0,High Scorers
+Samuel Liuzzi,5,12.6,1.4,2.1724137931034484,0,High Scorers
+Mitchell Smith,11,5.2727272727272725,2.909090909090909,1.8125,0,High Scorers
+Oscar Maher,5,5.6,0.8,2.1538461538461537,1,Mid-Range
+Artin Amani,5,1.4,1.2,1.75,1,Mid-Range
+Liam Wang,5,0.8,1.4,2.0,1,Mid-Range
+William Teng,5,6.6,1.0,1.736842105263158,1,Mid-Range
+Jake Lewis,6,4.166666666666667,0.3333333333333333,1.9230769230769231,1,Mid-Range
+Zachary Payne,5,19.6,2.0,1.8846153846153846,0,High Scorers
+Pascal Marie,6,6.833333333333333,2.0,1.7826086956521738,0,High Scorers
+Jordan Adi,5,0.6,0.0,3.0,1,Mid-Range
+Corbyn Reuter,5,2.0,1.6,2.0,1,Mid-Range
+Jake McMahon,6,5.5,1.6666666666666667,2.2,1,Mid-Range
+Levi ATTARD,5,0.8,2.6,2.0,0,High Scorers
+Brooklyn Bennett,5,5.8,3.0,1.8125,0,High Scorers
+Liam Sakhaie,5,2.0,2.0,2.0,1,Mid-Range
+Jacob Rackley,6,5.666666666666667,0.8333333333333334,2.0,1,Mid-Range
+Anton Siu,5,3.2,0.0,1.7777777777777777,1,Mid-Range
+Luca Bambino,6,1.6666666666666667,2.3333333333333335,1.4285714285714286,0,High Scorers
+Harry Waterson-Chappell,5,7.0,0.4,1.8421052631578947,1,Mid-Range
+Charlie Liu,5,0.0,0.6,0.0,2,Low Volume
+Tim wu,5,1.2,0.4,2.0,1,Mid-Range
+Xavier Mascitti,6,2.3333333333333335,1.1666666666666667,2.8,1,Mid-Range
+Diamandis Pittas,5,1.2,0.6,2.0,1,Mid-Range
+Caden Broxton,6,3.1666666666666665,0.8333333333333334,2.111111111111111,1,Mid-Range
+Justin Singh,5,8.0,2.0,2.2222222222222223,0,High Scorers
+YAN RAN LIU,5,0.8,1.4,2.0,1,Mid-Range
+Damon Dal Pos,5,2.6,2.6,2.1666666666666665,0,High Scorers
+Remy Padgham,5,3.6,0.6,1.5,1,Mid-Range
+Gabriel Haros,11,1.7272727272727273,2.6363636363636362,2.111111111111111,0,High Scorers
+EASON LI,5,4.8,1.8,1.6,0,High Scorers
+Luke Forbes,6,6.666666666666667,1.3333333333333333,1.9047619047619047,1,Mid-Range
+liam shelton,5,8.6,0.4,1.8695652173913044,1,Mid-Range
+Jeremy Zhang,11,3.3636363636363638,1.2727272727272727,1.6818181818181819,1,Mid-Range
+Oliver Broomhall,9,0.7777777777777778,1.8888888888888888,2.3333333333333335,1,Mid-Range
+Zacchaeus Yerondais,6,6.5,1.0,2.1666666666666665,1,Mid-Range
+Mason Rathjen,10,6.5,1.1,1.9696969696969697,1,Mid-Range
+Elliot Willis,6,3.3333333333333335,2.8333333333333335,1.6666666666666667,0,High Scorers
+Luke McLachlan,5,6.6,1.0,1.9411764705882353,1,Mid-Range
+Flynn Hamilton,5,13.6,3.0,2.193548387096774,0,High Scorers
+Nathan Cao,16,5.875,1.6875,1.88,0,High Scorers
+Hugh Macdonald,5,6.4,2.0,2.0,0,High Scorers
+Joshua Costigan,5,6.2,0.6,2.5833333333333335,1,Mid-Range
+Connor Goldsmith,6,5.333333333333333,1.8333333333333333,1.6842105263157894,0,High Scorers
+Adam Hodzic,5,5.0,1.8,2.0833333333333335,0,High Scorers
+Radvin Haji zeinolabedin pour,5,0.4,0.0,2.0,1,Mid-Range
+Harrison Horvat,5,0.0,1.8,0.0,2,Low Volume
+Oliver Williamson,5,0.8,0.8,2.0,1,Mid-Range
+Ryan Wynd,5,2.4,1.4,2.0,1,Mid-Range
+KURTIS NUCARA,6,4.833333333333333,3.3333333333333335,1.8125,0,High Scorers
+jake greenacre,5,4.8,1.2,2.1818181818181817,1,Mid-Range
+Wilfred Halim,6,6.5,1.3333333333333333,1.8571428571428572,1,Mid-Range
+Rhys Brockley,5,6.6,2.2,2.2,0,High Scorers
+Nour Ammar,11,5.181818181818182,0.9090909090909091,2.111111111111111,1,Mid-Range
+Remy Paul,5,3.0,1.4,1.6666666666666667,1,Mid-Range
+Gus Natoli,7,1.4285714285714286,1.2857142857142858,1.6666666666666667,1,Mid-Range
+Blake Hodgson,5,0.4,0.2,2.0,1,Mid-Range
+Tyce Ingram,9,6.0,0.6666666666666666,1.9285714285714286,1,Mid-Range
+Jasper Ling,5,1.4,1.0,1.75,1,Mid-Range
+Finn O'Meara,5,5.6,0.4,1.8666666666666667,1,Mid-Range
+Jayden Xu,6,3.8333333333333335,2.8333333333333335,1.7692307692307692,0,High Scorers
+Joshua Beasy,5,10.6,1.8,2.12,0,High Scorers
+Joshua Saines,6,6.166666666666667,2.3333333333333335,1.9473684210526316,0,High Scorers
+Lenny Cogan,5,2.8,1.2,2.0,1,Mid-Range
+Noah Ross,6,4.5,2.0,1.8,0,High Scorers
+Zaden Stubbs,5,3.6,1.8,1.8,1,Mid-Range
+ANTHONY Louey,5,0.8,0.6,2.0,1,Mid-Range
+Archer Moroney,8,2.875,1.25,1.9166666666666667,1,Mid-Range
+Jay Wilmot,6,7.666666666666667,2.0,1.7037037037037037,0,High Scorers
+Christian Tang,10,2.1,1.3,1.9090909090909092,1,Mid-Range
+Joshua Anderson,5,9.6,2.0,2.4,0,High Scorers
+Maxwell Quinlan,10,11.3,1.1,1.7121212121212122,0,High Scorers
+Giacomo Chincarini,11,5.0,2.090909090909091,1.8333333333333333,0,High Scorers
+Lucas Cain,6,3.6666666666666665,2.8333333333333335,1.8333333333333333,0,High Scorers
+Benjamin Di Meglio,5,2.6,1.4,2.1666666666666665,1,Mid-Range
+Nicholas Lynch,9,3.5555555555555554,1.1111111111111112,2.0,1,Mid-Range
+Joshua Luczyk,6,3.3333333333333335,1.1666666666666667,1.6666666666666667,1,Mid-Range
+Ethan Bouwmeester,8,3.25,1.875,1.8571428571428572,1,Mid-Range
+Billy Redin,10,10.6,1.5,1.8596491228070176,0,High Scorers
+Levi Gainsmith,10,7.2,1.7,1.894736842105263,0,High Scorers
+Ray Chang,12,4.5,1.0,2.7,1,Mid-Range
+Eamon King,5,7.8,3.4,1.7727272727272727,0,High Scorers
+Max Whitehead,6,6.166666666666667,0.6666666666666666,1.9473684210526316,1,Mid-Range
+Elijah Greig,6,8.0,0.8333333333333334,2.4,1,Mid-Range
+Jake Gray,6,3.5,0.6666666666666666,2.1,1,Mid-Range
+Ace Montfort,11,3.1818181818181817,2.1818181818181817,2.0588235294117645,0,High Scorers
+Alexander Lai,6,9.166666666666666,1.8333333333333333,1.8333333333333333,0,High Scorers
+Jeremy Watson,5,0.6,0.6,3.0,1,Mid-Range
+Liam Houghton,5,2.4,2.8,1.7142857142857142,0,High Scorers
+Finn Arbuthnot,5,5.6,1.2,2.3333333333333335,1,Mid-Range
+MARCUS LI,5,0.4,1.0,2.0,1,Mid-Range
+Alexander Fazzari,5,3.2,2.0,1.7777777777777777,0,High Scorers
+Terry Lee,6,7.5,0.5,1.6666666666666667,1,Mid-Range
+Remi Harper Lietoff,6,4.833333333333333,0.3333333333333333,2.4166666666666665,1,Mid-Range
+Massimo Pierorazio,6,7.833333333333333,2.0,2.35,0,High Scorers
+William Hondrakis,14,6.571428571428571,1.8571428571428572,1.803921568627451,0,High Scorers
+Toby Reiger,5,3.2,1.2,1.7777777777777777,1,Mid-Range
+Dante Byrne,5,6.8,0.6,1.7,1,Mid-Range
+George Coombs,11,2.1818181818181817,0.9090909090909091,2.0,1,Mid-Range
+Charlie Lacey,14,7.428571428571429,2.4285714285714284,1.9259259259259258,0,High Scorers
+Xavier Berry,5,5.8,1.0,1.8125,1,Mid-Range
+Deon Vandoros,5,3.6,1.6,2.0,1,Mid-Range
+Max Wang,5,3.4,1.2,1.8888888888888888,1,Mid-Range
+Jonathan Bartlett,5,15.6,2.2,1.813953488372093,0,High Scorers
+Felix Tilbrook,5,0.0,1.2,0.0,2,Low Volume
+Jacob Hughes,8,7.75,0.875,2.2142857142857144,1,Mid-Range
+Mitchell Tangey,5,0.0,1.6,0.0,2,Low Volume
+Christian Viola,5,6.6,1.2,2.357142857142857,1,Mid-Range
+Tommy Everett,5,9.2,1.2,2.7058823529411766,1,Mid-Range
+London Mazzeo,5,0.8,0.2,2.0,1,Mid-Range
+Asim Khan,15,3.3333333333333335,0.9333333333333333,2.0,1,Mid-Range
+Nate Faiman,6,6.5,1.3333333333333333,1.7727272727272727,1,Mid-Range
+Christian Toumplis,5,1.0,1.2,1.6666666666666667,1,Mid-Range
+Lennix Nunziato,9,3.111111111111111,1.5555555555555556,2.1538461538461537,1,Mid-Range
+Xavier Ruzzene,10,3.0,2.3,1.6666666666666667,0,High Scorers
+Yeung Yang,5,7.4,1.8,1.9473684210526316,0,High Scorers
+Henry Rhodes,6,3.1666666666666665,0.6666666666666666,1.9,1,Mid-Range
+Thomas Nikupala,11,10.727272727272727,1.0,1.710144927536232,0,High Scorers
+Xavier Walker,5,6.8,2.8,1.619047619047619,0,High Scorers
+Alessandro Jaime,6,5.5,1.8333333333333333,1.9411764705882353,0,High Scorers
+Oscar Mudie-Manger,11,14.363636363636363,2.8181818181818183,1.8588235294117648,0,High Scorers
+Kayne Jones,6,5.833333333333333,2.0,2.1875,0,High Scorers
+Oliver Tadic-Harrington,11,12.363636363636363,1.2727272727272727,2.2295081967213113,0,High Scorers
+Hugo Fitzsimons,5,14.0,1.6,1.627906976744186,0,High Scorers
+Eyob Oakey,5,5.0,1.0,2.0833333333333335,1,Mid-Range
+Julian Tran,5,8.2,1.0,1.7826086956521738,1,Mid-Range
+Jack Rujanoski,5,4.8,1.4,2.0,1,Mid-Range
+Dion Dimitropoulos,5,5.8,1.2,1.9333333333333333,1,Mid-Range
+Zach Lance,5,2.0,0.4,2.0,1,Mid-Range
+Jasper McCumber,5,2.2,1.2,1.8333333333333333,1,Mid-Range
+William Wendyono,6,4.166666666666667,2.5,1.7857142857142858,0,High Scorers
+Hugo Gibson,5,9.4,2.0,1.8076923076923077,0,High Scorers
+Joshua Edmunds,5,9.8,1.6,1.8148148148148149,0,High Scorers
+Cedric Vivian,6,1.0,1.6666666666666667,2.0,1,Mid-Range
+Ethan Vogdanos,10,3.9,2.4,2.0526315789473686,0,High Scorers
+Cash Eaton,6,7.333333333333333,0.6666666666666666,1.9130434782608696,1,Mid-Range
+Mason Lee,8,2.875,0.625,2.3,1,Mid-Range
+Matthew He,6,10.166666666666666,0.6666666666666666,1.90625,1,Mid-Range
+Harrison Zhang,5,7.8,1.6,1.95,0,High Scorers
+Finn Ong,6,7.166666666666667,0.8333333333333334,2.15,1,Mid-Range
+Felix Vandeneinden,5,4.6,1.0,2.3,1,Mid-Range
+Jay Prendergast,11,5.636363636363637,1.8181818181818181,1.878787878787879,0,High Scorers
+Cooper Craven,5,5.0,1.2,1.9230769230769231,1,Mid-Range
+Ethan Law,6,5.166666666666667,1.5,1.8235294117647058,1,Mid-Range
+Jordan Percival,9,19.333333333333332,2.0,1.9772727272727273,0,High Scorers
+Declan Perera,6,8.166666666666666,2.1666666666666665,2.0416666666666665,0,High Scorers
+Myles Bishop,10,4.5,1.2,1.875,1,Mid-Range
+Billy Georgiou,6,10.333333333333334,1.5,1.7222222222222223,0,High Scorers
+Lucas Smith,6,10.333333333333334,1.1666666666666667,1.9375,0,High Scorers
+Zachary Drossos,5,5.8,2.4,1.8125,0,High Scorers
+Zach Paporakis,6,1.1666666666666667,1.1666666666666667,2.3333333333333335,1,Mid-Range
+Louis Cagliarini,5,8.4,2.6,2.0,0,High Scorers
+Xavier Kelly,5,12.0,0.8,1.875,0,High Scorers
+Mitchell DeMatos,6,11.333333333333334,0.6666666666666666,1.7,1,Mid-Range
+Jacob Quinlan,10,5.7,1.9,1.8387096774193548,0,High Scorers
+Roman De Leo,5,0.4,1.4,2.0,1,Mid-Range
+Owen Wise,6,9.0,0.8333333333333334,2.076923076923077,1,Mid-Range
+Xavier Yong,9,18.88888888888889,1.3333333333333333,1.9101123595505618,0,High Scorers
+Felix D'Amico,15,9.8,2.0,1.8375,0,High Scorers
+Joshua Dworkin,31,5.064516129032258,3.096774193548387,1.8255813953488371,0,High Scorers
+Hugo Bush,5,2.4,0.8,1.7142857142857142,1,Mid-Range
+Jimmy Teys,6,2.0,0.6666666666666666,2.0,1,Mid-Range
+ANTON ALVIANO,5,11.8,3.8,1.7352941176470589,0,High Scorers
+Kai Moffitt,5,6.2,0.6,2.3846153846153846,1,Mid-Range
+Asher O'Brien,10,14.8,2.2,1.6263736263736264,0,High Scorers
+Hunter Cotterell,5,2.2,1.6,1.2222222222222223,1,Mid-Range
+Benjamin Mason,5,11.6,1.6,2.0714285714285716,0,High Scorers
+Archer Brown,10,2.3,0.6,1.7692307692307692,1,Mid-Range
+Ari Lancaster,5,6.0,2.4,1.7647058823529411,0,High Scorers
+Callum Bailey,5,3.8,0.4,2.375,1,Mid-Range
+Rory Audley,5,6.4,1.6,2.0,0,High Scorers
+Oliver Leworthy,5,4.4,2.8,2.2,0,High Scorers
+Noah Hartman,9,9.11111111111111,3.111111111111111,1.6734693877551021,0,High Scorers
+Archie Ferguson,5,6.6,1.2,1.5714285714285714,1,Mid-Range
+Jude Campbell,5,9.8,3.0,1.8148148148148149,0,High Scorers
+Luka van Riessen,5,0.0,0.2,0.0,2,Low Volume
+Flynn Brockett,5,5.6,1.4,1.75,1,Mid-Range
+Jason Yu,5,7.8,1.0,1.8571428571428572,1,Mid-Range
+Max Rowe,9,2.888888888888889,1.1111111111111112,2.0,1,Mid-Range
+Ethan Fidanza,5,1.6,2.6,2.0,0,High Scorers
+Byron Bond,5,0.8,2.0,2.0,1,Mid-Range
+Ryder Powell,5,6.0,2.0,1.6666666666666667,0,High Scorers
+Junqing Peng,5,4.0,1.8,2.0,1,Mid-Range
+Oliver Saman,9,13.88888888888889,1.5555555555555556,2.0161290322580645,0,High Scorers
+Parker Stefancic,5,0.0,0.8,0.0,2,Low Volume

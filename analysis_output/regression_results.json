@@ -1,0 +1,10 @@
+{
+  "r2": 0.9887,
+  "intercept": -0.6254,
+  "coefficients": {
+    "two_pt_made": 2.3015,
+    "three_pt_made": 3.1494,
+    "games_played": 0.0999
+  },
+  "n_players": 763
+}

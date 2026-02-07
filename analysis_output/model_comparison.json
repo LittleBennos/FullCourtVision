@@ -1,0 +1,23 @@
+{
+  "n_players": 559,
+  "linear_regression": {
+    "test_r2": 0.8826,
+    "test_mae": 1.1251,
+    "cv_r2_mean": 0.8854,
+    "cv_r2_std": 0.025
+  },
+  "random_forest": {
+    "test_r2": 0.9457,
+    "test_mae": 0.7016,
+    "cv_r2_mean": 0.903,
+    "cv_r2_std": 0.0349
+  },
+  "feature_importance": {
+    "two_pt_made": 0.7724,
+    "three_pt_made": 0.1188,
+    "games_played": 0.057,
+    "free_throws_made": 0.0362,
+    "total_fouls": 0.0121,
+    "seasons_played": 0.0035
+  }
+}
