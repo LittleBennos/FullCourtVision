@@ -61,58 +61,6 @@ if page == "Home":
     c5.metric("Seasons", f"{counts['seasons'][0]:,}")
 
     st.divider()
-
-    # ── Featured Player: Joshua Dworkin Career Profile ──
-    st.subheader("⭐ Featured Player: Joshua Dworkin")
-
-    josh_id = "f1fa18fc-a93f-45b9-ac91-f70652744dd7"
-    josh_stats = q("""
-        SELECT ps.team_name, g.name as grade, s.name as season,
-               ps.games_played, ps.total_points, ps.one_point, ps.two_point, ps.three_point,
-               ps.total_fouls, ps.ranking, s.start_date
-        FROM player_stats ps
-        JOIN grades g ON ps.grade_id = g.id
-        JOIN seasons s ON g.season_id = s.id
-        WHERE ps.player_id = ?
-        ORDER BY s.start_date DESC
-    """, [josh_id])
-
-    if not josh_stats.empty:
-        # Career totals
-        tot = josh_stats[['games_played', 'total_points', 'one_point', 'two_point', 'three_point', 'total_fouls']].sum()
-        gp = max(int(tot['games_played']), 1)
-
-        jc1, jc2, jc3, jc4, jc5 = st.columns(5)
-        jc1.metric("Career Games", int(tot['games_played']))
-        jc2.metric("Career Points", int(tot['total_points']))
-        jc3.metric("Career PPG", round(tot['total_points'] / gp, 1))
-        jc4.metric("3-Pointers", int(tot['three_point']))
-        jc5.metric("Career FPG", round(tot['total_fouls'] / gp, 1))
-
-        # Season-by-season table (exclude start_date)
-        display = josh_stats.drop(columns=['start_date'])
-        display['PPG'] = (display['total_points'] / display['games_played'].replace(0, 1)).round(1)
-        st.dataframe(display, use_container_width=True, hide_index=True)
-
-        # Scoring chart by season
-        # Aggregate by season for chart
-        by_season = josh_stats.groupby('season').agg(
-            total_points=('total_points', 'sum'),
-            one_point=('one_point', 'sum'),
-            two_point=('two_point', 'sum'),
-            three_point=('three_point', 'sum'),
-            games_played=('games_played', 'sum'),
-        ).reset_index()
-        fig = px.bar(
-            by_season, x="season", y=["one_point", "two_point", "three_point"],
-            title="Joshua Dworkin — Scoring Breakdown by Season",
-            labels={"value": "Makes", "variable": "Shot Type"},
-            barmode="group",
-        )
-        fig.update_layout(template="plotly_dark")
-        st.plotly_chart(fig, use_container_width=True)
-
-    st.divider()
     st.markdown("Use the sidebar to explore players, teams, leaderboards, competitions, and more.")
 
     # Recent seasons
