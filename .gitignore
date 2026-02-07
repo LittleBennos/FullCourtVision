@@ -5,8 +5,7 @@ __pycache__/
 .venv/
 venv/
 
-# Database (large, tracked via LFS or excluded)
-data/*.db
+# Database journals (main DB is tracked for Streamlit Cloud)
 data/*.db-shm
 data/*.db-wal
 data/*.sqlite
