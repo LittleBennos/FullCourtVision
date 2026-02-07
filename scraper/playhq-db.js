@@ -1,7 +1,7 @@
 const Database = require('better-sqlite3');
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, 'playhq.db');
+const DB_PATH = path.join(__dirname, '..', 'data', 'playhq.db');
 
 function getDb() {
   const db = new Database(DB_PATH);
