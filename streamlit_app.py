@@ -2,6 +2,8 @@
 
 import sqlite3
 import os
+import re
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
@@ -26,7 +28,7 @@ st.sidebar.title("🏀 FullCourtVision")
 page = st.sidebar.radio(
     "Navigate",
     ["Home", "Player Search", "Team Search", "Leaderboards",
-     "Grade Browser", "Player Comparison", "Organisations"],
+     "Grade Browser", "Player Comparison", "Scouting Report", "Organisations"],
 )
 
 st.sidebar.divider()
@@ -361,6 +363,341 @@ elif page == "Player Comparison":
         st.plotly_chart(fig2, use_container_width=True)
     elif player_ids:
         st.info("Enter at least 2 player names to compare.")
+
+# ── SCOUTING REPORT ──
+elif page == "Scouting Report":
+    st.header("📋 Player Scouting Report")
+    search = st.text_input("Enter player name", key="scout_search")
+
+    if search and len(search) >= 2:
+        players = q(
+            "SELECT id, first_name, last_name FROM players WHERE first_name || ' ' || last_name LIKE ? LIMIT 20",
+            [f"%{search}%"],
+        )
+        if players.empty:
+            st.info("No players found.")
+        else:
+            options = {f"{r['first_name']} {r['last_name']}": r['id'] for _, r in players.iterrows()}
+            sel = st.selectbox("Select player", list(options.keys()))
+            pid = options[sel]
+
+            # ── Fetch all stat lines for this player ──
+            stats = q("""
+                SELECT ps.*, g.name as grade, s.name as season, s.start_date
+                FROM player_stats ps
+                JOIN grades g ON ps.grade_id = g.id
+                JOIN seasons s ON g.season_id = s.id
+                WHERE ps.player_id = ?
+                ORDER BY s.start_date
+            """, [pid])
+
+            if stats.empty:
+                st.warning("No stats available for this player.")
+            else:
+                # Extract age group from grade name
+                def extract_age_group(grade_name):
+                    m = re.search(r'(U\d{2})', str(grade_name))
+                    return m.group(1) if m else 'Unknown'
+
+                stats['age_group'] = stats['grade'].apply(extract_age_group)
+
+                # ── HEADER ──
+                pname = sel
+                teams = stats['team_name'].dropna().unique().tolist()
+                total_gp = int(stats['games_played'].sum())
+                total_pts = int(stats['total_points'].sum())
+                total_fouls = int(stats['total_fouls'].sum())
+                total_1pt = int(stats['one_point'].sum())
+                total_2pt = int(stats['two_point'].sum())
+                total_3pt = int(stats['three_point'].sum())
+                ppg = round(total_pts / max(total_gp, 1), 1)
+                fpg = round(total_fouls / max(total_gp, 1), 1)
+                total_fga_3 = total_3pt  # only makes available
+                pct_3 = round(total_3pt / max(total_1pt + total_2pt + total_3pt, 1) * 100, 1)
+
+                st.markdown(f"""
+                <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                            padding: 30px; border-radius: 15px; margin-bottom: 20px; border: 1px solid #e94560;">
+                    <h1 style="color: #e94560; margin:0;">🏀 {pname}</h1>
+                    <p style="color: #a8a8a8; font-size: 1.1em;">Teams: {', '.join(teams)}</p>
+                    <p style="color: #a8a8a8;">Age Groups: {', '.join(sorted(stats['age_group'].unique()))}</p>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # ── Career Stats Summary ──
+                st.subheader("📊 Career Stats Summary")
+                c1, c2, c3, c4, c5 = st.columns(5)
+                c1.metric("GP", total_gp)
+                c2.metric("PPG", ppg)
+                c3.metric("FPG", fpg)
+                c4.metric("3PT Makes", total_3pt)
+                c5.metric("3PT %", f"{pct_3}%")
+
+                st.divider()
+
+                # ── Scoring Style Analysis ──
+                st.subheader("🎯 Scoring Style Analysis")
+                total_makes = total_1pt + total_2pt + total_3pt
+                if total_makes > 0:
+                    pts_from_1 = total_1pt * 1
+                    pts_from_2 = total_2pt * 2
+                    pts_from_3 = total_3pt * 3
+                    total_scored = pts_from_1 + pts_from_2 + pts_from_3
+                    pct1 = round(pts_from_1 / total_scored * 100, 1)
+                    pct2 = round(pts_from_2 / total_scored * 100, 1)
+                    pct3 = round(pts_from_3 / total_scored * 100, 1)
+
+                    col1, col2 = st.columns(2)
+                    with col1:
+                        fig_style = go.Figure(data=[go.Pie(
+                            labels=['Free Throws (1PT)', '2-Pointers', '3-Pointers'],
+                            values=[pts_from_1, pts_from_2, pts_from_3],
+                            hole=0.4,
+                            marker_colors=['#00d2ff', '#e94560', '#ffc300'],
+                            textinfo='label+percent',
+                        )])
+                        fig_style.update_layout(template='plotly_dark', title='Points Distribution by Shot Type',
+                                                showlegend=False, height=350)
+                        st.plotly_chart(fig_style, use_container_width=True)
+                    with col2:
+                        st.markdown(f"""
+                        | Shot Type | Makes | Points | % of Scoring |
+                        |-----------|-------|--------|-------------|
+                        | Free Throws | {total_1pt} | {pts_from_1} | {pct1}% |
+                        | 2-Pointers | {total_2pt} | {pts_from_2} | {pct2}% |
+                        | 3-Pointers | {total_3pt} | {pts_from_3} | {pct3}% |
+                        """)
+
+                st.divider()
+
+                # ── Strengths & Weaknesses (percentile vs age-group peers) ──
+                st.subheader("💪 Strengths & Weaknesses")
+                # Get the most common age group
+                primary_ag = stats['age_group'].mode().iloc[0] if not stats['age_group'].mode().empty else 'Unknown'
+
+                # Get all players' aggregated stats in the same age group
+                peers = q("""
+                    SELECT ps.player_id,
+                           SUM(ps.games_played) as gp,
+                           SUM(ps.total_points) as pts,
+                           SUM(ps.total_fouls) as fouls,
+                           SUM(ps.one_point) as ft,
+                           SUM(ps.two_point) as fg2,
+                           SUM(ps.three_point) as fg3
+                    FROM player_stats ps
+                    JOIN grades g ON ps.grade_id = g.id
+                    WHERE g.name LIKE ?
+                    GROUP BY ps.player_id
+                    HAVING SUM(ps.games_played) >= 3
+                """, [f"%{primary_ag}%"])
+
+                if not peers.empty and len(peers) >= 5:
+                    peers['ppg'] = peers['pts'] / peers['gp'].clip(lower=1)
+                    peers['fpg'] = peers['fouls'] / peers['gp'].clip(lower=1)
+                    peers['fg3pg'] = peers['fg3'] / peers['gp'].clip(lower=1)
+                    peers['fg2pg'] = peers['fg2'] / peers['gp'].clip(lower=1)
+                    peers['ftpg'] = peers['ft'] / peers['gp'].clip(lower=1)
+
+                    player_row = peers[peers['player_id'] == pid]
+                    if not player_row.empty:
+                        pr = player_row.iloc[0]
+                        metrics_list = [
+                            ('Scoring (PPG)', 'ppg'),
+                            ('3PT Shooting', 'fg3pg'),
+                            ('2PT Scoring', 'fg2pg'),
+                            ('Free Throws', 'ftpg'),
+                            ('Games Played', 'gp'),
+                        ]
+                        # Low fouls is good, so invert
+                        percentiles = {}
+                        strengths = []
+                        weaknesses = []
+                        for label, col in metrics_list:
+                            pctile = round((peers[col] < pr[col]).mean() * 100)
+                            percentiles[label] = pctile
+                            if pctile >= 75:
+                                strengths.append(f"**{label}** — {pctile}th percentile")
+                            elif pctile <= 25:
+                                weaknesses.append(f"**{label}** — {pctile}th percentile")
+
+                        # Discipline (low fouls = good)
+                        foul_pctile = round((peers['fpg'] > pr['fpg']).mean() * 100)
+                        percentiles['Discipline'] = foul_pctile
+                        if foul_pctile >= 75:
+                            strengths.append(f"**Discipline** — {foul_pctile}th percentile (low fouls)")
+                        elif foul_pctile <= 25:
+                            weaknesses.append(f"**Discipline** — {foul_pctile}th percentile (high fouls)")
+
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            st.markdown("##### ✅ Strengths")
+                            if strengths:
+                                for s in strengths:
+                                    st.markdown(f"- {s}")
+                            else:
+                                st.markdown("_No standout strengths (all metrics 25th-75th percentile)_")
+                        with col2:
+                            st.markdown("##### ⚠️ Areas for Improvement")
+                            if weaknesses:
+                                for w in weaknesses:
+                                    st.markdown(f"- {w}")
+                            else:
+                                st.markdown("_No major weaknesses identified_")
+
+                        st.caption(f"Compared to {len(peers)} peers in {primary_ag} (min 3 GP)")
+
+                        st.divider()
+
+                        # ── Radar Chart vs Age-Group Average ──
+                        st.subheader("📡 Radar: Player vs Age-Group Average")
+                        radar_metrics = ['Scoring (PPG)', '3PT Shooting', '2PT Scoring', 'Free Throws', 'Games Played', 'Discipline']
+                        radar_cols = ['ppg', 'fg3pg', 'fg2pg', 'ftpg', 'gp', None]
+
+                        player_vals = []
+                        avg_vals = []
+                        for label, col in zip(radar_metrics, radar_cols):
+                            if col:
+                                pv = float(pr[col])
+                                av = float(peers[col].mean())
+                            else:
+                                # Discipline: invert fouls
+                                max_fpg = peers['fpg'].max() if peers['fpg'].max() > 0 else 1
+                                pv = max_fpg - float(pr['fpg'])
+                                av = max_fpg - float(peers['fpg'].mean())
+                            player_vals.append(pv)
+                            avg_vals.append(av)
+
+                        # Normalize to 0-100 scale for radar
+                        maxes = [max(pv, av, 0.001) for pv, av in zip(player_vals, avg_vals)]
+                        # Use peer max for normalization
+                        for i, (label, col) in enumerate(zip(radar_metrics, radar_cols)):
+                            if col:
+                                peer_max = float(peers[col].max()) if peers[col].max() > 0 else 1
+                            else:
+                                peer_max = float(peers['fpg'].max()) if peers['fpg'].max() > 0 else 1
+                            maxes[i] = peer_max
+
+                        p_norm = [round(v / m * 100, 1) if m > 0 else 0 for v, m in zip(player_vals, maxes)]
+                        a_norm = [round(v / m * 100, 1) if m > 0 else 0 for v, m in zip(avg_vals, maxes)]
+
+                        fig_radar = go.Figure()
+                        fig_radar.add_trace(go.Scatterpolar(
+                            r=p_norm + [p_norm[0]], theta=radar_metrics + [radar_metrics[0]],
+                            fill='toself', name=pname, line_color='#e94560', fillcolor='rgba(233,69,96,0.3)'
+                        ))
+                        fig_radar.add_trace(go.Scatterpolar(
+                            r=a_norm + [a_norm[0]], theta=radar_metrics + [radar_metrics[0]],
+                            fill='toself', name=f'{primary_ag} Average', line_color='#00d2ff', fillcolor='rgba(0,210,255,0.15)'
+                        ))
+                        fig_radar.update_layout(
+                            template='plotly_dark', height=450,
+                            polar=dict(radialaxis=dict(visible=True, range=[0, 100])),
+                            title=f'{pname} vs {primary_ag} Average'
+                        )
+                        st.plotly_chart(fig_radar, use_container_width=True)
+                    else:
+                        st.info(f"Player not found in {primary_ag} peer group.")
+                else:
+                    st.info("Not enough peers for percentile comparison.")
+
+                st.divider()
+
+                # ── Season-over-Season Trend ──
+                st.subheader("📈 Season-over-Season Trend")
+                season_agg = stats.groupby(['season', 'start_date']).agg({
+                    'games_played': 'sum', 'total_points': 'sum', 'total_fouls': 'sum',
+                    'one_point': 'sum', 'two_point': 'sum', 'three_point': 'sum'
+                }).reset_index().sort_values('start_date')
+
+                if len(season_agg) >= 2:
+                    season_agg['PPG'] = (season_agg['total_points'] / season_agg['games_played'].clip(lower=1)).round(1)
+                    season_agg['FPG'] = (season_agg['total_fouls'] / season_agg['games_played'].clip(lower=1)).round(1)
+                    season_agg['3PT/G'] = (season_agg['three_point'] / season_agg['games_played'].clip(lower=1)).round(1)
+
+                    # Determine trend
+                    ppg_vals = season_agg['PPG'].values
+                    if len(ppg_vals) >= 2:
+                        slope = np.polyfit(range(len(ppg_vals)), ppg_vals, 1)[0]
+                        if slope > 0.5:
+                            trend = "📈 **IMPROVING** — PPG trending upward"
+                            trend_color = "green"
+                        elif slope < -0.5:
+                            trend = "📉 **DECLINING** — PPG trending downward"
+                            trend_color = "red"
+                        else:
+                            trend = "➡️ **STABLE** — Consistent performance"
+                            trend_color = "orange"
+                        st.markdown(f":{trend_color}[{trend}]")
+
+                    fig_trend = go.Figure()
+                    fig_trend.add_trace(go.Scatter(x=season_agg['season'], y=season_agg['PPG'],
+                                                   mode='lines+markers', name='PPG', line=dict(color='#e94560', width=3)))
+                    fig_trend.add_trace(go.Scatter(x=season_agg['season'], y=season_agg['3PT/G'],
+                                                   mode='lines+markers', name='3PT/G', line=dict(color='#ffc300', width=2)))
+                    fig_trend.add_trace(go.Scatter(x=season_agg['season'], y=season_agg['FPG'],
+                                                   mode='lines+markers', name='FPG', line=dict(color='#00d2ff', width=2, dash='dot')))
+                    fig_trend.update_layout(template='plotly_dark', title='Performance Trend', height=350)
+                    st.plotly_chart(fig_trend, use_container_width=True)
+
+                    st.dataframe(season_agg[['season', 'games_played', 'total_points', 'PPG', 'FPG', '3PT/G']],
+                                 use_container_width=True, hide_index=True)
+                else:
+                    st.info("Only one season of data — need multiple seasons for trend analysis.")
+
+                st.divider()
+
+                # ── Similar Players (Cosine Similarity) ──
+                st.subheader("👥 Similar Players")
+                if not peers.empty and len(peers) >= 5:
+                    from numpy.linalg import norm
+
+                    feature_cols = ['ppg', 'fg3pg', 'fg2pg', 'ftpg', 'fpg']
+                    # Ensure we have these columns
+                    peer_features = peers[feature_cols].values
+                    player_idx = peers.index[peers['player_id'] == pid]
+
+                    if len(player_idx) > 0:
+                        player_vec = peer_features[player_idx[0]]
+                        # Compute cosine similarity
+                        similarities = []
+                        for i, vec in enumerate(peer_features):
+                            if i == player_idx[0]:
+                                continue
+                            n1, n2 = norm(player_vec), norm(vec)
+                            if n1 > 0 and n2 > 0:
+                                sim = np.dot(player_vec, vec) / (n1 * n2)
+                            else:
+                                sim = 0
+                            similarities.append((i, sim))
+
+                        similarities.sort(key=lambda x: x[1], reverse=True)
+                        top5 = similarities[:5]
+
+                        # Fetch names
+                        sim_ids = [peers.iloc[i]['player_id'] for i, _ in top5]
+                        sim_names = q(
+                            f"SELECT id, first_name || ' ' || last_name as name FROM players WHERE id IN ({','.join(['?']*len(sim_ids))})",
+                            sim_ids
+                        )
+                        name_map = dict(zip(sim_names['id'], sim_names['name']))
+
+                        sim_data = []
+                        for i, sim_score in top5:
+                            row = peers.iloc[i]
+                            sim_data.append({
+                                'Player': name_map.get(row['player_id'], 'Unknown'),
+                                'Similarity': f"{sim_score:.1%}",
+                                'GP': int(row['gp']),
+                                'PPG': round(row['ppg'], 1),
+                                '3PT/G': round(row['fg3pg'], 1),
+                                'FPG': round(row['fpg'], 1),
+                            })
+
+                        st.dataframe(pd.DataFrame(sim_data), use_container_width=True, hide_index=True)
+                    else:
+                        st.info("Could not compute similarity — player not in peer group.")
+                else:
+                    st.info("Not enough peers for similarity analysis.")
 
 # ── ORGANISATIONS ──
 elif page == "Organisations":
