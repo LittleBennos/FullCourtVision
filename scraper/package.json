@@ -1,0 +1,19 @@
+{
+  "name": "openhoops-scraper",
+  "version": "1.0.0",
+  "description": "PlayHQ basketball data scraper",
+  "main": "playhq-scraper.js",
+  "scripts": {
+    "scrape:orgs": "node playhq-scraper.js orgs",
+    "scrape:assoc": "node playhq-scraper.js assoc",
+    "scrape:joshua": "node playhq-joshua-fast.js",
+    "stats": "node playhq-scraper.js stats"
+  },
+  "keywords": ["basketball", "playhq", "scraper", "analytics"],
+  "author": "LittleBennos",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^11.0.0"
+  }
+}
