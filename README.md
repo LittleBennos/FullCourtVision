@@ -1,6 +1,8 @@
-# OpenHoops 🏀
+# FullCourtVision 🏀
 
 A data analytics platform for Australian community basketball, powered by PlayHQ data.
+
+> *Full court vision* — the ability to see everything happening on the court. That's what we do with data.
 
 ## What it does
 
@@ -12,7 +14,7 @@ A data analytics platform for Australian community basketball, powered by PlayHQ
 ## Project Structure
 
 ```
-OpenHoops/
+FullCourtVision/
 ├── scraper/          # PlayHQ GraphQL scraper
 │   ├── playhq-db.js      # Database schema & helpers
 │   ├── playhq-scraper.js  # Main scraper engine
@@ -70,8 +72,8 @@ No authentication required — just a `tenant` header (e.g., `basketball-victori
 
 ```bash
 # Clone
-git clone git@github.com:LittleBennos/OpenHoops.git
-cd OpenHoops
+git clone git@github.com:LittleBennos/FullCourtVision.git
+cd FullCourtVision
 
 # Install scraper dependencies
 cd scraper

@@ -1,5 +1,5 @@
 {
-  "name": "openhoops-scraper",
+  "name": "fullcourtvision-scraper",
   "version": "1.0.0",
   "description": "PlayHQ basketball data scraper",
   "main": "playhq-scraper.js",
