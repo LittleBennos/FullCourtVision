@@ -221,23 +221,33 @@ async function main() {
         const progress = `[${i + 1}/${grades.length}]`;
         process.stdout.write(`  ${progress} ${grade.name}... `);
 
-        try {
-          const playerCount = await scrapePlayerStats(database, grade.id);
-          const gameCount = await scrapeFixtures(database, grade.id);
+        let retries = 0;
+        while (retries < 3) {
+          try {
+            const playerCount = await scrapePlayerStats(database, grade.id);
+            const gameCount = await scrapeFixtures(database, grade.id);
 
-          logScrapeResult(database, grade.id, true);
+            logScrapeResult(database, grade.id, true);
 
-          seasonPlayers += playerCount;
-          seasonGames += gameCount;
-          seasonGradesCompleted++;
-          totalPlayersScraped += playerCount;
-          totalGamesScraped += gameCount;
-          totalGradesScraped++;
+            seasonPlayers += playerCount;
+            seasonGames += gameCount;
+            seasonGradesCompleted++;
+            totalPlayersScraped += playerCount;
+            totalGamesScraped += gameCount;
+            totalGradesScraped++;
 
-          console.log(`${playerCount} players, ${gameCount} games ✓`);
-        } catch (err) {
-          logScrapeResult(database, grade.id, false, err.message);
-          console.log(`ERROR: ${err.message}`);
+            console.log(`${playerCount} players, ${gameCount} games ✓`);
+            break;
+          } catch (err) {
+            retries++;
+            if (retries >= 3) {
+              logScrapeResult(database, grade.id, false, err.message);
+              console.log(`ERROR (after 3 retries): ${err.message}`);
+            } else {
+              console.log(`RETRY ${retries}/3: ${err.message}`);
+              await sleep(2000 * retries);
+            }
+          }
         }
 
         // Rate limit: small pause between grades
