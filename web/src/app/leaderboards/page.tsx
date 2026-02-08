@@ -6,7 +6,7 @@ export const metadata = {
   description: "Top scorers, most games played, and statistical leaders across all Victorian basketball competitions.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 type Props = {
   searchParams: Promise<{ season?: string }>;

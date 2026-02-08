@@ -1,9 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { ComponentType } from "react";
-
-const COLORS = ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
 
 function ChartSkeleton() {
   return (
@@ -16,7 +13,7 @@ function ChartSkeleton() {
   );
 }
 
-// Lazy-loaded internal components
+// Lazy-loaded Recharts components — keeps them out of the main bundle
 const ScoringTrendChartInner = dynamic(
   () => import("./charts-inner").then((m) => m.ScoringTrendChart),
   { loading: () => <ChartSkeleton />, ssr: false }

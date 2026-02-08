@@ -3,7 +3,7 @@ import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "luci
 import { StatCard } from "@/components/stat-card";
 import { getStats } from "@/lib/data";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600; // Revalidate every hour
 
 export default async function Home() {
   const stats = await getStats();

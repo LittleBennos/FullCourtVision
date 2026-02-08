@@ -11,7 +11,7 @@ export const metadata = {
   description: "Browse 57,000+ basketball players across Victoria. Search by name, view career stats and performance trends.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function PlayersPage() {
   // Just get the count for the header — table handles its own data fetching

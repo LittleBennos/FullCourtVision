@@ -1,10 +1,6 @@
 import { getPlayerDetails, getAvailableSeasons } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
-import dynamic from "next/dynamic";
-const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(m => m.PlayerTrendsChart), {
-  loading: () => <div className="h-96 bg-card rounded-xl border border-border animate-pulse" />,
-  ssr: false,
-});
+import { PlayerTrendsChart } from "@/components/player-trends-chart";
 import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 
@@ -40,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export const dynamic = "force-dynamic";
+export const revalidate = 1800; // 30 minutes
 
 export default async function PlayerDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

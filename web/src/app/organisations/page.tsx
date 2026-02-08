@@ -6,7 +6,7 @@ export const metadata = {
   description: "Browse all basketball organisations across Victoria, Australia. View teams, players, and club statistics.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function OrganisationsPage() {
   const organisations = await getOrganisations();

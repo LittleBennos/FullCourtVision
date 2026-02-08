@@ -6,7 +6,7 @@ export const metadata = {
   description: "Players with the biggest PPG improvement between their most recent and previous seasons in Victorian basketball.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function RisingStarsPage() {
   const risingStars = await getRisingStars();

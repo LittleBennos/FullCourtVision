@@ -6,7 +6,7 @@ export const metadata = {
   description: "Browse all basketball teams across Victoria. View records, rosters, and statistics.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function TeamsPage() {
   const teams = await getTeams();

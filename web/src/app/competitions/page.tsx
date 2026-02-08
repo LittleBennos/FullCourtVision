@@ -6,7 +6,7 @@ export const metadata = {
   description: "Browse all basketball competitions across Victoria, Australia. Filter by season and view grades.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 export default async function CompetitionsPage() {
   const [competitions, seasons] = await Promise.all([getCompetitions(), getSeasons()]);
