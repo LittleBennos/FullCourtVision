@@ -263,6 +263,84 @@ export async function getTeamById(id: string): Promise<Team | null> {
   };
 }
 
+export type TeamPlayer = {
+  id: string;
+  first_name: string;
+  last_name: string;
+  games_played: number;
+  total_points: number;
+  ppg: number;
+  one_point: number;
+  two_point: number;
+  three_point: number;
+  total_fouls: number;
+};
+
+export async function getTeamPlayers(teamId: string): Promise<TeamPlayer[]> {
+  // Get the team to find its season
+  const { data: team } = await supabase
+    .from("teams")
+    .select("id, name, season_id")
+    .eq("id", teamId)
+    .single();
+
+  if (!team) return [];
+
+  // Get grades for this team's season
+  const { data: grades } = await supabase
+    .from("grades")
+    .select("id")
+    .eq("season_id", team.season_id);
+
+  if (!grades || grades.length === 0) return [];
+
+  const gradeIds = grades.map(g => g.id);
+
+  // Get player_stats matching this team name and grades
+  const { data: stats } = await supabase
+    .from("player_stats")
+    .select(`
+      player_id, games_played, total_points, one_point, two_point, three_point, total_fouls,
+      players!inner(first_name, last_name)
+    `)
+    .eq("team_name", team.name)
+    .in("grade_id", gradeIds);
+
+  if (!stats) return [];
+
+  // Aggregate by player (in case of multiple grade entries)
+  const playerMap = new Map<string, TeamPlayer>();
+  for (const s of stats) {
+    const pid = s.player_id;
+    const existing = playerMap.get(pid);
+    if (existing) {
+      existing.games_played += s.games_played || 0;
+      existing.total_points += s.total_points || 0;
+      existing.one_point += s.one_point || 0;
+      existing.two_point += s.two_point || 0;
+      existing.three_point += s.three_point || 0;
+      existing.total_fouls += s.total_fouls || 0;
+    } else {
+      playerMap.set(pid, {
+        id: pid,
+        first_name: (s.players as any)?.first_name || '',
+        last_name: (s.players as any)?.last_name || '',
+        games_played: s.games_played || 0,
+        total_points: s.total_points || 0,
+        one_point: s.one_point || 0,
+        two_point: s.two_point || 0,
+        three_point: s.three_point || 0,
+        total_fouls: s.total_fouls || 0,
+        ppg: 0,
+      });
+    }
+  }
+
+  return Array.from(playerMap.values())
+    .map(p => ({ ...p, ppg: p.games_played > 0 ? +(p.total_points / p.games_played).toFixed(1) : 0 }))
+    .sort((a, b) => b.total_points - a.total_points);
+}
+
 export async function getOrganisations(): Promise<Organisation[]> {
   const { data } = await supabase
     .from("organisations")
