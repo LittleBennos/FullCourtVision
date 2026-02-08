@@ -1,15 +1,10 @@
 import Link from "next/link";
 import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "lucide-react";
 import { StatCard } from "@/components/stat-card";
-import { getStats, getFeaturedPlayer } from "@/lib/data";
+import { getStats } from "@/lib/data";
 
 export default function Home() {
   const stats = getStats();
-  const featured = getFeaturedPlayer();
-  const fp = featured.player;
-  const totalGames = featured.stats.reduce((s, st) => s + (st.games_played || 0), 0);
-  const totalPoints = featured.stats.reduce((s, st) => s + (st.total_points || 0), 0);
-  const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
 
   return (
     <div>
@@ -57,44 +52,6 @@ export default function Home() {
           <StatCard label="Games" value={stats.games} icon={Gamepad2} />
           <StatCard label="Organisations" value={stats.organisations} icon={Building2} />
           <StatCard label="Competitions" value={stats.competitions} icon={Trophy} />
-        </div>
-      </section>
-
-      {/* Featured Player */}
-      <section className="max-w-7xl mx-auto px-4 mb-16">
-        <h2 className="text-2xl font-bold mb-6">Featured Player</h2>
-        <div className="bg-card rounded-xl border border-border p-6 md:p-8">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div>
-              <p className="text-sm text-accent font-medium mb-1">SPOTLIGHT</p>
-              <h3 className="text-3xl font-bold mb-2">{fp.first_name} {fp.last_name}</h3>
-              <p className="text-muted-foreground">
-                {featured.stats.length} season{featured.stats.length !== 1 ? "s" : ""} tracked
-              </p>
-            </div>
-            <div className="flex gap-8">
-              <div className="text-center">
-                <p className="text-3xl font-bold text-accent">{ppg}</p>
-                <p className="text-sm text-muted-foreground">PPG</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold">{totalPoints}</p>
-                <p className="text-sm text-muted-foreground">Total Pts</p>
-              </div>
-              <div className="text-center">
-                <p className="text-3xl font-bold">{totalGames}</p>
-                <p className="text-sm text-muted-foreground">Games</p>
-              </div>
-            </div>
-          </div>
-          <div className="mt-6">
-            <Link
-              href={`/players/${fp.id}`}
-              className="inline-flex items-center gap-2 text-accent hover:underline font-medium"
-            >
-              View Full Profile <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
         </div>
       </section>
 
