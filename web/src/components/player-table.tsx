@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useMemo } from "react";
-import { Search, ChevronUp, ChevronDown, ChevronsUpDown } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { Search, ChevronUp, ChevronDown, ChevronsUpDown, Loader2 } from "lucide-react";
 
 type Player = {
   id: string;
@@ -15,34 +15,52 @@ type Player = {
 
 type SortKey = "last_name" | "total_games" | "total_points" | "ppg";
 
-export function PlayerTable({ players, limit }: { players: Player[]; limit?: number }) {
+export function PlayerTable({ initialPlayers, initialTotal }: { initialPlayers?: Player[]; initialTotal?: number }) {
+  const [players, setPlayers] = useState<Player[]>(initialPlayers || []);
+  const [total, setTotal] = useState(initialTotal || 0);
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("total_points");
   const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
   const [page, setPage] = useState(0);
-  const perPage = limit || 25;
+  const [loading, setLoading] = useState(!initialPlayers);
+  const perPage = 25;
 
-  const filtered = useMemo(() => {
-    const q = query.toLowerCase();
-    let result = players.filter(
-      (p) =>
-        p.first_name.toLowerCase().includes(q) ||
-        p.last_name.toLowerCase().includes(q) ||
-        `${p.first_name} ${p.last_name}`.toLowerCase().includes(q)
-    );
-    result.sort((a, b) => {
-      const av = a[sortKey] ?? 0;
-      const bv = b[sortKey] ?? 0;
-      if (typeof av === "string" && typeof bv === "string") {
-        return sortDir === "asc" ? av.localeCompare(bv) : bv.localeCompare(av);
-      }
-      return sortDir === "asc" ? (av as number) - (bv as number) : (bv as number) - (av as number);
-    });
-    return result;
-  }, [players, query, sortKey, sortDir]);
+  const fetchPlayers = useCallback(async () => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        perPage: perPage.toString(),
+        search: query,
+        sortBy: sortKey,
+        sortDir: sortDir,
+      });
+      const res = await fetch(`/api/players?${params}`);
+      const data = await res.json();
+      setPlayers(data.players);
+      setTotal(data.total);
+    } catch (e) {
+      console.error("Failed to fetch players", e);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, query, sortKey, sortDir]);
 
-  const totalPages = Math.ceil(filtered.length / perPage);
-  const paged = filtered.slice(page * perPage, (page + 1) * perPage);
+  useEffect(() => {
+    fetchPlayers();
+  }, [fetchPlayers]);
+
+  // Debounce search
+  const [searchInput, setSearchInput] = useState("");
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setQuery(searchInput);
+      setPage(0);
+    }, 300);
+    return () => clearTimeout(t);
+  }, [searchInput]);
+
+  const totalPages = Math.ceil(total / perPage);
 
   function toggleSort(key: SortKey) {
     if (sortKey === key) {
@@ -66,13 +84,20 @@ export function PlayerTable({ players, limit }: { players: Player[]; limit?: num
         <input
           type="text"
           placeholder="Search players..."
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setPage(0); }}
+          value={searchInput}
+          onChange={(e) => setSearchInput(e.target.value)}
           className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
         />
       </div>
-      <div className="text-xs text-muted-foreground mb-2">{filtered.length.toLocaleString()} players</div>
-      <div className="overflow-x-auto rounded-xl border border-border">
+      <div className="text-xs text-muted-foreground mb-2">
+        {loading ? "Loading..." : `${total.toLocaleString()} players`}
+      </div>
+      <div className="overflow-x-auto rounded-xl border border-border relative">
+        {loading && (
+          <div className="absolute inset-0 bg-background/50 flex items-center justify-center z-10">
+            <Loader2 className="w-6 h-6 animate-spin text-accent" />
+          </div>
+        )}
         <table className="w-full text-sm">
           <thead className="bg-muted/50">
             <tr>
@@ -92,7 +117,7 @@ export function PlayerTable({ players, limit }: { players: Player[]; limit?: num
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {paged.map((p, i) => (
+            {players.map((p, i) => (
               <tr key={p.id} className="hover:bg-muted/30 transition-colors">
                 <td className="px-4 py-3 text-muted-foreground">{page * perPage + i + 1}</td>
                 <td className="px-4 py-3">
@@ -105,6 +130,9 @@ export function PlayerTable({ players, limit }: { players: Player[]; limit?: num
                 <td className="px-4 py-3 text-right tabular-nums font-semibold">{p.ppg}</td>
               </tr>
             ))}
+            {!loading && players.length === 0 && (
+              <tr><td colSpan={5} className="px-4 py-8 text-center text-muted-foreground">No players found</td></tr>
+            )}
           </tbody>
         </table>
       </div>
@@ -118,7 +146,7 @@ export function PlayerTable({ players, limit }: { players: Player[]; limit?: num
             Previous
           </button>
           <span className="text-sm text-muted-foreground">
-            Page {page + 1} of {totalPages}
+            Page {page + 1} of {totalPages.toLocaleString()}
           </span>
           <button
             disabled={page >= totalPages - 1}
