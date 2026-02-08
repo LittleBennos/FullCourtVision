@@ -1,176 +1,208 @@
-<p align="center">
-  <img src="https://img.shields.io/badge/🏀-FullCourtVision-orange?style=for-the-badge&labelColor=000" alt="FullCourtVision" />
-</p>
+# 🏀 FullCourtVision
 
-<h1 align="center">FullCourtVision</h1>
-<h3 align="center">Victorian Basketball Analytics</h3>
+**The most comprehensive Victorian basketball analytics platform.**
 
-<p align="center">
-  <em>Full court vision — the ability to see everything happening on the court. We do it with data.</em>
-</p>
+Tracking **58,000+ players**, **380,000+ stat lines**, and **90,000+ games** scraped from PlayHQ — all searchable, visualised, and available via a public API.
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white" />
-  <img src="https://img.shields.io/badge/Node.js-Scraper-339933?logo=nodedotjs&logoColor=white" />
-  <img src="https://img.shields.io/badge/SQLite-44MB-003B57?logo=sqlite&logoColor=white" />
-  <img src="https://img.shields.io/badge/Streamlit-Dashboard-FF4B4B?logo=streamlit&logoColor=white" />
-  <img src="https://img.shields.io/badge/License-MIT-green" />
-  <img src="https://img.shields.io/badge/Last%20Updated-February%202025-blue" />
-</p>
-
-<p align="center">
-  <strong>Tracking 31K+ players across 52K+ games with 235K+ stat lines from 887 organisations in Victorian basketball</strong>
-</p>
-
----
-
-## 📖 What Is This?
-
-FullCourtVision is a data science portfolio project that **reverse-engineers PlayHQ's GraphQL API** to build the most comprehensive analytics platform for Victorian community basketball.
-
-The pipeline scrapes player statistics, game results, team rosters, and organisational data from Basketball Victoria's PlayHQ platform — covering everything from Under-9s through to Senior competitions across 887 registered organisations.
-
-The data feeds into a **SQLite database**, a **Python analysis pipeline** (regression, clustering, random forest), and an **interactive Streamlit dashboard** for exploration.
-
----
-
-## 📸 Analysis Output
-
-<p align="center">
-  <img src="analysis_output/descriptive_overview.png" width="45%" alt="Descriptive Overview" />
-  <img src="analysis_output/regression_analysis.png" width="45%" alt="Regression Analysis" />
-</p>
-<p align="center">
-  <img src="analysis_output/clustering_analysis.png" width="45%" alt="Player Clustering" />
-  <img src="analysis_output/model_comparison.png" width="45%" alt="Model Comparison" />
-</p>
-<p align="center">
-  <img src="analysis_output/age_group_benchmarks.png" width="45%" alt="Age Group Benchmarks" />
-  <img src="analysis_output/player_development.png" width="45%" alt="Player Development" />
-</p>
+🔗 **[fullcourtvision.vercel.app](https://fullcourtvision.vercel.app)**
 
 ---
 
 ## ✨ Features
 
 | Feature | Description |
-|---------|-------------|
-| **Player Search** | Find any player across 31K+ profiles and view full stat lines |
-| **Team Analysis** | Compare team performance across thousands of teams and grades |
-| **Leaderboards** | Top scorers, 3PT leaders, and efficiency rankings by age group |
-| **Player Comparison** | Side-by-side comparison of any two players |
-| **Scouting Reports** | In-depth player scouting reports with strengths, weaknesses, and projections |
-| **Player Archetypes** | K-Means clustering to identify distinct player archetypes |
-| **Organisation Directory** | Browse 887 basketball organisations across Victoria |
-| **Game Predictor** | Random Forest model to predict matchup outcomes with win probabilities |
-| **Featured Player** | Joshua Dworkin spotlight with full career breakdown and trend analysis |
-| **ML Models** | Linear Regression, Random Forest, K-Means Clustering, XGBoost |
-| **Age Group Benchmarks** | Percentile rankings — what's "good" for U12 vs U16? |
+|---|---|
+| **Player Profiles** | Career stats, season-by-season breakdowns, and trend charts for every player |
+| **Team Pages** | Rosters, win/loss records, and team performance summaries |
+| **Organisation Pages** | Browse all clubs and associations across Victoria |
+| **Leaderboards** | Top players by PPG, total points, games played, three-pointers, and more |
+| **Rising Stars** | Surface breakout players with the biggest stat jumps |
+| **Scoring Heatmap** | Visual heatmap of scoring output across competitions |
+| **Player Comparison** | Side-by-side stat comparison between any two players |
+| **Unified Search** | Instant search across players, teams, and organisations |
+| **Grade Pages** | Drill into specific competition grades and divisions |
+| **Trend Charts** | Recharts-powered interactive visualisations of stat trends over time |
+| **Public API** | 8 RESTful JSON endpoints for programmatic access |
 
 ---
 
-## 📓 Notebooks
+## 🛠 Tech Stack
 
-Seven Jupyter notebooks covering the full analytical journey:
+| Layer | Technology |
+|---|---|
+| **Framework** | [Next.js 16](https://nextjs.org/) (React 19, App Router) |
+| **Database** | [Supabase](https://supabase.com/) (PostgreSQL) |
+| **Styling** | [Tailwind CSS 4](https://tailwindcss.com/) |
+| **Charts** | [Recharts 3](https://recharts.org/) |
+| **Icons** | [Lucide React](https://lucide.dev/) |
+| **Testing** | [Playwright](https://playwright.dev/) (E2E) · [Vitest](https://vitest.dev/) (Unit) |
+| **Scraping** | Node.js + PlayHQ GraphQL API |
+| **Analysis** | Python · scikit-learn · Streamlit |
+| **Hosting** | [Vercel](https://vercel.com/) |
 
-| # | Notebook | Description |
-|---|----------|-------------|
-| 01 | [Exploratory Analysis](notebooks/01_exploratory_analysis.ipynb) | Initial data exploration — distributions, missing data, summary statistics across 31K+ players |
-| 02 | [Player Development](notebooks/02_player_development.ipynb) | Tracking player growth over time — season-over-season progression and development curves |
-| 03 | [Predictive Modeling](notebooks/03_predictive_modeling.ipynb) | Regression and classification models to predict player performance |
-| 04 | [Team & Venue Analysis](notebooks/04_team_and_venue_analysis.ipynb) | Team-level analytics and home/away venue effects on performance |
-| 05 | [Advanced ML](notebooks/05_advanced_ml.ipynb) | Advanced machine learning — XGBoost, feature importance, hyperparameter tuning |
-| 06 | [Player Case Study](notebooks/06_player_case_study.ipynb) | Deep-dive case study tracking a single player's development journey |
-| 07 | [Player Comparison](notebooks/07_player_comparison.ipynb) | Head-to-head player comparison framework with percentile overlays |
+---
+
+## 📡 API Reference
+
+Base URL: `https://fullcourtvision.vercel.app/api`
+
+All endpoints return JSON with CORS enabled.
+
+| Endpoint | Description | Key Params |
+|---|---|---|
+| `GET /api` | API index & documentation | — |
+| `GET /api/players` | Search and list players | `search`, `limit` (max 100), `offset` |
+| `GET /api/players/:id` | Player profile with career stats | — |
+| `GET /api/players/:id/stats` | Season-by-season detailed stats | — |
+| `GET /api/teams` | Search and list teams | `search`, `org`, `limit` |
+| `GET /api/teams/:id` | Team details with roster and record | — |
+| `GET /api/leaderboards` | Top players by stat category | `stat` (ppg\|points\|games\|threes), `season`, `limit` |
+| `GET /api/organisations` | List all organisations | — |
+| `GET /api/search` | Unified search across all entities | `q` (min 2 chars), `limit` (max 20) |
+
+### Example
+
+```bash
+# Search for a player
+curl "https://fullcourtvision.vercel.app/api/players?search=smith&limit=5"
+
+# Get leaderboard
+curl "https://fullcourtvision.vercel.app/api/leaderboards?stat=ppg&limit=10"
+```
 
 ---
 
 ## 🔄 Data Pipeline
 
 ```
-PlayHQ GraphQL API          Node.js Scraper          SQLite Database
-┌─────────────────┐    ┌─────────────────────┐    ┌──────────────────┐
-│ discoverOrgs     │───▶│ playhq-scraper.js   │───▶│ playhq.db (44MB) │
-│ discoverSeasons  │    │ victoria-wide-scrape │    │ 10 tables        │
-│ gradePlayerStats │    │ better-sqlite3       │    │ 235K+ stat lines │
-│ discoverFixture  │    └─────────────────────┘    └────────┬─────────┘
-└─────────────────┘                                         │
-                                                            ▼
-                                              Python Analysis Pipeline
-                                         ┌──────────────────────────────┐
-                                         │ pandas · scikit-learn · scipy │
-                                         │ matplotlib · seaborn · plotly │
-                                         └──────────────┬───────────────┘
-                                                        ▼
-                                              Streamlit Dashboard
-                                         ┌──────────────────────────────┐
-                                         │ Interactive exploration       │
-                                         │ Charts · Tables · Comparisons │
-                                         │ Scouting Reports · Archetypes │
-                                         └──────────────────────────────┘
+PlayHQ GraphQL API  →  Node.js Scraper  →  SQLite  →  Supabase (PostgreSQL)
 ```
 
-**Flow:** The Node.js scraper hits PlayHQ's public GraphQL API (no auth required, just a `tenant: basketball-victoria` header), paginates through organisations → competitions → seasons → grades → player stats, and writes everything to SQLite. Python reads the database, runs statistical models, and generates visualisations. Streamlit serves it all as an interactive web app.
+### Scraper (`/scraper`)
+
+The data pipeline scrapes the PlayHQ GraphQL API to collect player stats, team rosters, game results, and organisation data across Victorian basketball competitions.
+
+- **`playhq-scraper.js`** — Core scraper with GraphQL query logic
+- **`playhq-db.js`** — SQLite database layer for local storage
+- **`victoria-wide-scrape.js`** — Full Victoria-wide data collection
+- **`edjba-full-scrape.js`** — EDJBA-specific deep scrape
+- **`edjba-fixtures-scrape.js`** — Fixtures and schedule data
+
+### Export (`/scripts`)
+
+Export scripts transform and load data from local SQLite into Supabase:
+
+- **`export_for_web.py`** — Main export pipeline: SQLite → Supabase
+- **`export_data.py`** — Supplementary data export utilities
 
 ---
 
-## 🏆 Key Findings
+## 📊 Analysis (`/analysis`)
 
-| Stat | Value |
-|------|-------|
-| **Total players tracked** | 31,000+ |
-| **Total stat lines** | 235,000+ individual player-grade records |
-| **Total games** | 52,000+ |
-| **Regression model accuracy** | R² = 0.989 (games played → total points) |
-| **Player clusters identified** | Distinct archetypes via K-Means |
+Python-based statistical analysis suite for deeper insights:
 
----
+| Module | Purpose |
+|---|---|
+| `clustering.py` | K-Means clustering to group players by statistical profile |
+| `predictions.py` | Random Forest models for performance prediction |
+| `player_analysis.py` | Individual player statistical analysis |
+| `team_analysis.py` | Team-level performance analysis |
+| `data_loader.py` | Shared data loading utilities |
 
-## 🛠 Tech Stack
+### Streamlit Dashboard
 
-| Component | Technology |
-|-----------|-----------|
-| **Scraper** | Node.js · better-sqlite3 · PlayHQ GraphQL API |
-| **Database** | SQLite (44MB, zero config, portable) |
-| **Analysis** | Python 3.12 · pandas · scikit-learn · scipy · matplotlib · seaborn |
-| **Dashboard** | Streamlit · Plotly |
-| **Notebooks** | Jupyter · 7 analytical notebooks |
-| **ML Models** | Linear Regression · Random Forest · K-Means Clustering · XGBoost |
-| **Version Control** | Git · GitHub |
+An interactive Streamlit dashboard (`streamlit_app.py`) provides visual exploration of clustering results, prediction models, and player comparisons.
+
+```bash
+pip install -r requirements.txt
+streamlit run streamlit_app.py
+```
+
+**Python dependencies:** pandas, numpy, scikit-learn, scipy, matplotlib, seaborn, plotly, streamlit
 
 ---
 
 ## 🚀 Getting Started
 
+### Prerequisites
+
+- Node.js 20+
+- npm or pnpm
+
+### Local Development
+
 ```bash
 # Clone the repo
 git clone https://github.com/LittleBennos/FullCourtVision.git
-cd FullCourtVision
+cd FullCourtVision/web
 
-# --- Scraper (Node.js) ---
-cd scraper
+# Install dependencies
 npm install
-node playhq-scraper.js orgs              # Scrape all organisations
-node victoria-wide-scrape.js              # Full Victoria-wide scrape
 
-# --- Analysis (Python) ---
-cd ..
-pip install -r requirements.txt
-python analysis.py                        # Run statistical analysis
-python advanced_analysis.py               # ML models & clustering
+# Set up environment variables
+cp .env.local.example .env.local
+# Add your Supabase URL and anon key
 
-# --- Notebooks ---
-jupyter notebook notebooks/               # Explore all 7 notebooks
-
-# --- Dashboard ---
-streamlit run streamlit_app.py            # Launch the interactive dashboard
+# Run the dev server
+npm run dev
 ```
 
-### Prerequisites
+Open [http://localhost:3000](http://localhost:3000).
 
-- **Node.js** 18+ (scraper)
-- **Python** 3.10+ (analysis & dashboard)
-- No API keys required — PlayHQ's GraphQL endpoint is public
+### Environment Variables
+
+| Variable | Description |
+|---|---|
+| `NEXT_PUBLIC_SUPABASE_URL` | Your Supabase project URL |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase anonymous/public key |
+
+---
+
+## 🧪 Testing
+
+**365 tests** across **5 browser targets** using Playwright.
+
+### Browser Matrix
+
+| Browser | Engine |
+|---|---|
+| Desktop Chrome | Chromium |
+| Desktop Firefox | Firefox |
+| Desktop Safari | WebKit |
+| Mobile Chrome | Pixel 5 (Chromium) |
+| Mobile Safari | iPhone 12 (WebKit) |
+
+### Test Suites
+
+| Suite | Coverage |
+|---|---|
+| `page-loads.spec.ts` | All pages render correctly |
+| `api-routes.spec.ts` | API endpoint responses and schemas |
+| `user-flows.spec.ts` | Search, navigation, comparison workflows |
+| `dynamic-routes.spec.ts` | Player/team/org dynamic pages |
+| `seo.spec.ts` | Meta tags, Open Graph, structured data |
+| `edge-cases.spec.ts` | Error handling, 404s, invalid inputs |
+
+### Running Tests
+
+```bash
+cd web
+
+# Run all E2E tests
+npm run test:e2e
+
+# Run with UI mode
+npm run test:e2e:ui
+
+# Run headed (visible browser)
+npm run test:e2e:headed
+
+# View HTML report
+npm run test:e2e:report
+
+# Run unit tests
+npm test
+```
 
 ---
 
@@ -178,63 +210,31 @@ streamlit run streamlit_app.py            # Launch the interactive dashboard
 
 ```
 FullCourtVision/
-├── scraper/                  # Node.js PlayHQ GraphQL scraper
-│   ├── playhq-scraper.js         # Main scraper engine
-│   ├── playhq-db.js              # Database schema & helpers
-│   ├── victoria-wide-scrape.js   # Full state-wide scraper
-│   └── package.json
-├── data/
-│   └── playhq.db                 # SQLite database (44MB)
-├── notebooks/                    # Jupyter analysis notebooks
-│   ├── 01_exploratory_analysis.ipynb
-│   ├── 02_player_development.ipynb
-│   ├── 03_predictive_modeling.ipynb
-│   ├── 04_team_and_venue_analysis.ipynb
-│   ├── 05_advanced_ml.ipynb
-│   ├── 06_player_case_study.ipynb
-│   └── 07_player_comparison.ipynb
-├── analysis_output/              # Generated charts & visualisations
-├── analysis/                      # Modular analysis package
-│   ├── data_loader.py                # SQLite → pandas DataFrames
-│   ├── player_analysis.py            # Player profiles, trends, consistency
-│   ├── team_analysis.py              # Team records, home/away splits
-│   ├── predictions.py                # Linear regression, Random Forest predictions
-│   └── clustering.py                 # K-Means player archetype clustering
-├── analysis.py                   # Core statistical analysis (legacy)
-├── advanced_analysis.py          # ML models (RF, clustering) (legacy)
-├── streamlit_app.py              # Interactive Streamlit dashboard
-├── requirements.txt              # Python dependencies
-├── DATA_DICTIONARY.md            # Database schema documentation
-├── ROADMAP.md                    # Project roadmap & future plans
-└── docs/
-    └── api-notes.md              # PlayHQ API documentation
+├── web/                    # Next.js 16 web application
+│   ├── src/app/           
+│   │   ├── api/            # REST API routes
+│   │   ├── players/        # Player pages
+│   │   ├── teams/          # Team pages
+│   │   ├── organisations/  # Organisation pages
+│   │   ├── leaderboards/   # Leaderboard page
+│   │   ├── rising-stars/   # Rising stars page
+│   │   ├── compare/        # Player comparison
+│   │   ├── heatmap/        # Scoring heatmap
+│   │   ├── grades/         # Grade/division pages
+│   │   ├── competitions/   # Competition pages
+│   │   └── search/         # Search page
+│   └── tests/              # Playwright E2E tests
+├── scraper/                # PlayHQ GraphQL scrapers
+├── analysis/               # Python statistical analysis
+├── data/                   # Local data files
+├── scripts/                # Data export & utility scripts
+├── dashboard/              # Streamlit dashboard assets
+├── notebooks/              # Jupyter notebooks
+└── models/                 # Trained ML models
 ```
-
----
-
-## 🗺 Roadmap
-
-See **[ROADMAP.md](ROADMAP.md)** for the full project roadmap, including:
-
-- Phase 1: Expand data collection beyond EDJBA ✅
-- Phase 2: Advanced ML models (XGBoost, feature importance) ✅
-- Phase 3: Personal analytics tracker
-- Phase 4: Full Streamlit dashboard ✅
-
----
-
-## 📊 Data Dictionary
-
-See **[DATA_DICTIONARY.md](DATA_DICTIONARY.md)** for complete documentation of all database tables and columns.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
-
----
-
-<p align="center">
-  <sub>Built with 🏀 and data by <a href="https://github.com/LittleBennos">LittleBennos</a></sub>
-</p>
+[MIT](LICENSE) © 2025 LittleBennos
