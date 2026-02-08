@@ -345,3 +345,189 @@ export async function getLeaderboards(): Promise<{ ppg: any[]; games: any[]; thr
     threes: (threesData || []).map(mapRow),
   };
 }
+
+export async function getOrganisationById(id: string): Promise<Organisation | null> {
+  const { data: organisation } = await supabase
+    .from("organisations")
+    .select("id, name, type, suburb, state, website")
+    .eq("id", id)
+    .single();
+
+  if (!organisation) return null;
+
+  return organisation as Organisation;
+}
+
+export async function getOrganisationTeams(organisationId: string): Promise<Team[]> {
+  const { data: teams } = await supabase
+    .from("teams")
+    .select("id, name, organisation_id, season_id, organisations(name), seasons(name)")
+    .eq("organisation_id", organisationId);
+
+  if (!teams) return [];
+
+  // Get win/loss from games for all teams
+  const teamIds = teams.map(t => t.id);
+  const games = await fetchAllRows("games", "home_team_id, away_team_id, home_score, away_score");
+
+  const wlMap = new Map<string, { wins: number; losses: number; gp: number }>();
+  if (games.length) {
+    for (const g of games) {
+      if (g.home_score == null || g.away_score == null) continue;
+      const homeWin = g.home_score > g.away_score;
+
+      for (const [tid, isHome] of [[g.home_team_id, true], [g.away_team_id, false]] as [string, boolean][]) {
+        if (!tid || !teamIds.includes(tid)) continue;
+        const rec = wlMap.get(tid) || { wins: 0, losses: 0, gp: 0 };
+        rec.gp++;
+        if ((isHome && homeWin) || (!isHome && !homeWin)) rec.wins++;
+        else rec.losses++;
+        wlMap.set(tid, rec);
+      }
+    }
+  }
+
+  return teams.map((t: any) => {
+    const wl = wlMap.get(t.id) || { wins: 0, losses: 0, gp: 0 };
+    return {
+      id: t.id,
+      name: t.name,
+      organisation_id: t.organisation_id,
+      season_id: t.season_id,
+      org_name: (t.organisations as any)?.name || "",
+      season_name: (t.seasons as any)?.name || "",
+      wins: wl.wins,
+      losses: wl.losses,
+      games_played: wl.gp,
+    };
+  });
+}
+
+export async function getOrganisationPlayers(organisationId: string): Promise<{ id: string; first_name: string; last_name: string; total_games: number; total_points: number; ppg: number; team_name: string; }[]> {
+  // Get all teams for this organisation
+  const { data: teams } = await supabase
+    .from("teams")
+    .select("id, name")
+    .eq("organisation_id", organisationId);
+
+  if (!teams || teams.length === 0) return [];
+
+  const teamIds = teams.map(t => t.id);
+  
+  // Get player stats for these teams
+  const { data: playerStats } = await supabase
+    .from("player_stats")
+    .select(`
+      player_id, team_name, games_played, total_points,
+      players!inner(first_name, last_name),
+      grades!inner(teams!inner(id))
+    `)
+    .in("grades.teams.id", teamIds);
+
+  if (!playerStats) return [];
+
+  // Aggregate stats by player
+  const playerMap = new Map<string, {
+    id: string;
+    first_name: string;
+    last_name: string;
+    total_games: number;
+    total_points: number;
+    teams: Set<string>;
+  }>();
+
+  for (const stat of playerStats) {
+    const playerId = stat.player_id;
+    if (!playerMap.has(playerId)) {
+      playerMap.set(playerId, {
+        id: playerId,
+        first_name: (stat.players as any)?.first_name || '',
+        last_name: (stat.players as any)?.last_name || '',
+        total_games: 0,
+        total_points: 0,
+        teams: new Set(),
+      });
+    }
+    
+    const player = playerMap.get(playerId)!;
+    player.total_games += stat.games_played || 0;
+    player.total_points += stat.total_points || 0;
+    player.teams.add(stat.team_name || '');
+  }
+
+  return Array.from(playerMap.values())
+    .map(p => ({
+      id: p.id,
+      first_name: p.first_name,
+      last_name: p.last_name,
+      total_games: p.total_games,
+      total_points: p.total_points,
+      ppg: p.total_games > 0 ? +(p.total_points / p.total_games).toFixed(1) : 0,
+      team_name: Array.from(p.teams).join(', '),
+    }))
+    .filter(p => p.total_games > 0)
+    .sort((a, b) => b.total_points - a.total_points);
+}
+
+export async function getOrganisationStats(organisationId: string): Promise<{
+  total_teams: number;
+  total_players: number;
+  total_games: number;
+  top_scorer: { name: string; points: number } | null;
+}> {
+  // Get teams count
+  const { data: teams, count: teamsCount } = await supabase
+    .from("teams")
+    .select("id", { count: "exact", head: true })
+    .eq("organisation_id", organisationId);
+
+  const totalTeams = teamsCount || 0;
+
+  if (totalTeams === 0) {
+    return {
+      total_teams: 0,
+      total_players: 0,
+      total_games: 0,
+      top_scorer: null,
+    };
+  }
+
+  // Get players for this organisation
+  const players = await getOrganisationPlayers(organisationId);
+  const totalPlayers = players.length;
+
+  // Get top scorer
+  const topScorer = players.length > 0 ? {
+    name: `${players[0].first_name} ${players[0].last_name}`,
+    points: players[0].total_points,
+  } : null;
+
+  // Get games count (approximate based on teams)
+  const { data: teamsData } = await supabase
+    .from("teams")
+    .select("id")
+    .eq("organisation_id", organisationId);
+
+  let totalGames = 0;
+  if (teamsData && teamsData.length > 0) {
+    const teamIds = teamsData.map(t => t.id);
+    const { data: homeGames, count: homeCount } = await supabase
+      .from("games")
+      .select("id", { count: "exact", head: true })
+      .in("home_team_id", teamIds);
+
+    const { data: awayGames, count: awayCount } = await supabase
+      .from("games")
+      .select("id", { count: "exact", head: true })
+      .in("away_team_id", teamIds);
+
+    totalGames = (homeCount || 0) + (awayCount || 0);
+  }
+
+  return {
+    total_teams: totalTeams,
+    total_players: totalPlayers,
+    total_games: totalGames,
+    top_scorer: topScorer,
+  };
+}

@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Search, Menu, X, ArrowLeftRight } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Search, Menu, X, ArrowLeftRight, Building2 } from "lucide-react";
 import { useState } from "react";
 
 const links = [
   { href: "/players", label: "Players", icon: Users },
   { href: "/teams", label: "Teams", icon: Activity },
+  { href: "/organisations", label: "Organisations", icon: Building2 },
   { href: "/competitions", label: "Competitions", icon: Trophy },
   { href: "/leaderboards", label: "Leaderboards", icon: BarChart3 },
   { href: "/compare", label: "Compare", icon: ArrowLeftRight },
