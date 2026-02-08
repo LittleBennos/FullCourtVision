@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Search, Menu, X } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Search, Menu, X, ArrowLeftRight } from "lucide-react";
 import { useState } from "react";
 
 const links = [
@@ -10,6 +10,7 @@ const links = [
   { href: "/teams", label: "Teams", icon: Activity },
   { href: "/competitions", label: "Competitions", icon: Trophy },
   { href: "/leaderboards", label: "Leaderboards", icon: BarChart3 },
+  { href: "/compare", label: "Compare", icon: ArrowLeftRight },
   { href: "/search", label: "Search", icon: Search },
 ];
 
