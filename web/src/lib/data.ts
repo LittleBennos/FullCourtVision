@@ -901,3 +901,311 @@ export async function getHeatmapData(): Promise<HeatmapRegion[]> {
 
   return result;
 }
+
+// Grade-related types and functions
+export type Grade = {
+  id: string;
+  name: string;
+  type: string | null;
+  season_id: string;
+  season_name: string;
+  competition_id: string;
+  competition_name: string;
+  org_name: string;
+};
+
+export type GradeTeamStanding = {
+  id: string;
+  name: string;
+  organisation_id: string;
+  wins: number;
+  losses: number;
+  games_played: number;
+  points_for: number;
+  points_against: number;
+  percentage: number;
+  org_name: string;
+};
+
+export type GradeFixture = {
+  id: string;
+  round_name: string | null;
+  home_team_id: string;
+  away_team_id: string;
+  home_team_name: string;
+  away_team_name: string;
+  home_score: number | null;
+  away_score: number | null;
+  date: string | null;
+  time: string | null;
+  venue: string | null;
+  court: string | null;
+  status: string | null;
+};
+
+export async function getAllGrades(): Promise<Grade[]> {
+  const { data } = await supabase
+    .from("grades")
+    .select(`
+      id, name, type, season_id,
+      seasons!inner(name, competition_id, competitions!inner(name, organisation_id, organisations!inner(name)))
+    `)
+    .order("name");
+
+  return (data || []).map((g: any) => ({
+    id: g.id,
+    name: g.name,
+    type: g.type,
+    season_id: g.season_id,
+    season_name: (g.seasons as any)?.name || "",
+    competition_id: (g.seasons as any)?.competition_id || "",
+    competition_name: (g.seasons as any)?.competitions?.name || "",
+    org_name: (g.seasons as any)?.competitions?.organisations?.name || "",
+  }));
+}
+
+export async function getGradeById(id: string): Promise<Grade | null> {
+  const { data: grade } = await supabase
+    .from("grades")
+    .select(`
+      id, name, type, season_id,
+      seasons!inner(name, competition_id, competitions!inner(name, organisation_id, organisations!inner(name)))
+    `)
+    .eq("id", id)
+    .single();
+
+  if (!grade) return null;
+
+  return {
+    id: grade.id,
+    name: grade.name,
+    type: grade.type,
+    season_id: grade.season_id,
+    season_name: (grade.seasons as any)?.name || "",
+    competition_id: (grade.seasons as any)?.competition_id || "",
+    competition_name: (grade.seasons as any)?.competitions?.name || "",
+    org_name: (grade.seasons as any)?.competitions?.organisations?.name || "",
+  };
+}
+
+export async function getGradeTeamStandings(gradeId: string): Promise<GradeTeamStanding[]> {
+  // Get teams that have players in this grade (via player_stats)
+  const { data: gradeTeams } = await supabase
+    .from("player_stats")
+    .select("team_name")
+    .eq("grade_id", gradeId);
+
+  if (!gradeTeams || gradeTeams.length === 0) return [];
+
+  // Get unique team names
+  const teamNames = [...new Set(gradeTeams.map(t => t.team_name).filter(Boolean))];
+
+  // Get the season for this grade to find the actual teams
+  const { data: gradeData } = await supabase
+    .from("grades")
+    .select("season_id")
+    .eq("id", gradeId)
+    .single();
+
+  if (!gradeData) return [];
+
+  // Get teams in this season that match the team names
+  const { data: teams } = await supabase
+    .from("teams")
+    .select("id, name, organisation_id, organisations(name)")
+    .eq("season_id", gradeData.season_id)
+    .in("name", teamNames);
+
+  if (!teams) return [];
+
+  // Get all games for this grade
+  const { data: games } = await supabase
+    .from("games")
+    .select("home_team_id, away_team_id, home_score, away_score")
+    .eq("grade_id", gradeId)
+    .not("home_score", "is", null)
+    .not("away_score", "is", null);
+
+  // Calculate standings
+  const standings = new Map<string, GradeTeamStanding>();
+
+  for (const team of teams) {
+    standings.set(team.id, {
+      id: team.id,
+      name: team.name,
+      organisation_id: team.organisation_id,
+      wins: 0,
+      losses: 0,
+      games_played: 0,
+      points_for: 0,
+      points_against: 0,
+      percentage: 0,
+      org_name: (team.organisations as any)?.name || "",
+    });
+  }
+
+  // Process games
+  if (games) {
+    for (const game of games) {
+      const homeTeam = standings.get(game.home_team_id);
+      const awayTeam = standings.get(game.away_team_id);
+
+      if (homeTeam && awayTeam) {
+        homeTeam.games_played++;
+        awayTeam.games_played++;
+        homeTeam.points_for += game.home_score || 0;
+        homeTeam.points_against += game.away_score || 0;
+        awayTeam.points_for += game.away_score || 0;
+        awayTeam.points_against += game.home_score || 0;
+
+        if ((game.home_score || 0) > (game.away_score || 0)) {
+          homeTeam.wins++;
+          awayTeam.losses++;
+        } else {
+          awayTeam.wins++;
+          homeTeam.losses++;
+        }
+      }
+    }
+  }
+
+  // Calculate percentages and return sorted by wins
+  return Array.from(standings.values())
+    .map(team => ({
+      ...team,
+      percentage: team.points_against > 0 ? +(team.points_for / team.points_against * 100).toFixed(1) : 0,
+    }))
+    .sort((a, b) => {
+      if (a.wins !== b.wins) return b.wins - a.wins;
+      if (a.losses !== b.losses) return a.losses - b.losses;
+      return b.percentage - a.percentage;
+    });
+}
+
+export async function getGradeTopScorers(gradeId: string, limit: number = 10): Promise<TopPlayer[]> {
+  const { data: stats } = await supabase
+    .from("player_stats")
+    .select(`
+      player_id, games_played, total_points,
+      players!inner(first_name, last_name)
+    `)
+    .eq("grade_id", gradeId)
+    .gte("games_played", 1);
+
+  if (!stats) return [];
+
+  // Aggregate by player (in case there are multiple entries)
+  const playerMap = new Map<string, {
+    id: string;
+    first_name: string;
+    last_name: string;
+    total_games: number;
+    total_points: number;
+  }>();
+
+  for (const stat of stats) {
+    const playerId = stat.player_id;
+    const existing = playerMap.get(playerId);
+    
+    if (existing) {
+      existing.total_games += stat.games_played || 0;
+      existing.total_points += stat.total_points || 0;
+    } else {
+      playerMap.set(playerId, {
+        id: playerId,
+        first_name: (stat.players as any)?.first_name || '',
+        last_name: (stat.players as any)?.last_name || '',
+        total_games: stat.games_played || 0,
+        total_points: stat.total_points || 0,
+      });
+    }
+  }
+
+  return Array.from(playerMap.values())
+    .map(p => ({
+      id: p.id,
+      first_name: p.first_name,
+      last_name: p.last_name,
+      total_games: p.total_games,
+      total_points: p.total_points,
+      ppg: p.total_games > 0 ? +(p.total_points / p.total_games).toFixed(1) : 0,
+    }))
+    .filter(p => p.total_games >= 3) // Minimum games filter
+    .sort((a, b) => b.total_points - a.total_points)
+    .slice(0, limit);
+}
+
+export async function getGradeFixtures(gradeId: string): Promise<GradeFixture[]> {
+  const { data: fixtures } = await supabase
+    .from("games")
+    .select(`
+      id, round_name, home_team_id, away_team_id, home_score, away_score,
+      date, time, venue, court, status,
+      home_teams:teams!home_team_id(name),
+      away_teams:teams!away_team_id(name)
+    `)
+    .eq("grade_id", gradeId)
+    .order("date", { ascending: true });
+
+  if (!fixtures) return [];
+
+  return fixtures.map((f: any) => ({
+    id: f.id,
+    round_name: f.round_name,
+    home_team_id: f.home_team_id,
+    away_team_id: f.away_team_id,
+    home_team_name: f.home_teams?.name || "TBD",
+    away_team_name: f.away_teams?.name || "TBD",
+    home_score: f.home_score,
+    away_score: f.away_score,
+    date: f.date,
+    time: f.time,
+    venue: f.venue,
+    court: f.court,
+    status: f.status,
+  }));
+}
+
+export async function searchGrades(options: {
+  search?: string;
+  seasonId?: string;
+  competitionId?: string;
+  orgId?: string;
+}): Promise<Grade[]> {
+  let query = supabase
+    .from("grades")
+    .select(`
+      id, name, type, season_id,
+      seasons!inner(name, competition_id, competitions!inner(name, organisation_id, organisations!inner(name)))
+    `);
+
+  // Apply filters
+  if (options.search) {
+    query = query.ilike("name", `%${options.search}%`);
+  }
+
+  if (options.seasonId) {
+    query = query.eq("season_id", options.seasonId);
+  }
+
+  if (options.competitionId) {
+    query = query.eq("seasons.competition_id", options.competitionId);
+  }
+
+  if (options.orgId) {
+    query = query.eq("seasons.competitions.organisation_id", options.orgId);
+  }
+
+  const { data } = await query.order("name");
+
+  return (data || []).map((g: any) => ({
+    id: g.id,
+    name: g.name,
+    type: g.type,
+    season_id: g.season_id,
+    season_name: (g.seasons as any)?.name || "",
+    competition_id: (g.seasons as any)?.competition_id || "",
+    competition_name: (g.seasons as any)?.competitions?.name || "",
+    org_name: (g.seasons as any)?.competitions?.organisations?.name || "",
+  }));
+}
