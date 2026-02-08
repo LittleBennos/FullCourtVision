@@ -133,46 +133,61 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
       <div className="bg-card rounded-xl border border-border p-6">
         <h3 className="text-xl font-semibold mb-4">Season Breakdown</h3>
         <div className="overflow-x-auto">
-          <table className="w-full">
+          <table className="w-full" role="table" aria-label={`${playerName} season by season statistics`}>
+            <caption className="sr-only">
+              Detailed statistics for {playerName} broken down by season, competition, and team
+            </caption>
             <thead>
               <tr className="border-b border-border">
-                <th className="text-left py-3 px-4">Competition</th>
-                <th className="text-left py-3 px-4">Season</th>
-                <th className="text-left py-3 px-4">Grade</th>
-                <th className="text-left py-3 px-4">Team</th>
-                <th className="text-center py-3 px-4">GP</th>
-                <th className="text-center py-3 px-4">PTS</th>
-                <th className="text-center py-3 px-4">PPG</th>
-                <th className="text-center py-3 px-4">2PM</th>
-                <th className="text-center py-3 px-4">3PM</th>
-                <th className="text-center py-3 px-4">FOULS</th>
+                <th className="text-left py-3 px-4" scope="col">Competition</th>
+                <th className="text-left py-3 px-4" scope="col">Season</th>
+                <th className="text-left py-3 px-4" scope="col">Grade</th>
+                <th className="text-left py-3 px-4" scope="col">Team</th>
+                <th className="text-center py-3 px-4" scope="col" aria-label="Games Played">GP</th>
+                <th className="text-center py-3 px-4" scope="col" aria-label="Total Points">PTS</th>
+                <th className="text-center py-3 px-4" scope="col" aria-label="Points Per Game">PPG</th>
+                <th className="text-center py-3 px-4" scope="col" aria-label="Two Point Makes">2PM</th>
+                <th className="text-center py-3 px-4" scope="col" aria-label="Three Point Makes">3PM</th>
+                <th className="text-center py-3 px-4" scope="col">FOULS</th>
               </tr>
             </thead>
             <tbody>
-              {stats.map((stat) => (
+              {stats.map((stat, index) => (
                 <tr key={stat.id} className="border-b border-border/50">
-                  <td className="py-3 px-4">{stat.competition_name || '-'}</td>
+                  <th className="py-3 px-4 text-left font-normal" scope="row">
+                    {stat.competition_name || '-'}
+                  </th>
                   <td className="py-3 px-4">{stat.season_name || '-'}</td>
                   <td className="py-3 px-4">{stat.grade_name || '-'}</td>
                   <td className="py-3 px-4">{stat.team_name || '-'}</td>
-                  <td className="text-center py-3 px-4">{stat.games_played || 0}</td>
-                  <td className="text-center py-3 px-4">{stat.total_points || 0}</td>
-                  <td className="text-center py-3 px-4">
+                  <td className="text-center py-3 px-4" aria-label={`${stat.games_played || 0} games played`}>
+                    {stat.games_played || 0}
+                  </td>
+                  <td className="text-center py-3 px-4" aria-label={`${stat.total_points || 0} total points`}>
+                    {stat.total_points || 0}
+                  </td>
+                  <td className="text-center py-3 px-4" aria-label={`${stat.games_played > 0 ? ((stat.total_points || 0) / stat.games_played).toFixed(1) : '0.0'} points per game`}>
                     {stat.games_played > 0 
                       ? ((stat.total_points || 0) / stat.games_played).toFixed(1)
                       : '0.0'
                     }
                   </td>
-                  <td className="text-center py-3 px-4">{stat.two_point || 0}</td>
-                  <td className="text-center py-3 px-4">{stat.three_point || 0}</td>
-                  <td className="text-center py-3 px-4">{stat.total_fouls || 0}</td>
+                  <td className="text-center py-3 px-4" aria-label={`${stat.two_point || 0} two point makes`}>
+                    {stat.two_point || 0}
+                  </td>
+                  <td className="text-center py-3 px-4" aria-label={`${stat.three_point || 0} three point makes`}>
+                    {stat.three_point || 0}
+                  </td>
+                  <td className="text-center py-3 px-4" aria-label={`${stat.total_fouls || 0} total fouls`}>
+                    {stat.total_fouls || 0}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         {stats.length === 0 && (
-          <p className="text-muted-foreground text-center py-8">
+          <p className="text-muted-foreground text-center py-8" role="status">
             No statistics available for this player.
           </p>
         )}
