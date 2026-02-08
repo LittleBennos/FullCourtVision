@@ -213,4 +213,1093 @@
     [25/97] Saturday U14 Boys Div  1... 93 players, 73 games ✓
     [26/97] Saturday U14 Boys Div  2... 91 players, 56 games ✓
     [27/97] Saturday U14 Boys Div  3... 107 players, 56 games ✓
-    [28/97] Saturday U14 Boys Div  4... 
+    [28/97] Saturday U14 Boys Div  4... 128 players, 71 games ✓
+    [29/97] Saturday U14 Boys Div  5... 121 players, 61 games ✓
+    [30/97] Saturday U14 Boys Div  6... 127 players, 54 games ✓
+    [31/97] Saturday U14 Boys Div  7... 135 players, 64 games ✓
+    [32/97] Saturday U14 Boys Div  8... 117 players, 57 games ✓
+    [33/97] Saturday U14 Boys Div  9... 106 players, 62 games ✓
+    [34/97] Saturday U14 Boys Div 10... 95 players, 51 games ✓
+    [35/97] Saturday U14 Boys Div 11... 48 players, 33 games ✓
+    [36/97] Saturday U14 Boys Div 12... 114 players, 51 games ✓
+    [37/97] Saturday U14 Boys Div 13... 106 players, 51 games ✓
+    [38/97] Saturday U14 Boys Div 14... 55 players, 33 games ✓
+    [39/97] Saturday U16 Boys Div  1... 65 players, 50 games ✓
+    [40/97] Saturday U16 Boys Div  2... 62 players, 45 games ✓
+    [41/97] Saturday U16 Boys Div  3... 91 players, 59 games ✓
+    [42/97] Saturday U16 Boys Div  4... 100 players, 46 games ✓
+    [43/97] Saturday U16 Boys Div  5... 94 players, 58 games ✓
+    [44/97] Saturday U16 Boys Div  6... 87 players, 49 games ✓
+    [45/97] Saturday U16 Boys Div  7... 92 players, 49 games ✓
+    [46/97] Saturday U16 Boys Div  8... 120 players, 70 games ✓
+    [47/97] Saturday U16 Boys Div  9... 89 players, 48 games ✓
+    [48/97] Saturday U16 Boys Div 10... 114 players, 59 games ✓
+    [49/97] Saturday U16 Boys Div 11... 107 players, 52 games ✓
+    [50/97] Saturday U16 Boys Div 12... 46 players, 32 games ✓
+    [51/97] Saturday U18 Boys Div  1... 56 players, 45 games ✓
+    [52/97] Saturday U18 Boys Div  2... 66 players, 45 games ✓
+    [53/97] Saturday U18 Boys Div  3... 59 players, 45 games ✓
+    [54/97] Saturday U18 Boys Div  4... 68 players, 44 games ✓
+    [55/97] Saturday U18 Boys Div  5... 88 players, 55 games ✓
+    [56/97] Saturday U18 Boys Div  6... 89 players, 50 games ✓
+    [57/97] Saturday U18 Boys Div  7... 63 players, 44 games ✓
+    [58/97] Saturday U18 Boys Div  8... 77 players, 49 games ✓
+    [59/97] Saturday U18 Boys Div  9... 57 players, 45 games ✓
+    [60/97] Sunday U8 Girls PINK Loans on the Run... 89 players, 66 games ✓
+    [61/97] Sunday U8 Girls PURPLE Loans on the Run... 74 players, 70 games ✓
+    [62/97] Sunday U10 Girls Div  1... 61 players, 44 games ✓
+    [63/97] Sunday U10 Girls Div  2... 87 players, 57 games ✓
+    [64/97] Sunday U10 Girls Div  3... 90 players, 49 games ✓
+    [65/97] Sunday U10 Girls Div  4... 114 players, 51 games ✓
+    [66/97] Sunday U10 Girls Div  5... 91 players, 46 games ✓
+    [67/97] Sunday U10 Girls Div  6... 30 players, 23 games ✓
+    [68/97] Sunday U12 Girls Div 1A... 65 players, 50 games ✓
+    [69/97] Sunday U12 Girls Div 1B... 55 players, 34 games ✓
+    [70/97] Sunday U12 Girls Div 2... 98 players, 45 games ✓
+    [71/97] Sunday U12 Girls Div 3... 110 players, 51 games ✓
+    [72/97] Sunday U12 Girls Div 4... 121 players, 47 games ✓
+    [73/97] Sunday U12 Girls Div 5... 126 players, 52 games ✓
+    [74/97] Sunday U12 Girls Div 6... 46 players, 31 games ✓
+    [75/97] Sunday U12 Girls Div 7... 123 players, 48 games ✓
+    [76/97] Sunday U12 Girls Div 7 grading... 71 players, 11 games ✓
+    [77/97] Sunday U14 Girls Div  1A... 106 players, 58 games ✓
+    [78/97] Sunday U14 Girls Div  1B... 52 players, 33 games ✓
+    [79/97] Sunday U14 Girls Div  2... 70 players, 47 games ✓
+    [80/97] Sunday U14 Girls Div  3... 96 players, 50 games ✓
+    [81/97] Sunday U14 Girls Div  4... 89 players, 55 games ✓
+    [82/97] Sunday U14 Girls Div  5... 97 players, 61 games ✓
+    [83/97] Sunday U14 Girls Div  6... 103 players, 54 games ✓
+    [84/97] Sunday U14 Girls Div  7... 76 players, 47 games ✓
+    [85/97] Sunday U16 Girls Div  1... 80 players, 61 games ✓
+    [86/97] Sunday U16 Girls Div  2... 70 players, 45 games ✓
+    [87/97] Sunday U16 Girls Div  3... 70 players, 58 games ✓
+    [88/97] Sunday U16 Girls Div  4... 79 players, 54 games ✓
+    [89/97] Sunday U16 Girls Div  5... 77 players, 49 games ✓
+    [90/97] Sunday U16 Girls Div  6... 43 players, 45 games ✓
+    [91/97] Sunday U18 Girls Div  1... 34 players, 31 games ✓
+    [92/97] Sunday U18 Girls Div  2... 84 players, 50 games ✓
+    [93/97] Sunday U18 Girls Div  3... 96 players, 52 games ✓
+    [94/97] Sunday U18 Girls Div  4... 44 players, 34 games ✓
+    [95/97] Sunday U20 Boys Div 1... 48 players, 33 games ✓
+    [96/97] Sunday U20 Boys Div 2... 93 players, 71 games ✓
+    [97/97] Sunday U20 Boys Div 3... 61 players, 45 games ✓
+  'Victorian Oral & Facial Surgeons' Junior Domestic (U8-U20) / Summer 2024/25: 101 grades
+    [1/101] Saturday U8 Mixed BLUE Loans on the Run... 87 players, 45 games ✓
+    [2/101] Saturday U8 Mixed RED Loans on the Run... 43 players, 34 games ✓
+    [3/101] Saturday U10 Boys 1... 66 players, 58 games ✓
+    [4/101] Saturday U10 Boys 2... 90 players, 48 games ✓
+    [5/101] Saturday U10 Boys 3... 103 players, 49 games ✓
+    [6/101] Saturday U10 Boys 4... 123 players, 54 games ✓
+    [7/101] Saturday U10 Boys 5... 168 players, 74 games ✓
+    [8/101] Saturday U10 Boys 6... 164 players, 57 games ✓
+    [9/101] Saturday U10 Boys 7... 176 players, 73 games ✓
+    [10/101] Saturday U10 Boys Div 8 MODIFIED... 163 players, 64 games ✓
+    [11/101] Saturday U10 Boys Div 9 MODIFIED... 130 players, 51 games ✓
+    [12/101] Saturday U10 Boys Division 10 MODIFIED... 55 players, 28 games ✓
+    [13/101] Saturday U12 Boys 1... 64 players, 46 games ✓
+    [14/101] Saturday U12 Boys 2... 92 players, 46 games ✓
+    [15/101] Saturday U12 Boys 3... 126 players, 64 games ✓
+    [16/101] Saturday U12 Boys 4... 104 players, 51 games ✓
+    [17/101] Saturday U12 Boys 5... 115 players, 52 games ✓
+    [18/101] Saturday U12 Boys 6... 141 players, 52 games ✓
+    [19/101] Saturday U12 Boys 7... 116 players, 49 games ✓
+    [20/101] Saturday U12 Boys 8... 125 players, 72 games ✓
+    [21/101] Saturday U12 Boys 9... 126 players, 54 games ✓
+    [22/101] Saturday U12 Boys Div 10... 110 players, 59 games ✓
+    [23/101] Saturday U12 Boys Div 11... 145 players, 65 games ✓
+    [24/101] Saturday U12 Boys Div 12... 137 players, 59 games ✓
+    [25/101] Saturday U12 Boys Div 13... 71 players, 49 games ✓
+    [26/101] Saturday U14 Boys 1... 54 players, 35 games ✓
+    [27/101] Saturday U14 Boys 2... 74 players, 60 games ✓
+    [28/101] Saturday U14 Boys 3... 116 players, 76 games ✓
+    [29/101] Saturday U14 Boys 4... 136 players, 72 games ✓
+    [30/101] Saturday U14 Boys 5... 151 players, 72 games ✓
+    [31/101] Saturday U14 Boys 6... 167 players, 55 games ✓
+    [32/101] Saturday U14 Boys 7... 147 players, 63 games ✓
+    [33/101] Saturday U14 Boys 8... 184 players, 75 games ✓
+    [34/101] Saturday U14 Boys 9... 137 players, 53 games ✓
+    [35/101] Saturday U14 Boys Div 10... 127 players, 52 games ✓
+    [36/101] Saturday U14 Boys Div 11... 138 players, 53 games ✓
+    [37/101] Saturday U14 Boys Div 12... 155 players, 50 games ✓
+    [38/101] Saturday U14 Boys Div 13... 119 players, 51 games ✓
+    [39/101] Saturday U14 Boys Div 14... 45 players, 8 games ✓
+    [40/101] Saturday U16 Boys 1... 54 players, 48 games ✓
+    [41/101] Saturday U16 Boys 2... 74 players, 60 games ✓
+    [42/101] Saturday U16 Boys 3... 92 players, 58 games ✓
+    [43/101] Saturday U16 Boys 4... 127 players, 65 games ✓
+    [44/101] Saturday U16 Boys 5... 154 players, 74 games ✓
+    [45/101] Saturday U16 Boys 6... 173 players, 80 games ✓
+    [46/101] Saturday U16 Boys 7... 131 players, 51 games ✓
+    [47/101] Saturday U16 Boys 8... 98 players, 49 games ✓
+    [48/101] Saturday U16 Boys 9... 107 players, 62 games ✓
+    [49/101] Saturday U16 Boys DIV 10... 137 players, 54 games ✓
+    [50/101] Saturday U16 Boys Div 11... 144 players, 61 games ✓
+    [51/101] Saturday U16 Boys Div 12... 111 players, 55 games ✓
+    [52/101] Saturday U16 Boys DIV 13... 62 players, 45 games ✓
+    [53/101] Saturday U18 Boys 1... 80 players, 73 games ✓
+    [54/101] Saturday U18 Boys 2... 101 players, 62 games ✓
+    [55/101] Saturday U18 Boys 3... 118 players, 55 games ✓
+    [56/101] Saturday U18 Boys 4... 103 players, 51 games ✓
+    [57/101] Saturday U18 Boys 5... 127 players, 64 games ✓
+    [58/101] Saturday U18 Boys 6... 146 players, 77 games ✓
+    [59/101] Saturday U18 Boys 7... 108 players, 50 games ✓
+    [60/101] Saturday U18 Boys 8... 114 players, 65 games ✓
+    [61/101] Saturday U18 Boys 9... 81 players, 60 games ✓
+    [62/101] Saturday U18 Boys Div 10 GRADING rnds 1-2... 26 players, 4 games ✓
+    [63/101] Sunday U8 Girls Sponsored by Loans on the Run... 55 players, 56 games ✓
+    [64/101] Sunday U10 Girls 1... 91 players, 48 games ✓
+    [65/101] Sunday U10 Girls 2... 40 players, 15 games ✓
+    [66/101] Sunday U10 Girls 3... 123 players, 50 games ✓
+    [67/101] Sunday U10 Girls 4... 144 players, 54 games ✓
+    [68/101] Sunday U10 Girls 5... 132 players, 43 games ✓
+    [69/101] Sunday U10 Girls 6... 76 players, 41 games ✓
+    [70/101] Sunday U10 Girls 7... 88 players, 10 games ✓
+    [71/101] Sunday U12 Girls 1... 62 players, 37 games ✓
+    [72/101] Sunday U12 Girls 2... 112 players, 59 games ✓
+    [73/101] Sunday U12 Girls 2 grading rnds 1-2... 25 players, 4 games ✓
+    [74/101] Sunday U12 Girls 3... 54 players, 30 games ✓
+    [75/101] Sunday U12 Girls 4... 118 players, 70 games ✓
+    [76/101] Sunday U12 Girls 5... 121 players, 64 games ✓
+    [77/101] Sunday U12 Girls 6... 89 players, 46 games ✓
+    [78/101] Sunday U12 Girls 7... 55 players, 55 games ✓
+    [79/101] Sunday U12 Girls 8... 54 players, 8 games ✓
+    [80/101] Sunday U14 Girls 1... 76 players, 51 games ✓
+    [81/101] Sunday U14 Girls 2... 77 players, 49 games ✓
+    [82/101] Sunday U14 Girls 3... 132 players, 58 games ✓
+    [83/101] Sunday U14 Girls 3B... 78 players, 43 games ✓
+    [84/101] Sunday U14 Girls 4... 123 players, 56 games ✓
+    [85/101] Sunday U14 Girls 5... 96 players, 51 games ✓
+    [86/101] Sunday U14 Girls 6... 117 players, 75 games ✓
+    [87/101] Sunday U14 Girls 7 & 8... 92 players, 64 games ✓
+    [88/101] Sunday U16 Girls 1... 77 players, 68 games ✓
+    [89/101] Sunday U16 Girls 2 A/B... 78 players, 55 games ✓
+    [90/101] Sunday U16 Girls 3... 103 players, 61 games ✓
+    [91/101] Sunday U16 Girls 4... 106 players, 54 games ✓
+    [92/101] Sunday U16 Girls 5... 104 players, 63 games ✓
+    [93/101] Sunday U16 Girls 6... 59 players, 35 games ✓
+    [94/101] Sunday U18 Girls 1... 66 players, 42 games ✓
+    [95/101] Sunday U18 Girls 2... 101 players, 75 games ✓
+    [96/101] Sunday U18 Girls 3... 73 players, 56 games ✓
+    [97/101] Sunday U18 Girls 4... 64 players, 49 games ✓
+    [98/101] Sunday U20 Boys 1... 66 players, 51 games ✓
+    [99/101] Sunday U20 Boys 2... 89 players, 71 games ✓
+    [100/101] Sunday U20 Boys 3... 100 players, 59 games ✓
+    [101/101] Sunday U20 Boys 4... 82 players, 68 games ✓
+  'Victorian Oral & Facial Surgeons' Junior Domestic (U8-U20) / Winter 2024: 98 grades
+    [1/98] Saturday U8 Mixed Blue Sponsored by Loans on the Run... 43 players, 33 games ✓
+    [2/98] Saturday U8 Mixed Green Sponsored by Loans on the Run... 66 players, 44 games ✓
+    [3/98] Saturday U8 Mixed Sponsored by Loans on the Run... 140 players, 36 games ✓
+    [4/98] Saturday U8 Mixed Yellow Sponsored by Loans on the Run... 30 players, 24 games ✓
+    [5/98] Saturday U10 Boys 1... 51 players, 51 games ✓
+    [6/98] Saturday U10 Boys 2... 70 players, 51 games ✓
+    [7/98] Saturday U10 Boys 3... 101 players, 64 games ✓
+    [8/98] Saturday U10 Boys 4... 119 players, 66 games ✓
+    [9/98] Saturday U10 Boys 5... 103 players, 56 games ✓
+    [10/98] Saturday U10 Boys 6... 107 players, 64 games ✓
+    [11/98] Saturday U10 Boys 7/8 modified... 109 players, 53 games ✓
+    [12/98] Saturday U10 Boys 8 Modified grading... 43 players, 6 games ✓
+    [13/98] Saturday U10 Boys 9 Modified... 78 players, 55 games ✓
+    [14/98] Saturday U10 Boys 9B modified grading... 69 players, 11 games ✓
+    [15/98] Saturday U12 Boys 1... 85 players, 82 games ✓
+    [16/98] Saturday U12 Boys 2... 75 players, 52 games ✓
+    [17/98] Saturday U12 Boys 3... 95 players, 76 games ✓
+    [18/98] Saturday U12 Boys 4... 106 players, 64 games ✓
+    [19/98] Saturday U12 Boys 5... 89 players, 42 games ✓
+    [20/98] Saturday U12 Boys 5 grading... 52 players, 9 games ✓
+    [21/98] Saturday U12 Boys 6... 84 players, 65 games ✓
+    [22/98] Saturday U12 Boys 7... 101 players, 54 games ✓
+    [23/98] Saturday U12 Boys 8... 93 players, 56 games ✓
+    [24/98] Saturday U12 Boys 9... 88 players, 65 games ✓
+    [25/98] Saturday U12 Boys Div 10... 107 players, 72 games ✓
+    [26/98] Saturday U12 Boys Div 11... 83 players, 55 games ✓
+    [27/98] Saturday U14 Boys 1 A/B... 85 players, 63 games ✓
+    [28/98] Saturday U14 Boys 2... 94 players, 55 games ✓
+    [29/98] Saturday U14 Boys 3... 98 players, 71 games ✓
+    [30/98] Saturday U14 Boys 4... 99 players, 67 games ✓
+    [31/98] Saturday U14 Boys 5... 85 players, 67 games ✓
+    [32/98] Saturday U14 Boys 6... 103 players, 54 games ✓
+    [33/98] Saturday U14 Boys 7... 113 players, 63 games ✓
+    [34/98] Saturday U14 Boys 8... 108 players, 69 games ✓
+    [35/98] Saturday U14 Boys 9... 98 players, 57 games ✓
+    [36/98] Saturday U14 Boys Div 10... 127 players, 69 games ✓
+    [37/98] Saturday U14 Boys Div 11... 113 players, 66 games ✓
+    [38/98] Saturday U14 Boys Div 12... 121 players, 53 games ✓
+    [39/98] Saturday U14 Boys Div 13... 62 players, 45 games ✓
+    [40/98] Saturday U14 Boys Div 13 grading... 30 players, 2 games ✓
+    [41/98] Saturday U16 Boys 1... 76 players, 53 games ✓
+    [42/98] Saturday U16 Boys 2... 101 players, 80 games ✓
+    [43/98] Saturday U16 Boys 3... 133 players, 85 games ✓
+    [44/98] Saturday U16 Boys 4... 98 players, 69 games ✓
+    [45/98] Saturday U16 Boys 5... 85 players, 53 games ✓
+    [46/98] Saturday U16 Boys 6... 85 players, 64 games ✓
+    [47/98] Saturday U16 Boys 7/8... 123 players, 81 games ✓
+    [48/98] Saturday U16 Boys 8 grading... 62 players, 15 games ✓
+    [49/98] Saturday U16 Boys 9... 115 players, 80 games ✓
+    [50/98] Saturday U16 Boys Div 10... 103 players, 62 games ✓
+    [51/98] Saturday U16 Boys Div 11... 92 players, 56 games ✓
+    [52/98] Saturday U18 Boys 1... 45 players, 51 games ✓
+    [53/98] Saturday U18 Boys 2... 67 players, 53 games ✓
+    [54/98] Saturday U18 Boys 3... 58 players, 51 games ✓
+    [55/98] Saturday U18 Boys 4... 59 players, 51 games ✓
+    [56/98] Saturday U18 Boys 5... 80 players, 67 games ✓
+    [57/98] Saturday U18 Boys 6... 86 players, 81 games ✓
+    [58/98] Saturday U18 Boys 7... 96 players, 80 games ✓
+    [59/98] Saturday U18 Boys 8... 97 players, 54 games ✓
+    [60/98] Saturday U18 Boys 9... 72 players, 52 games ✓
+    [61/98] Sunday U8 Girls Sponsored by Loans on the Run... 52 players, 45 games ✓
+    [62/98] Sunday U10 Girls 1... 62 players, 49 games ✓
+    [63/98] Sunday U10 Girls 2... 60 players, 14 games ✓
+    [64/98] Sunday U10 Girls 2/3... 96 players, 50 games ✓
+    [65/98] Sunday U10 Girls 4... 105 players, 53 games ✓
+    [66/98] Sunday U10 Girls 5... 63 players, 33 games ✓
+    [67/98] Sunday U10 Girls 6... 83 players, 50 games ✓
+    [68/98] Sunday U12 Girls 1... 45 players, 36 games ✓
+    [69/98] Sunday U12 Girls 2... 92 players, 51 games ✓
+    [70/98] Sunday U12 Girls 2B grading... 40 players, 3 games ✓
+    [71/98] Sunday U12 Girls 3... 116 players, 68 games ✓
+    [72/98] Sunday U12 Girls 4... 84 players, 50 games ✓
+    [73/98] Sunday U12 Girls 5... 86 players, 65 games ✓
+    [74/98] Sunday U12 Girls 6... 72 players, 39 games ✓
+    [75/98] Sunday U12 Girls 7... 53 players, 47 games ✓
+    [76/98] Sunday U14 Girls 1... 67 players, 54 games ✓
+    [77/98] Sunday U14 Girls 2... 85 players, 64 games ✓
+    [78/98] Sunday U14 Girls 3 grading... 43 players, 5 games ✓
+    [79/98] Sunday U14 Girls 3A... 75 players, 60 games ✓
+    [80/98] Sunday U14 Girls 3B... 86 players, 22 games ✓
+    [81/98] Sunday U14 Girls 3B/4... 95 players, 61 games ✓
+    [82/98] Sunday U14 Girls 5... 93 players, 51 games ✓
+    [83/98] Sunday U14 Girls 6... 52 players, 50 games ✓
+    [84/98] Sunday U16 Girls 1... 84 players, 68 games ✓
+    [85/98] Sunday U16 Girls 2... 94 players, 54 games ✓
+    [86/98] Sunday U16 Girls 3... 135 players, 57 games ✓
+    [87/98] Sunday U16 Girls 3 grading... 53 players, 9 games ✓
+    [88/98] Sunday U16 Girls 4A... 125 players, 54 games ✓
+    [89/98] Sunday U16 Girls 4B... 44 players, 36 games ✓
+    [90/98] Sunday U16 Girls 5... 95 players, 43 games ✓
+    [91/98] Sunday U16 Girls 6... 35 players, 27 games ✓
+    [92/98] Sunday U18 Girls 1... 59 players, 51 games ✓
+    [93/98] Sunday U18 Girls 2... 74 players, 42 games ✓
+    [94/98] Sunday U18 Girls 3... 46 players, 47 games ✓
+    [95/98] Sunday U20 Boys 1... 73 players, 80 games ✓
+    [96/98] Sunday U20 Boys 2... 86 players, 81 games ✓
+    [97/98] Sunday U20 Boys 2 grading... 38 players, 5 games ✓
+    [98/98] Sunday U20 Boys 3... 52 players, 51 games ✓
+  'Victorian Oral & Facial Surgeons' Junior Domestic (U8-U20) / Summer 2023/24: 88 grades
+    [1/88] Saturday U8 Mixed Sponsored by Loans on the Run... 82 players, 70 games ✓
+    [2/88] Saturday U10 Boys 1... 72 players, 60 games ✓
+    [3/88] Saturday U10 Boys 2... 109 players, 49 games ✓
+    [4/88] Saturday U10 Boys 3... 97 players, 43 games ✓
+    [5/88] Saturday U10 Boys 4... 95 players, 62 games ✓
+    [6/88] Saturday U10 Boys 5... 106 players, 72 games ✓
+    [7/88] Saturday U10 Boys 6... 104 players, 54 games ✓
+    [8/88] Saturday U10 Boys 7... 89 players, 51 games ✓
+    [9/88] Saturday U10 Boys 8... 84 players, 60 games ✓
+    [10/88] Saturday U12 Boys 1... 77 players, 61 games ✓
+    [11/88] Saturday U12 Boys 2... 81 players, 63 games ✓
+    [12/88] Saturday U12 Boys 3... 101 players, 50 games ✓
+    [13/88] Saturday U12 Boys 4... 103 players, 52 games ✓
+    [14/88] Saturday U12 Boys 5... 135 players, 53 games ✓
+    [15/88] Saturday U12 Boys 6... 131 players, 71 games ✓
+    [16/88] Saturday U12 Boys 7... 141 players, 56 games ✓
+    [17/88] Saturday U12 Boys 8... 106 players, 59 games ✓
+    [18/88] Saturday U12 Boys 9... 100 players, 52 games ✓
+    [19/88] Saturday U12 Boys Div 10... 144 players, 62 games ✓
+    [20/88] Saturday U12 Boys Div 11... 132 players, 51 games ✓
+    [21/88] Saturday U12 Boys Div 11B... 62 players, 51 games ✓
+    [22/88] Saturday U14 Boys 1... 95 players, 51 games ✓
+    [23/88] Saturday U14 Boys 2... 152 players, 95 games ✓
+    [24/88] Saturday U14 Boys 3... 141 players, 52 games ✓
+    [25/88] Saturday U14 Boys 4... 146 players, 73 games ✓
+    [26/88] Saturday U14 Boys 5... 144 players, 52 games ✓
+    [27/88] Saturday U14 Boys 6... 178 players, 76 games ✓
+    [28/88] Saturday U14 Boys 7... 163 players, 72 games ✓
+    [29/88] Saturday U14 Boys 8... 168 players, 54 games ✓
+    [30/88] Saturday U14 Boys 9... 139 players, 63 games ✓
+    [31/88] Saturday U14 Boys Div 10... 118 players, 37 games ✓
+    [32/88] Saturday U14 Boys Div 11... 123 players, 57 games ✓
+    [33/88] Saturday U14 Boys Div 12... 109 players, 41 games ✓
+    [34/88] Saturday U14 Boys Div 13... 88 players, 36 games ✓
+    [35/88] Saturday U16 Boys 1... 94 players, 51 games ✓
+    [36/88] Saturday U16 Boys 2... 122 players, 78 games ✓
+    [37/88] Saturday U16 Boys 3... 138 players, 61 games ✓
+    [38/88] Saturday U16 Boys 4... 173 players, 71 games ✓
+    [39/88] Saturday U16 Boys 5... 142 players, 54 games ✓
+    [40/88] Saturday U16 Boys 6... 130 players, 64 games ✓
+    [41/88] Saturday U16 Boys 7... 162 players, 74 games ✓
+    [42/88] Saturday U16 Boys 8... 148 players, 75 games ✓
+    [43/88] Saturday U16 Boys 9... 118 players, 64 games ✓
+    [44/88] Saturday U16 Boys Div 10... 119 players, 52 games ✓
+    [45/88] Saturday U16 Boys Div 11... 125 players, 54 games ✓
+    [46/88] Saturday U18 Boys 1... 61 players, 63 games ✓
+    [47/88] Saturday U18 Boys 2... 59 players, 52 games ✓
+    [48/88] Saturday U18 Boys 3... 92 players, 74 games ✓
+    [49/88] Saturday U18 Boys 4... 85 players, 52 games ✓
+    [50/88] Saturday U18 Boys 5... 111 players, 70 games ✓
+    [51/88] Saturday U18 Boys 5B... 63 players, 47 games ✓
+    [52/88] Saturday U18 Boys 6... 106 players, 54 games ✓
+    [53/88] Saturday U18 Boys 7... 103 players, 75 games ✓
+    [54/88] Saturday U18 Boys 8... 82 players, 49 games ✓
+    [55/88] Saturday U18 Boys 9... 79 players, 38 games ✓
+    [56/88] Sunday U10 Girls 1... 63 players, 37 games ✓
+    [57/88] Sunday U10 Girls 2... 82 players, 49 games ✓
+    [58/88] Sunday U10 Girls 3... 110 players, 50 games ✓
+    [59/88] Sunday U10 Girls 4... 113 players, 40 games ✓
+    [60/88] Sunday U10 Girls 5... 31 players, 25 games ✓
+    [61/88] Sunday U12 Girls 1... 81 players, 47 games ✓
+    [62/88] Sunday U12 Girls 2... 119 players, 53 games ✓
+    [63/88] Sunday U12 Girls 3... 144 players, 62 games ✓
+    [64/88] Sunday U12 Girls 4... 145 players, 43 games ✓
+    [65/88] Sunday U12 Girls 4B... 47 players, 33 games ✓
+    [66/88] Sunday U12 Girls 5... 119 players, 43 games ✓
+    [67/88] Sunday U12 Girls 6... 85 players, 48 games ✓
+    [68/88] Sunday U14 Girls 1... 77 players, 48 games ✓
+    [69/88] Sunday U14 Girls 2... 113 players, 52 games ✓
+    [70/88] Sunday U14 Girls 3... 133 players, 53 games ✓
+    [71/88] Sunday U14 Girls 4... 125 players, 61 games ✓
+    [72/88] Sunday U14 Girls 5... 120 players, 67 games ✓
+    [73/88] Sunday U14 Girls 6... 127 players, 55 games ✓
+    [74/88] Sunday U14 Girls 7... 97 players, 67 games ✓
+    [75/88] Sunday U16 Girls 1... 69 players, 48 games ✓
+    [76/88] Sunday U16 Girls 2... 97 players, 65 games ✓
+    [77/88] Sunday U16 Girls 3... 87 players, 48 games ✓
+    [78/88] Sunday U16 Girls 4... 129 players, 67 games ✓
+    [79/88] Sunday U16 Girls 5... 117 players, 53 games ✓
+    [80/88] Sunday U16 Girls 6A... 85 players, 65 games ✓
+    [81/88] Sunday U18 Girls 1... 81 players, 50 games ✓
+    [82/88] Sunday U18 Girls 2... 103 players, 61 games ✓
+    [83/88] Sunday U18 Girls 3... 109 players, 61 games ✓
+    [84/88] Sunday U18 Girls 4... 64 players, 35 games ✓
+    [85/88] Sunday U20 Boys 1... 73 players, 54 games ✓
+    [86/88] Sunday U20 Boys 2... 86 players, 63 games ✓
+    [87/88] Sunday U20 Boys 3... 102 players, 65 games ✓
+    [88/88] Sunday U20 Boys 4... 90 players, 75 games ✓
+  After-School Wednesday Junior Domestic Competition (U8-10) / Summer 2025/26: 2 grades
+    [1/2] Wednesday U10 Mixed... 70 players, 50 games ✓
+    [2/2] Wednesday U10 Mixed Modified... 59 players, 58 games ✓
+  After-School Wednesday Junior Domestic Competition (U8-10) / Term 3, 2025: 2 grades
+    [1/2] Wednesday U8 Mixed... 43 players, 32 games ✓
+    [2/2] Wednesday U10 Mixed... 29 players, 20 games ✓
+  Junior Domestic After-School / Spring 2025: 3 grades
+    [1/3] Friday Whitehorse YR.1 Boys... 54 players, 43 games ✓
+    [2/3] Friday Whitehorse YR.1 Girls... 72 players, 74 games ✓
+    [3/3] Friday Whitehorse Train & Play... 54 players, 43 games ✓
+  Junior Domestic After-School / Autumn 2025: 35 grades
+    [1/35] Playball Bayside Round Robin Finals... 0 players, 36 games ✓
+    [2/35] MSAC/Bayside Crossover Grade... 0 players, 62 games ✓
+    [3/35] Tuesday MSAC/Bayside Year 5 Girls A... 50 players, 48 games ✓
+    [4/35] Tuesday MSAC/Bayside Year 5 Girls B... 79 players, 70 games ✓
+    [5/35] Tuesday MSAC/Bayside Year 6 Boys A... 55 players, 51 games ✓
+    [6/35] Tuesday MSAC/Bayside Year 6 Boys B... 78 players, 75 games ✓
+    [7/35] Tuesday MSAC/Bayside Year 6 Boys C... 59 players, 60 games ✓
+    [8/35] Tuesday MSAC/Bayside Year 6 Girls A... 51 players, 53 games ✓
+    [9/35] Tuesday MSAC/Bayside Year 6 Girls B... 53 players, 72 games ✓
+    [10/35] Tuesday MSAC/Bayside Year 6 Girls C... 33 players, 17 games ✓
+    [11/35] Wednesday MSAC/Bayside Year 4/5 Boys... 43 players, 51 games ✓
+    [12/35] Wednesday MSAC/Bayside Year 5 Boys A... 63 players, 70 games ✓
+    [13/35] Wednesday MSAC/Bayside Year 5 Boys B... 88 players, 80 games ✓
+    [14/35] Wednesday MSAC/Bayside Year 5 Boys C... 102 players, 99 games ✓
+    [15/35] Friday MSAC/Bayside Year 1 Boys AP... 99 players, 50 games ✓
+    [16/35] Friday MSAC/Bayside Year 1 Boys STH... 71 players, 33 games ✓
+    [17/35] Friday MSAC/Bayside Year 2 Boys A... 53 players, 55 games ✓
+    [18/35] Friday MSAC/Bayside Year 2 Boys B... 97 players, 86 games ✓
+    [19/35] Friday MSAC/Bayside Year 2 Boys C... 115 players, 88 games ✓
+    [20/35] Friday MSAC/Bayside Year 1 Girls AP... 79 players, 39 games ✓
+    [21/35] Friday MSAC/Bayside Year 1 Girls STH... 99 players, 48 games ✓
+    [22/35] Friday MSAC/Bayside Year 2 Girls A... 53 players, 56 games ✓
+    [23/35] Friday MSAC/Bayside Year 2 Girls B... 74 players, 62 games ✓
+    [24/35] Friday MSAC/Bayside Year 2 Girls C... 71 players, 71 games ✓
+    [25/35] Friday MSAC/Bayside Year 3 Boys A... 68 players, 67 games ✓
+    [26/35] Friday MSAC/Bayside Year 3 Boys B... 81 players, 89 games ✓
+    [27/35] Friday MSAC/Bayside Year 3 Boys C... 76 players, 85 games ✓
+    [28/35] Friday MSAC/Bayside Year 3 Girls A... 48 players, 49 games ✓
+    [29/35] Friday MSAC/Bayside Year 3 Girls B... 71 players, 62 games ✓
+    [30/35] Friday MSAC/Bayside Year 3 Girls C... 86 players, 79 games ✓
+    [31/35] Friday MSAC/Bayside Year 4 Boys A... 77 players, 79 games ✓
+    [32/35] Friday MSAC/Bayside Year 4 Boys B... 86 players, 88 games ✓
+    [33/35] Friday MSAC/Bayside Year 4 Girls A... 62 players, 63 games ✓
+    [34/35] Friday MSAC/Bayside Year 4 Girls B... 70 players, 59 games ✓
+    [35/35] Friday MSAC/Bayside Year 4 Girls C... 65 players, 61 games ✓
+  Junior Domestic After-School / Spring 2024: 6 grades
+    [1/6] Tuesday MSAC/Bayside YR.5 GIRLS... 0 players, 0 games ✓
+    [2/6] Tuesday MSAC/Bayside YR6 GIRLS... 0 players, 0 games ✓
+    [3/6] Tuesday MSAC/Bayside YR.6 BOYS... 0 players, 0 games ✓
+    [4/6] Wednesday GESAC PREP Boys & Girls... 0 players, 0 games ✓
+    [5/6] Wednesday MSAC YR5.BOYS... 0 players, 0 games ✓
+    [6/6] Friday Whitehorse PREP Boys & Girls... 0 players, 0 games ✓
+  Playball Bayside / Spring 2025: 37 grades
+    [1/37] Round Robin Finals... 401 players, 54 games ✓
+    [2/37] Tuesday Year 5 Girls A... 49 players, 47 games ✓
+    [3/37] Tuesday Year 5 Girls B... 71 players, 67 games ✓
+    [4/37] Tuesday Year 6 Boys A... 60 players, 55 games ✓
+    [5/37] Tuesday Year 6 Boys B... 83 players, 81 games ✓
+    [6/37] Tuesday Year 6 Boys C... 40 players, 33 games ✓
+    [7/37] Tuesday Year 6 Girls A... 68 players, 63 games ✓
+    [8/37] Tuesday Year 6 Girls B... 46 players, 47 games ✓
+    [9/37] Tuesday Year 6 Girls C... 33 players, 34 games ✓
+    [10/37] Wednesday Year 4/5 Boys... 54 players, 43 games ✓
+    [11/37] Wednesday Year 5 Boys A... 83 players, 85 games ✓
+    [12/37] Wednesday Year 5 Boys B... 71 players, 71 games ✓
+    [13/37] Wednesday Year 5 Boys C... 86 players, 79 games ✓
+    [14/37] Friday Year 1 Boys A... 73 players, 57 games ✓
+    [15/37] Friday Year 1 Boys B... 69 players, 63 games ✓
+    [16/37] Friday Year 1 Boys C... 84 players, 70 games ✓
+    [17/37] Friday Year 2 Boys A... 77 players, 78 games ✓
+    [18/37] Friday Year 2 Boys B... 105 players, 96 games ✓
+    [19/37] Friday Year 2 Boys C... 92 players, 85 games ✓
+    [20/37] Friday Year 1 Girls A... 45 players, 49 games ✓
+    [21/37] Friday Year 1 Girls B... 69 players, 57 games ✓
+    [22/37] Friday Year 1 Girls C... 73 players, 63 games ✓
+    [23/37] Friday Year 2 Girls A... 62 players, 54 games ✓
+    [24/37] Friday Year 2 Girls B... 82 players, 76 games ✓
+    [25/37] Friday Year 2 Girls C... 57 players, 62 games ✓
+    [26/37] Friday Year 3 Boys A... 71 players, 67 games ✓
+    [27/37] Friday Year 3 Boys B... 105 players, 99 games ✓
+    [28/37] Friday Year 3 Boys C... 91 players, 75 games ✓
+    [29/37] Friday Year 3 Girls A... 69 players, 57 games ✓
+    [30/37] Friday Year 3 Girls B... 94 players, 75 games ✓
+    [31/37] Friday Year 3 Girls C... 67 players, 63 games ✓
+    [32/37] Friday Year 4 Boys A... 66 players, 57 games ✓
+    [33/37] Friday Year 4 Boys B... 70 players, 49 games ✓
+    [34/37] Friday Year 4 Boys C... 77 players, 65 games ✓
+    [35/37] Friday Year 4 Girls A... 71 players, 55 games ✓
+    [36/37] Friday Year 4 Girls B... 79 players, 73 games ✓
+    [37/37] Friday Year 4 Girls C... 65 players, 66 games ✓
+  Saturday Junior Domestic / Summer 2025/26: 17 grades
+    [1/17] Saturday U12 Boys A... 61 players, 28 games ✓
+    [2/17] Saturday U12 Boys B/C... 88 players, 51 games ✓
+    [3/17] Saturday U12 Girls A/B... 50 players, 33 games ✓
+    [4/17] Saturday U14 Boys A... 64 players, 35 games ✓
+    [5/17] Saturday U14 Boys B... 100 players, 48 games ✓
+    [6/17] Saturday U14 Boys C... 54 players, 27 games ✓
+    [7/17] Saturday U14 Girls A/B... 61 players, 33 games ✓
+    [8/17] Saturday U16 Boys A... 70 players, 38 games ✓
+    [9/17] Saturday U16 Boys B... 98 players, 46 games ✓
+    [10/17] Saturday U16 Boys C... 72 players, 37 games ✓
+    [11/17] Saturday U16 Girls A... 62 players, 25 games ✓
+    [12/17] Saturday U16 Girls B... 69 players, 33 games ✓
+    [13/17] Saturday U18 Boys A... 89 players, 51 games ✓
+    [14/17] Saturday U18 Boys B... 122 players, 49 games ✓
+    [15/17] Saturday U18 Boys C... 50 players, 19 games ✓
+    [16/17] Saturday U19 Girls... 44 players, 25 games ✓
+    [17/17] Saturday U21 Boys... 68 players, 47 games ✓
+  South Eastern Junior Basketball Tournament / 2025: 65 grades
+    [1/65] U10 Boys A Grade... 80 players, 23 games ✓
+    [2/65] U10 Boys B Grade... 82 players, 23 games ✓
+    [3/65] U10 Boys C Grade... 80 players, 23 games ✓
+    [4/65] U10 Girls A Grade... 90 players, 23 games ✓
+    [5/65] U10 Girls B Grade... 76 players, 23 games ✓
+    [6/65] U12 Boys A Grade... 95 players, 23 games ✓
+    [7/65] U12 Boys B Grade... 91 players, 23 games ✓
+    [8/65] U12 Boys C Grade... 92 players, 23 games ✓
+    [9/65] U12 Boys D Grade... 49 players, 13 games ✓
+    [10/65] U12 Boys E Grade... 87 players, 23 games ✓
+    [11/65] U12 Boys F Grade... 89 players, 23 games ✓
+    [12/65] U12 Boys G Grade... 53 players, 15 games ✓
+    [13/65] U12 Boys H Grade... 91 players, 23 games ✓
+    [14/65] U12 Boys I Grade... 92 players, 23 games ✓
+    [15/65] U12 Boys J Grade... 70 players, 23 games ✓
+    [16/65] U12 Boys K Grade... 105 players, 27 games ✓
+    [17/65] U12 Boys L Grade... 48 players, 15 games ✓
+    [18/65] U12 Boys M Grade... 40 players, 13 games ✓
+    [19/65] U12 Girls A Grade... 49 players, 13 games ✓
+    [20/65] U12 Girls B Grade... 88 players, 23 games ✓
+    [21/65] U12 Girls C Grade... 95 players, 23 games ✓
+    [22/65] U12 Girls D Grade... 91 players, 23 games ✓
+    [23/65] U12 Girls E Grade... 85 players, 23 games ✓
+    [24/65] U12 Girls F Grade... 103 players, 27 games ✓
+    [25/65] U14 Boys A Grade... 45 players, 13 games ✓
+    [26/65] U14 Boys B Grade... 71 players, 19 games ✓
+    [27/65] U14 Boys C Grade... 92 players, 23 games ✓
+    [28/65] U14 Boys D Grade... 45 players, 13 games ✓
+    [29/65] U14 Boys E Grade... 89 players, 23 games ✓
+    [30/65] U14 Boys F Grade... 91 players, 23 games ✓
+    [31/65] U14 Boys G Grade... 92 players, 23 games ✓
+    [32/65] U14 Boys H Grade... 91 players, 23 games ✓
+    [33/65] U14 Boys I Grade... 55 players, 15 games ✓
+    [34/65] U14 Boys J Grade... 93 players, 23 games ✓
+    [35/65] U14 Boys K Grade... 111 players, 27 games ✓
+    [36/65] U14 Girls A Grade... 45 players, 13 games ✓
+    [37/65] U14 Girls B Grade... 93 players, 23 games ✓
+    [38/65] U14 Girls C Grade... 84 players, 23 games ✓
+    [39/65] U14 Girls D Grade... 92 players, 23 games ✓
+    [40/65] U14 Girls E Grade... 76 players, 19 games ✓
+    [41/65] U14 Girls F Grade... 68 players, 19 games ✓
+    [42/65] U14 Girls G Grade... 52 players, 15 games ✓
+    [43/65] U16 Boys A Grade... 37 players, 9 games ✓
+    [44/65] U16 Boys B Grade... 83 players, 23 games ✓
+    [45/65] U16 Boys C Grade... 88 players, 23 games ✓
+    [46/65] U16 Boys D Grade... 71 players, 19 games ✓
+    [47/65] U16 Boys E Grade... 78 players, 19 games ✓
+    [48/65] U16 Boys F Grade... 90 players, 23 games ✓
+    [49/65] U16 Boys G Grade... 45 players, 13 games ✓
+    [50/65] U16 Boys H Grade... 63 players, 18 games ✓
+    [51/65] U16 Girls A Grade... 36 players, 13 games ✓
+    [52/65] U16 Girls B Grade... 38 players, 9 games ✓
+    [53/65] U16 Girls C Grade... 91 players, 23 games ✓
+    [54/65] U16 Girls D Grade... 90 players, 23 games ✓
+    [55/65] U16 Girls E Grade... 42 players, 13 games ✓
+    [56/65] U18 Boys A Grade... 58 players, 19 games ✓
+    [57/65] U18 Boys B Grade... 72 players, 19 games ✓
+    [58/65] U18 Boys C Grade... 40 players, 13 games ✓
+    [59/65] U18 Boys D Grade... 91 players, 23 games ✓
+    [60/65] U18 Boys E Grade... 35 players, 13 games ✓
+    [61/65] U18 Girls A Grade... 88 players, 23 games ✓
+    [62/65] U18 Girls B Grade... 39 players, 13 games ✓
+    [63/65] U18 Girls C Grade... 36 players, 9 games ✓
+    [64/65] U20 Boys A... 55 players, 15 games ✓
+    [65/65] U20 Boys B... 51 players, 13 games ✓
+  ✓ Done: 728 grades, 65776 players, 36496 games
+
+[2/887] ACT (ACJBC) (607553f9)
+  3 competition-seasons
+  The Commercial Club ACJBC / 2025: 8 grades
+    [1/8] U14 Boys D1... 139 players, 56 games ✓
+    [2/8] U14 Girls D1... 136 players, 56 games ✓
+    [3/8] U16 Boys D1... 119 players, 48 games ✓
+    [4/8] U16 Girls D1... 117 players, 48 games ✓
+    [5/8] U18 Boys Cross Pool... 83 players, 5 games ✓
+    [6/8] U18 Boys D1... 97 players, 35 games ✓
+    [7/8] U18 Girls Cross Pool... 96 players, 5 games ✓
+    [8/8] U18 Girls D1... 100 players, 35 games ✓
+  The Commercial Club ACJBC / 2026: 8 grades
+    [1/8] U14 Boys D1... 141 players, 56 games ✓
+    [2/8] U14 Girls D1... 117 players, 48 games ✓
+    [3/8] U16 Boys D1... 126 players, 48 games ✓
+    [4/8] U16 Girls D1... 121 players, 48 games ✓
+    [5/8] U18 Boys Cross Pool... 96 players, 5 games ✓
+    [6/8] U18 Boys D1... 104 players, 35 games ✓
+    [7/8] U18 Girls Cross Pool... 98 players, 5 games ✓
+    [8/8] U18 Girls D1... 102 players, 35 games ✓
+  ✓ Done: 16 grades, 1792 players, 568 games
+
+[3/887] Aberfeldie Jets Basketball Club (9744fcd8)
+  11 competition-seasons
+  Junior Domestic / Summer 2025/26: 36 grades
+    [1/36] U8 Mixed GREEN... 46 players, 23 games ✓
+    [2/36] U8 Mixed RED... 49 players, 24 games ✓
+    [3/36] U8 Mixed YELLOW... 62 players, 31 games ✓
+    [4/36] U10 Boys Division 1... 57 players, 27 games ✓
+    [5/36] U10 Boys Division 2... 68 players, 29 games ✓
+    [6/36] U10 Boys Division 3... 68 players, 32 games ✓
+    [7/36] U10 Girls Division 1... 60 players, 32 games ✓
+    [8/36] U10 Girls Division 2... 56 players, 27 games ✓
+    [9/36] U12 Boys Division 1... 66 players, 32 games ✓
+    [10/36] U12 Boys Division 2... 68 players, 32 games ✓
+    [11/36] U12 Boys Division 3... 87 players, 40 games ✓
+    [12/36] U12 Boys Division 4... 91 players, 40 games ✓
+    [13/36] U12 Girls Division 1... 66 players, 32 games ✓
+    [14/36] U12 Girls Division 2... 64 players, 32 games ✓
+    [15/36] U14 Boys Division 1... 68 players, 32 games ✓
+    [16/36] U14 Boys Division 2... 63 players, 32 games ✓
+    [17/36] U14 Boys Division 3... 69 players, 32 games ✓
+    [18/36] U14 Boys Division 4... 69 players, 35 games ✓
+    [19/36] U14 Boys Division 5... 85 players, 40 games ✓
+    [20/36] U14 Girls Division 1... 63 players, 26 games ✓
+    [21/36] U14 Girls Division 2... 80 players, 38 games ✓
+    [22/36] U14 Girls Division 3... 73 players, 32 games ✓
+    [23/36] U16 Boys Division 1... 71 players, 32 games ✓
+    [24/36] U16 Boys Division 2... 73 players, 32 games ✓
+    [25/36] U16 Boys Division 3... 60 players, 32 games ✓
+    [26/36] U16 Boys Division 4... 68 players, 35 games ✓
+    [27/36] U16 Boys Division 5... 61 players, 32 games ✓
+    [28/36] U16 Girls Division 1... 65 players, 32 games ✓
+    [29/36] U16 Girls Division 2... 58 players, 24 games ✓
+    [30/36] U16 Girls Division 3... 53 players, 24 games ✓
+    [31/36] U19 Boys Division 1... 60 players, 32 games ✓
+    [32/36] U19 Boys Division 2... 75 players, 34 games ✓
+    [33/36] U19 Boys Division 3... 65 players, 27 games ✓
+    [34/36] U19 Boys Division 4... 51 players, 27 games ✓
+    [35/36] U19 Girls Division 1... 52 players, 27 games ✓
+    [36/36] U19 Girls Division 2... 65 players, 32 games ✓
+  Junior Domestic / Summer 2025/26: 76 grades
+    [1/76] Saturday U8 Mixed A Grade... 52 players, 39 games ✓
+    [2/76] Saturday U8 Mixed B Grade... 54 players, 39 games ✓
+    [3/76] Saturday U10 Boys A Grade... 31 players, 25 games ✓
+    [4/76] Saturday U10 Boys B Grade... 48 players, 31 games ✓
+    [5/76] Saturday U10 Boys C Grade... 53 players, 33 games ✓
+    [6/76] Saturday U10 Boys D Grade... 46 players, 33 games ✓
+    [7/76] Saturday U10 Boys E Grade... 57 players, 33 games ✓
+    [8/76] Saturday U10 Boys F Grade... 60 players, 33 games ✓
+    [9/76] Saturday U10 Boys G Grade... 53 players, 33 games ✓
+    [10/76] Saturday U10 Boys H Grade... 55 players, 33 games ✓
+    [11/76] Saturday U10 Girls AB Grade... 68 players, 44 games ✓
+    [12/76] Saturday U10 Girls CD Grade... 64 players, 44 games ✓
+    [13/76] Saturday U10 Girls EF Grade... 61 players, 44 games ✓
+    [14/76] Saturday U12 Boys A Grade... 48 players, 33 games ✓
+    [15/76] Saturday U12 Boys B Grade... 57 players, 33 games ✓
+    [16/76] Saturday U12 Boys C Grade... 68 players, 44 games ✓
+    [17/76] Saturday U12 Boys D Grade... 71 players, 44 games ✓
+    [18/76] Saturday U12 Boys E Grade... 64 players, 43 games ✓
+    [19/76] Saturday U12 Boys F Grade... 72 players, 44 games ✓
+    [20/76] Saturday U12 Boys G Grade... 94 players, 54 games ✓
+    [21/76] Saturday U12 Boys H Grade... 86 players, 34 games ✓
+    [22/76] Saturday U12 Boys I Grade... 64 players, 43 games ✓
+    [23/76] Saturday U12 Girls A Grade... 58 players, 33 games ✓
+    [24/76] Saturday U12 Girls B Grade... 71 players, 44 games ✓
+    [25/76] Saturday U12 Girls C Grade... 66 players, 44 games ✓
+    [26/76] Saturday U12 Girls D Grade... 56 players, 33 games ✓
+    [27/76] Saturday U12 Girls E Grade... 39 players, 22 games ✓
+    [28/76] Saturday U14 Boys A Grade... 49 players, 33 games ✓
+    [29/76] Saturday U14 Boys B Grade... 56 players, 33 games ✓
+    [30/76] Saturday U14 Boys C Grade... 76 players, 44 games ✓
+    [31/76] Saturday U14 Boys D Grade... 57 players, 33 games ✓
+    [32/76] Saturday U14 Boys E Grade... 73 players, 44 games ✓
+    [33/76] Saturday U14 Boys F Grade... 67 players, 33 games ✓
+    [34/76] Saturday U14 Boys G Grade... 106 players, 52 games ✓
+    [35/76] Saturday U14 Boys H Grade... 68 players, 33 games ✓
+    [36/76] Saturday U14 Boys I Grade... 78 players, 55 games ✓
+    [37/76] Saturday U14 Boys J Grade... 79 players, 55 games ✓
+    [38/76] Saturday U14 Boys K Grade... 49 players, 33 games ✓
+    [39/76] Saturday U14 Girls AB Grade... 61 players, 36 games ✓
+    [40/76] Saturday U14 Girls C Grade... 62 players, 33 games ✓
+    [41/76] Saturday U14 Girls D Grade... 81 players, 46 games ✓
+    [42/76] Saturday U14 Girls E Grade... 63 players, 41 games ✓
+    [43/76] Saturday U14 Girls F Grade... 55 players, 33 games ✓
+    [44/76] Saturday U16 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [45/76] Saturday U16 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [46/76] Saturday U16 Boys C Grade... ERROR: Parse error: local_rate_limited
+    [47/76] Saturday U16 Boys D Grade... ERROR: Parse error: local_rate_limited
+    [48/76] Saturday U16 Boys E Grade... ERROR: Parse error: no healthy upstream
+    [49/76] Saturday U16 Boys F Grade... ERROR: Parse error: no healthy upstream
+    [50/76] Saturday U16 Boys G Grade... ERROR: Parse error: no healthy upstream
+    [51/76] Saturday U16 Boys H Grade... ERROR: Parse error: local_rate_limited
+    [52/76] Saturday U16 Boys I Grade... 77 players, 44 games ✓
+    [53/76] Saturday U16 Boys J Grade... ERROR: Parse error: no healthy upstream
+    [54/76] Saturday U16 Girls A Grade... ERROR: Parse error: no healthy upstream
+    [55/76] Saturday U16 Girls B Grade... 49 players, 33 games ✓
+    [56/76] Saturday U16 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [57/76] Saturday U16 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [58/76] Saturday U16 Girls E Grade... 51 players, 33 games ✓
+    [59/76] Saturday U16 Girls F Grade... ERROR: Parse error: no healthy upstream
+    [60/76] Saturday U16 Girls G Grade... ERROR: Parse error: no healthy upstream
+    [61/76] Saturday U18 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [62/76] Saturday U18 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [63/76] Saturday U18 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [64/76] Saturday U18 Boys D Grade... ERROR: Parse error: no healthy upstream
+    [65/76] Saturday U18 Boys E Grade... ERROR: Parse error: local_rate_limited
+    [66/76] Saturday U18 Boys F Grade... ERROR: Parse error: no healthy upstream
+    [67/76] Saturday U18 Boys G Grade... ERROR: Parse error: no healthy upstream
+    [68/76] Saturday U18 Boys H Grade... ERROR: Parse error: no healthy upstream
+    [69/76] Saturday U19 Girls A Grade... ERROR: Parse error: no healthy upstream
+    [70/76] Saturday U19 Girls B Grade... ERROR: Parse error: no healthy upstream
+    [71/76] Saturday U19 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [72/76] Saturday U19 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [73/76] Sunday U20 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [74/76] Sunday U20 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [75/76] Sunday U20 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [76/76] Sunday U20 Boys D Grade... ERROR: Parse error: local_rate_limited
+  Junior Domestic / Winter 2025: 66 grades
+    [1/66] Saturday U8 Mixed... ERROR: Parse error: local_rate_limited
+    [2/66] Saturday U10 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [3/66] Saturday U10 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [4/66] Saturday U10 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [5/66] Saturday U10 Boys D Grade... ERROR: Parse error: no healthy upstream
+    [6/66] Saturday U10 Boys E Grade... ERROR: Parse error: no healthy upstream
+    [7/66] Saturday U10 Boys F Grade... ERROR: Parse error: no healthy upstream
+    [8/66] Saturday U10 Girls A Grade... ERROR: Parse error: local_rate_limited
+    [9/66] Saturday U10 Girls B Grade... ERROR: Parse error: local_rate_limited
+    [10/66] Saturday U10 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [11/66] Saturday U10 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [12/66] Saturday U12 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [13/66] Saturday U12 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [14/66] Saturday U12 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [15/66] Saturday U12 Boys D Grade... ERROR: Parse error: no healthy upstream
+    [16/66] Saturday U12 Boys E Grade... ERROR: Parse error: no healthy upstream
+    [17/66] Saturday U12 Boys F Grade... ERROR: Parse error: no healthy upstream
+    [18/66] Saturday U12 Boys G Grade... ERROR: Parse error: no healthy upstream
+    [19/66] Saturday U12 Boys H Grade... ERROR: Parse error: no healthy upstream
+    [20/66] Saturday U12 Boys I Grade... ERROR: Parse error: no healthy upstream
+    [21/66] Saturday U12 Girls A Grade... ERROR: Parse error: no healthy upstream
+    [22/66] Saturday U12 Girls B Grade... ERROR: Parse error: no healthy upstream
+    [23/66] Saturday U12 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [24/66] Saturday U12 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [25/66] Saturday U12 Girls E Grade... ERROR: Parse error: no healthy upstream
+    [26/66] Saturday U14 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [27/66] Saturday U14 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [28/66] Saturday U14 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [29/66] Saturday U14 Boys D Grade... 107 players, 64 games ✓
+    [30/66] Saturday U14 Boys E Grade... 109 players, 72 games ✓
+    [31/66] Saturday U14 Boys F Grade... 109 players, 83 games ✓
+    [32/66] Saturday U14 Boys G Grade... 124 players, 85 games ✓
+    [33/66] Saturday U14 Boys H Grade... 95 players, 67 games ✓
+    [34/66] Saturday U14 Boys I Grade... ERROR: Parse error: local_rate_limited
+    [35/66] Saturday U14 Girls A Grade... ERROR: Parse error: upstream connect error or disconnect/reset before headers. reset reason: connection termination
+    [36/66] Saturday U14 Girls B Grade... ERROR: Parse error: no healthy upstream
+    [37/66] Saturday U14 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [38/66] Saturday U14 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [39/66] Saturday U14 Girls E Grade... ERROR: Parse error: no healthy upstream
+    [40/66] Saturday U16 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [41/66] Saturday U16 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [42/66] Saturday U16 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [43/66] Saturday U16 Boys D Grade... ERROR: Parse error: no healthy upstream
+    [44/66] Saturday U16 Boys E Grade... ERROR: Parse error: no healthy upstream
+    [45/66] Saturday U16 Boys F Grade... ERROR: Parse error: no healthy upstream
+    [46/66] Saturday U16 Boys G Grade... ERROR: Parse error: no healthy upstream
+    [47/66] Saturday U16 Boys H Grade... ERROR: Parse error: no healthy upstream
+    [48/66] Saturday U16 Boys I Grade... ERROR: Parse error: no healthy upstream
+    [49/66] Saturday U16 Girls A Grade... ERROR: Parse error: no healthy upstream
+    [50/66] Saturday U16 Girls B Grade... ERROR: Parse error: no healthy upstream
+    [51/66] Saturday U16 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [52/66] Saturday U16 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [53/66] Saturday U16 Girls E Grade... ERROR: Parse error: no healthy upstream
+    [54/66] Saturday U16 Girls F Grade... ERROR: Parse error: no healthy upstream
+    [55/66] Saturday U18 Boys A Grade... ERROR: Parse error: no healthy upstream
+    [56/66] Saturday U18 Boys B Grade... ERROR: Parse error: no healthy upstream
+    [57/66] Saturday U18 Boys C Grade... ERROR: Parse error: no healthy upstream
+    [58/66] Saturday U18 Boys D Grade... ERROR: Parse error: no healthy upstream
+    [59/66] Saturday U18 Boys E Grade... ERROR: Parse error: no healthy upstream
+    [60/66] Saturday U18 Boys F Grade... ERROR: Parse error: no healthy upstream
+    [61/66] Saturday U18 Boys G Grade... ERROR: Parse error: no healthy upstream
+    [62/66] Saturday U19 Girls A/B Grade... ERROR: Parse error: no healthy upstream
+    [63/66] Saturday U19 Girls C Grade... ERROR: Parse error: no healthy upstream
+    [64/66] Saturday U19 Girls D Grade... ERROR: Parse error: no healthy upstream
+    [65/66] Sunday U20 Boys A/B Grade... ERROR: Parse error: no healthy upstream
+    [66/66] Sunday U20 Boys C/D Grade... ERROR: Parse error: no healthy upstream
+  ERROR on org: Parse error: no healthy upstream
+
+[4/887] Active Basketball Association (68b65265)
+  ERROR on org: Parse error: no healthy upstream
+
+[5/887] Aitken Creek Ravens Basketball Club (f0a2a314)
+  ERROR on org: Parse error: no healthy upstream
+
+[6/887] Alamanda Basketball Club Inc. (09a5c177)
+  ERROR on org: Parse error: no healthy upstream
+
+[7/887] Albert Park Lakers Basketball Club (13b6cbd4)
+  ERROR on org: Parse error: no healthy upstream
+
+[8/887] Albury Cougars Basketball Club (183c5701)
+  ERROR on org: Parse error: no healthy upstream
+
+[9/887] Albury/Wodonga (ACJBC) (91ffac7c)
+  ERROR on org: Parse error: no healthy upstream
+
+[10/887] Albury/Wodonga Bandits Basketball Club (20a8a588)
+  No competitions/seasons found
+
+[11/887] Alcheringa Saints Basketball Club (8c9e507c)
+  12 competition-seasons
+  Domestic / Summer 2022/23: 28 grades
+    [1/28] Under 12 Girls... ERROR: Parse error: local_rate_limited
+    [2/28] Under 17 Girls Division 1... ERROR: Parse error: local_rate_limited
+    [3/28] Under 17 Girls Division 2... ERROR: Parse error: local_rate_limited
+    [4/28] B1 Men... ERROR: Parse error: local_rate_limited
+    [5/28] B2 Men... ERROR: Parse error: local_rate_limited
+    [6/28] B3 Men... ERROR: Parse error: no healthy upstream
+    [7/28] Under 14 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [8/28] Under 14 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [9/28] Under 14 Boys Division 2B... ERROR: Parse error: no healthy upstream
+    [10/28] Under 14 Girls Division 1... ERROR: Parse error: no healthy upstream
+    [11/28] Under 14 Girls Division 2... ERROR: Parse error: no healthy upstream
+    [12/28] Under 16 Boys Division 2B... ERROR: Parse error: no healthy upstream
+    [13/28] A Men... ERROR: Parse error: no healthy upstream
+    [14/28] Women's Premier League... ERROR: Parse error: no healthy upstream
+    [15/28] Under 8 Boys... ERROR: Parse error: no healthy upstream
+    [16/28] Under 8 Girls... ERROR: Parse error: no healthy upstream
+    [17/28] Under 16 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [18/28] Under 16 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [19/28] Men's Premier League... ERROR: Parse error: no healthy upstream
+    [20/28] A Women... ERROR: Parse error: no healthy upstream
+    [21/28] Under 12 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [22/28] Under 18 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [23/28] Under 18 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [24/28] Under 10 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [25/28] Under 10 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [26/28] Under 10 Girls... ERROR: Parse error: no healthy upstream
+    [27/28] Under 12 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [28/28] Under 12 Boys Division 2B... ERROR: Parse error: no healthy upstream
+  ERROR on org: Parse error: no healthy upstream
+
+[12/887] Alexandra & District Basketball Association (90b3f927)
+  ERROR on org: Parse error: no healthy upstream
+
+[13/887] All Saints Basketball Club (2357e7ae)
+  ERROR on org: Parse error: no healthy upstream
+
+[14/887] All Stars Basketball Club (Knox) (796aaa86)
+  ERROR on org: Parse error: no healthy upstream
+
+[15/887] AlphaWolf Basketball Club (d8af2858)
+  ERROR on org: Parse error: no healthy upstream
+
+[16/887] Altona Bay Basketball Association (7872909d)
+  ERROR on org: Parse error: no healthy upstream
+
+[17/887] Altona Gators Basketball Club (229e1ac1)
+  ERROR on org: Parse error: no healthy upstream
+
+[18/887] Altona Laverton Eagles Basketball Club (411020e6)
+  ERROR on org: Parse error: no healthy upstream
+
+[19/887] Altona Meadows Sharks Basketball Club (3f1d4519)
+  ERROR on org: Parse error: no healthy upstream
+
+[20/887] Altona Pirates Basketball Club Inc. (468a0769)
+  ERROR on org: Parse error: no healthy upstream
+
+[21/887] Anglesea Aireys Basketball Club (57740eb3)
+  ERROR on org: Parse error: no healthy upstream
+
+[22/887] Apollo Rockets Basketball Club (c5eb4baf)
+  ERROR on org: Parse error: no healthy upstream
+
+[23/887] Ararat Basketball Association (a3b55da3)
+  ERROR on org: Parse error: no healthy upstream
+
+[24/887] Ararat Community Sports (ceaaf456)
+  ERROR on org: Parse error: no healthy upstream
+
+[25/887] Ararat Redbacks Basketball Club (6b648037)
+  41 competition-seasons
+  [ARCHIVED] Horsham Intersport Basketball Tournament / 2023: 13 grades
+    [1/13] U12 Boys... 89 players, 24 games ✓
+    [2/13] U12 Girls... ERROR: Parse error: local_rate_limited
+    [3/13] U14 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [4/13] U14 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [5/13] U14 Girls Division 1... ERROR: Parse error: no healthy upstream
+    [6/13] U14 Girls Division 2... ERROR: Parse error: no healthy upstream
+    [7/13] U16 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [8/13] U16 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [9/13] U16 Girls Division 1... ERROR: Parse error: no healthy upstream
+    [10/13] U16 Girls Division 2... ERROR: Parse error: no healthy upstream
+    [11/13] U18 Boys Division 1... ERROR: Parse error: no healthy upstream
+    [12/13] U18 Boys Division 2... ERROR: Parse error: no healthy upstream
+    [13/13] U18 Girls... ERROR: Parse error: no healthy upstream
+  ERROR on org: Parse error: no healthy upstream
+
+[26/887] Arrows Basketball Club (ff6a9072)
+  ERROR on org: Parse error: no healthy upstream
+
+[27/887] Ashwood Wolves Basketball Club (fd0fe982)
+  ERROR on org: Parse error: no healthy upstream
+
+[28/887] Ashy Basketball Club (2a09631b)
+  1 competition-seasons
+  Senior Domestic / Autumn 2026: 29 grades
+    [1/29] Monday Open Men Section 01... 0 players, 17 games ✓
+    [2/29] Monday Open Men Section 02... 0 players, 13 games ✓
+    [3/29] Monday Open Men Section 03... 0 players, 15 games ✓
+    [4/29] Monday Open Men Section 04... 0 players, 14 games ✓
+    [5/29] Monday Open Men Section 05... 0 players, 15 games ✓
+    [6/29] Monday Open Men Section 06... 0 players, 15 games ✓
+    [7/29] Monday Open Men Section 07... 0 players, 15 games ✓
+    [8/29] Monday Open Men Section 08... 0 players, 17 games ✓
+    [9/29] Monday Open Men Section 09... 0 players, 17 games ✓
+    [10/29] Monday Open Men Section 10... 0 players, 19 games ✓
+    [11/29] Tuesday Open Women Section 1... 0 players, 15 games ✓
+    [12/29] Tuesday Open Women Section 2... 0 players, 9 games ✓
+    [13/29] Wednesday Open Men Section 1... 0 players, 16 games ✓
+    [14/29] Wednesday Open Men Section 2... 0 players, 13 games ✓
+    [15/29] Wednesday Open Men Section 3... 0 players, 15 games ✓
+    [16/29] Wednesday Open Men Section 4... 0 players, 15 games ✓
+    [17/29] Wednesday Open Men Section 5... 0 players, 15 games ✓
+    [18/29] Wednesday Open Men Section 6... 0 players, 15 games ✓
+    [19/29] Wednesday Open Men Section 7... 0 players, 15 games ✓
+    [20/29] Wednesday Open Men Section 8... 0 players, 15 games ✓
+    [21/29] Wednesday Open Men Section 9... 0 players, 15 games ✓
+    [22/29] Thursday Open Men Section 1... 0 players, 15 games ✓
+    [23/29] Thursday Open Men Section 2... 0 players, 17 games ✓
+    [24/29] Thursday Open Men Section 3... 0 players, 13 games ✓
+    [25/29] Thursday Open Men Section 4... 0 players, 16 games ✓
+    [26/29] Thursday Open Men Section 5... 0 players, 17 games ✓
+    [27/29] Thursday Open Men Section 6... 0 players, 13 games ✓
+    [28/29] Sunday Open Mixed Section 1... 0 players, 19 games ✓
+    [29/29] Sunday Open Mixed Section 2... 0 players, 14 games ✓
+  ✓ Done: 29 grades, 0 players, 439 games
+
+[29/887] Aspendale Gardens Giants Basketball Club (2d2cf358)
+  12 competition-seasons
+  .Juniors Up to U18's & Seniors U20's & U23's / Autumn 2026: 103 grades
+    [1/103] Monday U8 Boys B Grade... 75 players, 13 games ✓
+    [2/103] Monday U9 Boys Full Height B Grade... 87 players, 15 games ✓
+    [3/103] Monday U12 Girls A Grade... 43 players, 9 games ✓
+    [4/103] Monday U12 Girls B1 Grade... 28 players, 8 games ✓
+    [5/103] Monday U12 Girls B2 Grade... 30 players, 8 games ✓
+    [6/103] Monday U12 Girls C1 Grade... 14 players, 5 games ✓
+    [7/103] Monday U12 Girls C2 Grade... 104 players, 13 games ✓
+    [8/103] Monday U12 Girls C3 Grade... 0 players, 4 games ✓
+    [9/103] Monday U12 Girls D1 Grade... 73 players, 12 games ✓
+    [10/103] Monday U12 Girls D2 Grade... 67 players, 12 games ✓
+    [11/103] Monday U18 Girls A Grade... 26 players, 7 games ✓
+    [12/103] Monday U18 Girls B Grade... 40 players, 9 games ✓
+    [13/103] Monday U18 Girls C1 Grade... 15 players, 6 games ✓
+    [14/103] Monday U18 Girls C2 Grade... 71 players, 11 games ✓
+    [15/103] Monday U18 Girls D Grade... 49 players, 11 games ✓
+    [16/103] Tuesday U8 Girls Modified A... 11 players, 3 games ✓
+    [17/103] Tuesday U8 Girls Modified B... 99 players, 17 games ✓
+    [18/103] Tuesday U14 Girls A Grade... 29 players, 8 games ✓
+    [19/103] Tuesday U14 Girls B1 Grade... 30 players, 8 games ✓
+    [20/103] Tuesday U14 Girls B2 Grade... 40 players, 9 games ✓
+    [21/103] Tuesday U14 Girls C1 Grade... 30 players, 7 games ✓
+    [22/103] Tuesday U14 Girls C2 Grade... 54 players, 10 games ✓
+    [23/103] Tuesday U14 Girls D1 Grade... 26 players, 8 games ✓
+    [24/103] Tuesday U14 Girls D2 Grade... 57 players, 10 games ✓
+    [25/103] Wednesday U16 Girls A Grade... 61 players, 14 games ✓
+    [26/103] Wednesday U16 Girls B Grade... 55 players, 13 games ✓
+    [27/103] Wednesday U16 Girls C1 Grade... 45 players, 12 games ✓
+    [28/103] Wednesday U16 Girls C2 Grade... 54 players, 12 games ✓
+    [29/103] Wednesday U16 Girls D Grade... 64 players, 15 games ✓
+    [30/103] Wednesday U18 Boys B Grade... 57 players, 14 games ✓
+    [31/103] Wednesday U18 Boys C Grade... 50 players, 12 games ✓
+    [32/103] Wednesday U18 Boys D Grade... 64 players, 15 games ✓
+    [33/103] Thursday U10 Boys A Grade... 64 players, 16 games ✓
+    [34/103] Thursday U10 Boys B1 Grade... 46 players, 11 games ✓
+    [35/103] Thursday U10 Boys B2 Grade... 59 players, 14 games ✓
+    [36/103] Thursday U10 Boys C1 Grade... 65 players, 15 games ✓
+    [37/103] Thursday U10 Boys C2 Grade... 73 players, 16 games ✓
+    [38/103] Thursday U10 Boys D Grade... 46 players, 13 games ✓
+    [39/103] Thursday U10 Girls A  Grade... 54 players, 12 games ✓
+    [40/103] Thursday U10 Girls B1 Grade... 22 players, 5 games ✓
+    [41/103] Thursday U10 Girls B2 Grade... 24 players, 5 games ✓
+    [42/103] Thursday U10 Girls C Grade... 143 players, 21 games ✓
+    [43/103] Thursday U10 Girls C1 Grade... 0 players, 6 games ✓
+    [44/103] Thursday U10 Girls C2 Grade... 0 players, 5 games ✓
+    [45/103] Friday U8 Boys Modified A Grade... 29 players, 4 games ✓
+    [46/103] Friday U8 Boys Modified B1 Grade... 67 players, 9 games ✓
+    [47/103] Friday U8 Boys Modified B2 Grade... 51 players, 5 games ✓
+    [48/103] Friday U9 Boys Full Height A... 65 players, 9 games ✓
+    [49/103] Friday U9 Boys Full Height B1... 62 players, 6 games ✓
+    [50/103] Friday U9 Boys Full Height B2... 75 players, 9 games ✓
+    [51/103] Friday U9 Boys Modified A... 116 players, 11 games ✓
+    [52/103] Friday U9 Boys Modified B... 100 players, 10 games ✓
+    [53/103] Friday U9 Girls Full Height B Grade... 59 players, 6 games ✓
+    [54/103] Friday U9 Girls Modified A... 86 players, 7 games ✓
+    [55/103] Friday U9 Girls Modified B... 93 players, 9 games ✓
+    [56/103] Saturday U12 Boys A Grade... 62 players, 10 games ✓
+    [57/103] Saturday U12 Boys B1 Grade... 55 players, 10 games ✓
+    [58/103] Saturday U12 Boys B2 Grade... 39 players, 5 games ✓
+    [59/103] Saturday U12 Boys B3 Grade... 107 players, 11 games ✓
+    [60/103] Saturday U12 Boys C1 Grade... 75 players, 11 games ✓
+    [61/103] Saturday U12 Boys C2 Grade... 69 players, 10 games ✓
+    [62/103] Saturday U12 Boys C3 Grade... 84 players, 11 games ✓
+    [63/103] Saturday U12 Boys C4 Grade... 77 players, 12 games ✓
+    [64/103] Saturday U12 Boys D1 Grade... 52 players, 9 games ✓
+    [65/103] Saturday U12 Boys D2 Grade... 55 players, 9 games ✓
+    [66/103] Saturday U12 Boys D3 Grade... 49 players, 9 games ✓
+    [67/103] Saturday U14 Boys A Grade... 79 players, 12 games ✓
+    [68/103] Saturday U14 Boys B1 Grade... 59 players, 9 games ✓
+    [69/103] Saturday U14 Boys B2 Grade... 99 players, 13 games ✓
+    [70/103] Saturday U14 Boys B3 Grade... 78 players, 11 games ✓
+    [71/103] Saturday U14 Boys B4 Grade... 169 players, 17 games ✓
+    [72/103] Saturday U14 Boys B5 Grade... 66 players, 7 games ✓
+    [73/103] Saturday U14 Boys C1 Grade... 75 players, 10 games ✓
+    [74/103] Saturday U14 Boys C2 Grade... 146 players, 16 games ✓
+    [75/103] Saturday U14 Boys C3 Grade... 30 players, 4 games ✓
+    [76/103] Saturday U14 Boys D1 Grade... 167 players, 18 games ✓
+    [77/103] Saturday U14 Boys D2 Grade... 41 players, 7 games ✓
+    [78/103] Saturday U14 Boys D3 Grade... 65 players, 11 games ✓
+    [79/103] Saturday U16 Boys A Grade... 59 players, 11 games ✓
+    [80/103] Saturday U16 Boys B1 Grade... 32 players, 4 games ✓
+    [81/103] Saturday U16 Boys B2 Grade... 42 players, 7 games ✓
+    [82/103] Saturday U16 Boys B3 Grade... 71 players, 9 games ✓
+    [83/103] Saturday U16 Boys B4 Grade... 135 players, 17 games ✓
+    [84/103] Saturday U16 Boys C1 Grade... 56 players, 9 games ✓
+    [85/103] Saturday U16 Boys C2 Grade... 72 players, 9 games ✓
+    [86/103] Saturday U16 Boys C3 Grade... 73 players, 10 games ✓
+    [87/103] Saturday U16 Boys C4 Grade... 73 players, 12 games ✓
+    [88/103] Saturday U16 Boys D1 Grade... 72 players, 11 games ✓
+    [89/103] Saturday U16 Boys D2 Grade... 63 players, 11 games ✓
+    [90/103] Saturday U18 Boys A Grade... 45 players, 9 games ✓
+    [91/103] Saturday U18 Boys B1 Grade... 36 players, 7 games ✓
+    [92/103] Saturday U18 Boys B2 Grade... 32 players, 7 games ✓
+    [93/103] Saturday U18 Boys B3 Grade... 74 players, 13 games ✓
+    [94/103] Saturday U18 Boys B4 Grade... 107 players, 17 games ✓
+    [95/103] Sunday U18 Boys C Grade... 52 players, 9 games ✓
+    [96/103] Sunday U18 Boys D Grade... 51 players, 9 games ✓
+    [97/103] Sunday U20 Boys B Grade... 45 players, 9 games ✓
+    [98/103] Sunday U20 Boys C Grade... 91 players, 15 games ✓
+    [99/103] Sunday U20 Boys D Grade... 32 players, 9 games ✓
+    [100/103] Sunday U20 Girls B Grade... 41 players, 9 games ✓
+    [101/103] Sunday U23 Boys A Grade... 12 players, 4 games ✓
+    [102/103] Sunday U23 Boys B Grade... 56 players, 13 games ✓
+    [103/103] Sunday U23 Girls A Grade... 14 players, 5 games ✓
+  .Juniors Up to U18's & Seniors U20's & U23's / Spring 2025: 102 grades
+    [1/102] Monday U8 Boys A Grade... 93 players, 66 games ✓
+    [2/102] Monday U8 Boys B Grade... 46 players, 42 games ✓
+    [3/102] Monday U9 Boys Full Height A Grade... 53 players, 41 games ✓
+    [4/102] Monday U9 Boys Full Height B/B Reserve Grade... 76 players, 70 games ✓
+    [5/102] Monday U12 Girls A/A Reserve Grade... 71 players, 73 games ✓
+    [6/102] Monday U12 Girls B1 Grade... 64 players, 51 games ✓
+    [7/102] Monday U12 Girls B2 Grade... 92 players, 71 games ✓
+    [8/102] Monday U12 Girls C1 Grade... 73 players, 51 games ✓
+    [9/102] Monday U12 Girls C2 Grade... 115 players, 62 games ✓
+    [10/102] Monday U12 Girls D1 Grade... 97 players, 56 games ✓
+    [11/102] Monday U12 Girls D2 Grade... 70 players, 54 games ✓
+    [12/102] Monday U18 Girls A Grade... 56 players, 41 games ✓
+    [13/102] Monday U18 Girls B Grade... 64 players, 52 games ✓
+    [14/102] Monday U18 Girls C1 Grade... 65 players, 54 games ✓
+    [15/102] Monday U18 Girls C2 Grade... 69 players, 66 games ✓
+    [16/102] Monday U18 Girls D Grade... 43 players, 53 games ✓
+    [17/102] Tuesday U8 Girls Modified A... 66 players, 57 games ✓
+    [18/102] Tuesday U8 Girls Modified B... 98 players, 102 games ✓
+    [19/102] Tuesday U14 Girls A Grade... 97 players, 63 games ✓
+    [20/102] Tuesday U14 Girls B1 Grade... 49 players, 39 games ✓
+    [21/102] Tuesday U14 Girls B2 Grade... 103 players, 58 games ✓
+    [22/102] Tuesday U14 Girls C1 Grade... 81 players, 69 games ✓
+    [23/102] Tuesday U14 Girls C2 Grade... 89 players, 67 games ✓
+    [24/102] Tuesday U14 Girls D1 Grade... 96 players, 57 games ✓
+    [25/102] Tuesday U14 Girls D2 Grade... 72 players, 54 games ✓
+    [26/102] Wednesday U16 Girls A Grade... 78 players, 75 games ✓
+    [27/102] Wednesday U16 Girls B/B Reserve Grade... 104 players, 96 games ✓
+    [28/102] Wednesday U16 Girls C1 Grade... 58 players, 53 games ✓
+    [29/102] Wednesday U16 Girls C2 Grade... 69 players, 55 games ✓
+    [30/102] Wednesday U16 Girls D Grade... 81 players, 63 games ✓
+    [31/102] Wednesday U18 Boys B Grade... 106 players, 78 games ✓
+    [32/102] Wednesday U18 Boys C/D Grade... 99 players, 103 games ✓
+    [33/102] Thursday U10 Boys A/A Reserve Grade... 84 players, 78 games ✓
+    [34/102] Thursday U10 Boys B1 Grade... 79 players, 58 games ✓
+    [35/102] Thursday U10 Boys B2 Grade... 100 players, 80 games ✓
+    [36/102] Thursday U10 Boys C1 Grade... 82 players, 71 games ✓
+    [37/102] Thursday U10 Boys C2 Grade... 67 players, 57 games ✓
+    [38/102] Thursday U10 Boys D Grade... 63 players, 55 games ✓
+    [39/102] Thursday U10 Girls A/A Reserve... 78 players, 77 games ✓
+    [40/102] Thursday U10 Girls B1 Grade... 103 players, 62 games ✓
+    [41/102] Thursday U10 Girls B2 Grade... 56 players, 45 games ✓
+    [42/102] Thursday U10 Girls C Grade... 102 players, 81 games ✓
+    [43/102] Friday U8 Boys Modified A Grade... 53 players, 37 games ✓
+    [44/102] Friday U8 Boys Modified B1 Grade... 68 players, 59 games ✓
+    [45/102] Friday U8 Boys Modified B2 Grade... 158 players, 66 games ✓
+    [46/102] Friday U8 Boys Modified C1 Grade... 138 players, 66 games ✓
+    [47/102] Friday U8 Boys Modified C2... 39 players, 29 games ✓
+    [48/102] Friday U9 Boys Full Height A... 87 players, 58 games ✓
+    [49/102] Friday U9 Boys Full Height B1... 152 players, 79 games ✓
+    [50/102] Friday U9 Boys Full Height B2... 64 players, 45 games ✓
+    [51/102] Friday U9 Boys Modified... 61 players, 52 games ✓
+    [52/102] Friday U9 Girls Full Height A Grade... 81 players, 55 games ✓
+    [53/102] Friday U9 Girls Full Height B/B Reserve Grade... 120 players, 88 games ✓
+    [54/102] Friday U9 Girls Modified... 80 players, 54 games ✓
+    [55/102] Saturday U12 Boys A/A Reserve Grade... 78 players, 79 games ✓
+    [56/102] Saturday U12 Boys B1 Grade... 78 players, 64 games ✓
+    [57/102] Saturday U12 Boys B2 Grade... 100 players, 55 games ✓
+    [58/102] Saturday U12 Boys B3 Grade... 120 players, 71 games ✓
+    [59/102] Saturday U12 Boys B4 Grade... 56 players, 38 games ✓
+    [60/102] Saturday U12 Boys C1 Grade... 96 players, 66 games ✓
+    [61/102] Saturday U12 Boys C2 Grade... 87 players, 67 games ✓
+    [62/102] Saturday U12 Boys C3 Grade... 116 players, 68 games ✓
+    [63/102] Saturday U12 Boys C4 Grade... 96 players, 54 games ✓
+    [64/102] Saturday U12 Boys D1 Grade... 76 players, 50 games ✓
+    [65/102] Saturday U12 Boys D2 Grade... 70 players, 53 games ✓
+    [66/102] Saturday U12 Boys D3 Grade... 52 players, 51 games ✓
+    [67/102] Saturday U14 Boys A Grade... 91 players, 65 games ✓
+    [68/102] Saturday U14 Boys B1 Grade... 105 players, 92 games ✓
+    [69/102] Saturday U14 Boys B2 Grade... 135 players, 82 games ✓
+    [70/102] Saturday U14 Boys B3 Grade... 113 players, 82 games ✓
+    [71/102] Saturday U14 Boys B4 Grade... 156 players, 87 games ✓
+    [72/102] Saturday U14 Boys B5 Grade... 143 players, 90 games ✓
+    [73/102] Saturday U14 Boys C1 Grade... 117 players, 65 games ✓
+    [74/102] Saturday U14 Boys C2 Grade... 127 players, 64 games ✓
+    [75/102] Saturday U14 Boys D1 Grade... 89 players, 80 games ✓
+    [76/102] Saturday U14 Boys D2 Grade... 95 players, 56 games ✓
+    [77/102] Saturday U14 Boys D3 Grade... 32 players, 27 games ✓
+    [78/102] Saturday U16 Boys A/A Reserve Grade... 70 players, 67 games ✓
+    [79/102] Saturday U16 Boys B1 Grade... 66 players, 52 games ✓
+    [80/102] Saturday U16 Boys B2 Grade... 85 players, 68 games ✓
+    [81/102] Saturday U16 Boys B3 Grade... 91 players, 64 games ✓
+    [82/102] Saturday U16 Boys B4 Grade... 138 players, 96 games ✓
+    [83/102] Saturday U16 Boys C1 Grade... 76 players, 53 games ✓
+    [84/102] Saturday U16 Boys C2 Grade... 81 players, 53 games ✓
+    [85/102] Saturday U16 Boys C3 Grade... 83 players, 51 games ✓
+    [86/102] Saturday U16 Boys C4 Grade... 89 players, 65 games ✓
+    [87/102] Saturday U16 Boys D1 Grade... 112 players, 83 games ✓
+    [88/102] Saturday U16 Boys D2 Grade... 

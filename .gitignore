@@ -38,3 +38,7 @@ models/*.joblib
 # Temp
 *.log
 *.tmp
+
+# Next.js
+web/.next/
+web/out/
