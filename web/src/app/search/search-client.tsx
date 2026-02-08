@@ -1,41 +1,51 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { Search, Users, Activity, Building2 } from "lucide-react";
-import type { Player, Team, Organisation } from "@/lib/data";
+import { Search, Users, Activity, Building2, Loader2 } from "lucide-react";
 
-export function SearchClient({
-  players: allPlayers,
-  teams,
-  organisations,
-}: {
-  players: Player[];
-  teams: Team[];
-  organisations: Organisation[];
-}) {
+type PlayerResult = { id: string; name: string; total_games: number; ppg: number };
+type TeamResult = { id: string; name: string; organisation_name?: string };
+type OrgResult = { id: string; name: string; suburb?: string; state?: string; type?: string };
+
+export function SearchClient() {
+  const [input, setInput] = useState("");
   const [query, setQuery] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [results, setResults] = useState<{ players: PlayerResult[]; teams: TeamResult[]; organisations: OrgResult[] }>({
+    players: [], teams: [], organisations: [],
+  });
 
-  const results = useMemo(() => {
-    const q = query.toLowerCase().trim();
-    if (q.length < 2) return { players: [], teams: [], orgs: [] };
+  // Debounce input
+  useEffect(() => {
+    const t = setTimeout(() => setQuery(input.trim()), 300);
+    return () => clearTimeout(t);
+  }, [input]);
 
-    const players = allPlayers
-      .filter((p) => `${p.first_name} ${p.last_name}`.toLowerCase().includes(q))
-      .slice(0, 20);
+  const fetchResults = useCallback(async () => {
+    if (query.length < 2) {
+      setResults({ players: [], teams: [], organisations: [] });
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}&limit=20`);
+      if (res.ok) {
+        const json = await res.json();
+        setResults(json.data || { players: [], teams: [], organisations: [] });
+      }
+    } catch (e) {
+      console.error("Search failed", e);
+    } finally {
+      setLoading(false);
+    }
+  }, [query]);
 
-    const matchedTeams = teams
-      .filter((t) => t.name?.toLowerCase().includes(q))
-      .slice(0, 20);
+  useEffect(() => {
+    fetchResults();
+  }, [fetchResults]);
 
-    const orgs = organisations
-      .filter((o) => o.name?.toLowerCase().includes(q))
-      .slice(0, 20);
-
-    return { players, teams: matchedTeams, orgs };
-  }, [query, allPlayers, teams, organisations]);
-
-  const total = results.players.length + results.teams.length + results.orgs.length;
+  const total = results.players.length + results.teams.length + results.organisations.length;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -46,14 +56,17 @@ export function SearchClient({
         <input
           type="text"
           placeholder="Search players, teams, organisations..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
           autoFocus
           className="w-full pl-12 pr-4 py-4 bg-card border border-border rounded-xl text-lg focus:outline-none focus:ring-2 focus:ring-accent"
         />
+        {loading && (
+          <Loader2 className="absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 animate-spin text-muted-foreground" />
+        )}
       </div>
 
-      {query.length >= 2 && (
+      {query.length >= 2 && !loading && (
         <p className="text-sm text-muted-foreground mb-6">{total} results for &quot;{query}&quot;</p>
       )}
 
@@ -65,7 +78,7 @@ export function SearchClient({
           <div className="bg-card rounded-xl border border-border divide-y divide-border">
             {results.players.map((p) => (
               <Link key={p.id} href={`/players/${p.id}`} className="flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors">
-                <span className="font-medium">{p.first_name} {p.last_name}</span>
+                <span className="font-medium">{p.name}</span>
                 <span className="text-sm text-muted-foreground">{p.total_games} games · {p.ppg} PPG</span>
               </Link>
             ))}
@@ -82,30 +95,30 @@ export function SearchClient({
             {results.teams.map((t) => (
               <Link key={t.id} href={`/teams/${t.id}`} className="flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors">
                 <span className="font-medium">{t.name}</span>
-                <span className="text-sm text-muted-foreground">{t.org_name || ""}</span>
+                <span className="text-sm text-muted-foreground">{t.organisation_name || ""}</span>
               </Link>
             ))}
           </div>
         </div>
       )}
 
-      {results.orgs.length > 0 && (
+      {results.organisations.length > 0 && (
         <div className="mb-8">
           <h2 className="flex items-center gap-2 text-lg font-semibold mb-3">
             <Building2 className="w-5 h-5 text-accent" /> Organisations
           </h2>
           <div className="bg-card rounded-xl border border-border divide-y divide-border">
-            {results.orgs.map((o) => (
-              <div key={o.id} className="flex items-center justify-between px-4 py-3">
+            {results.organisations.map((o) => (
+              <Link key={o.id} href={`/organisations/${o.id}`} className="flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors">
                 <span className="font-medium">{o.name}</span>
                 <span className="text-sm text-muted-foreground">{o.suburb ? `${o.suburb}, ${o.state}` : o.type || ""}</span>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
       )}
 
-      {query.length >= 2 && total === 0 && (
+      {query.length >= 2 && !loading && total === 0 && (
         <div className="text-center py-16 text-muted-foreground">
           <Search className="w-12 h-12 mx-auto mb-4 opacity-30" />
           <p className="text-lg">No results found for &quot;{query}&quot;</p>

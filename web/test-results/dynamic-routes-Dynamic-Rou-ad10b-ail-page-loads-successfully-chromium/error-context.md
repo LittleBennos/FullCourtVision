@@ -1,0 +1,89 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "FullCourtVision home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e8]: FullCourtVision
+      - generic [ref=e9]:
+        - link "Players" [ref=e10] [cursor=pointer]:
+          - /url: /players
+          - img [ref=e11]
+          - text: Players
+        - link "Teams" [ref=e16] [cursor=pointer]:
+          - /url: /teams
+          - img [ref=e17]
+          - text: Teams
+        - link "Organisations" [ref=e19] [cursor=pointer]:
+          - /url: /organisations
+          - img [ref=e20]
+          - text: Organisations
+        - link "Competitions" [ref=e24] [cursor=pointer]:
+          - /url: /competitions
+          - img [ref=e25]
+          - text: Competitions
+        - link "Grades" [ref=e31] [cursor=pointer]:
+          - /url: /grades
+          - img [ref=e32]
+          - text: Grades
+        - link "Leaderboards" [ref=e36] [cursor=pointer]:
+          - /url: /leaderboards
+          - img [ref=e37]
+          - text: Leaderboards
+        - link "Rising Stars" [ref=e39] [cursor=pointer]:
+          - /url: /rising-stars
+          - img [ref=e40]
+          - text: Rising Stars
+        - link "Heatmap" [ref=e43] [cursor=pointer]:
+          - /url: /heatmap
+          - img [ref=e44]
+          - text: Heatmap
+        - link "Compare" [ref=e47] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e48]
+          - text: Compare
+      - button "Open search" [ref=e54]:
+        - img [ref=e55]
+  - main [ref=e58]:
+    - generic [ref=e59]:
+      - link "Back to Grades" [ref=e60] [cursor=pointer]:
+        - /url: /grades
+        - img [ref=e61]
+        - text: Back to Grades
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - heading "A Men" [level=1] [ref=e66]
+          - generic [ref=e67]:
+            - paragraph [ref=e68]: Domestic
+            - paragraph [ref=e69]: Summer 2022/23 · Alcheringa Saints Basketball Club
+            - paragraph [ref=e70]: "Grade Type: REGULAR"
+        - generic [ref=e71]:
+          - generic [ref=e72]:
+            - paragraph [ref=e73]: "0"
+            - paragraph [ref=e74]: Teams
+          - generic [ref=e75]:
+            - paragraph [ref=e76]: "0"
+            - paragraph [ref=e77]: Players
+          - generic [ref=e78]:
+            - paragraph [ref=e79]: "0"
+            - paragraph [ref=e80]: Fixtures
+      - generic [ref=e81]:
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - img [ref=e85]
+            - heading "Team Standings" [level=2] [ref=e91]
+          - paragraph [ref=e92]: No team standings available for this grade.
+        - generic [ref=e94]:
+          - generic [ref=e95]:
+            - img [ref=e96]
+            - heading "Top 10 Scorers" [level=2] [ref=e100]
+          - paragraph [ref=e101]: No scorer data available.
+  - contentinfo [ref=e102]:
+    - generic [ref=e103]:
+      - paragraph [ref=e104]: FullCourtVision © 2025 — Basketball Victoria Analytics
+      - paragraph [ref=e105]: Data sourced from PlayHQ. Not affiliated with Basketball Victoria.
+  - alert [ref=e106]
+```

@@ -1,0 +1,98 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - navigation [ref=e2]:
+    - generic [ref=e3]:
+      - link "FullCourtVision home" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img [ref=e6]
+        - generic [ref=e8]: FullCourtVision
+      - generic [ref=e9]:
+        - link "Players" [ref=e10] [cursor=pointer]:
+          - /url: /players
+          - img [ref=e11]
+          - text: Players
+        - link "Teams" [ref=e16] [cursor=pointer]:
+          - /url: /teams
+          - img [ref=e17]
+          - text: Teams
+        - link "Organisations" [ref=e19] [cursor=pointer]:
+          - /url: /organisations
+          - img [ref=e20]
+          - text: Organisations
+        - link "Competitions" [ref=e24] [cursor=pointer]:
+          - /url: /competitions
+          - img [ref=e25]
+          - text: Competitions
+        - link "Grades" [ref=e31] [cursor=pointer]:
+          - /url: /grades
+          - img [ref=e32]
+          - text: Grades
+        - link "Leaderboards" [ref=e36] [cursor=pointer]:
+          - /url: /leaderboards
+          - img [ref=e37]
+          - text: Leaderboards
+        - link "Rising Stars" [ref=e39] [cursor=pointer]:
+          - /url: /rising-stars
+          - img [ref=e40]
+          - text: Rising Stars
+        - link "Heatmap" [ref=e43] [cursor=pointer]:
+          - /url: /heatmap
+          - img [ref=e44]
+          - text: Heatmap
+        - link "Compare" [ref=e47] [cursor=pointer]:
+          - /url: /compare
+          - img [ref=e48]
+          - text: Compare
+      - button "Open search" [ref=e54]:
+        - img [ref=e55]
+  - main [ref=e58]:
+    - generic [ref=e59]:
+      - generic [ref=e61]:
+        - img [ref=e63]
+        - generic [ref=e67]:
+          - heading "~[ARCHIVED] BDU Lightning Basketball Club" [level=1] [ref=e68]
+          - generic [ref=e70]: CLUB
+      - generic [ref=e71]:
+        - generic [ref=e72]:
+          - img [ref=e74]
+          - generic [ref=e79]:
+            - paragraph [ref=e80]: "0"
+            - paragraph [ref=e81]: Teams
+        - generic [ref=e82]:
+          - img [ref=e84]
+          - generic [ref=e88]:
+            - paragraph [ref=e89]: "0"
+            - paragraph [ref=e90]: Players
+        - generic [ref=e91]:
+          - img [ref=e93]
+          - generic [ref=e99]:
+            - paragraph [ref=e100]: "0"
+            - paragraph [ref=e101]: Total Games
+        - generic [ref=e102]:
+          - img [ref=e104]
+          - generic [ref=e106]:
+            - paragraph [ref=e107]: No data
+            - paragraph [ref=e108]: Top Scorer
+      - generic [ref=e110]:
+        - button "Teams (0)" [ref=e111]
+        - button "Players (0)" [ref=e112]
+      - table [ref=e114]:
+        - rowgroup [ref=e115]:
+          - row "Team Season W L GP Win%" [ref=e116]:
+            - columnheader "Team" [ref=e117]
+            - columnheader "Season" [ref=e118]
+            - columnheader "W" [ref=e119]
+            - columnheader "L" [ref=e120]
+            - columnheader "GP" [ref=e121]
+            - columnheader "Win%" [ref=e122]
+        - rowgroup [ref=e123]:
+          - row "No teams found for this organisation" [ref=e124]:
+            - cell "No teams found for this organisation" [ref=e125]
+  - contentinfo [ref=e126]:
+    - generic [ref=e127]:
+      - paragraph [ref=e128]: FullCourtVision © 2025 — Basketball Victoria Analytics
+      - paragraph [ref=e129]: Data sourced from PlayHQ. Not affiliated with Basketball Victoria.
+  - alert [ref=e130]
+```
