@@ -20,7 +20,15 @@ export async function GET(req: NextRequest) {
     .select("player_id, first_name, last_name, total_games, total_points, ppg", { count: "exact" });
 
   if (search) {
-    query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%`);
+    const words = search.trim().split(/\s+/);
+    if (words.length >= 2) {
+      // Multi-word: first word matches first_name, last word matches last_name
+      const first = words[0];
+      const last = words.slice(1).join(" ");
+      query = query.ilike("first_name", `%${first}%`).ilike("last_name", `%${last}%`);
+    } else {
+      query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%`);
+    }
   }
 
   const { data, count, error: dbError } = await query
