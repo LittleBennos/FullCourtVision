@@ -17,6 +17,26 @@ export const metadata: Metadata = {
   title: "FullCourtVision — Basketball Victoria Analytics",
   description: "Comprehensive basketball analytics covering 57,000+ players and 89,000+ games across Victoria, Australia.",
   keywords: ["basketball", "analytics", "Victoria", "Australia", "PlayHQ", "statistics"],
+  openGraph: {
+    title: "FullCourtVision — Basketball Victoria Analytics",
+    description: "Comprehensive basketball analytics covering 57,000+ players and 89,000+ games across Victoria, Australia.",
+    type: "website",
+    siteName: "FullCourtVision",
+    images: [
+      {
+        url: `${process.env.NEXT_PUBLIC_BASE_URL || 'https://fullcourtvision.com'}/api/og?type=homepage`,
+        width: 1200,
+        height: 630,
+        alt: "FullCourtVision - Basketball Victoria Analytics",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "FullCourtVision — Basketball Victoria Analytics",
+    description: "Comprehensive basketball analytics covering 57,000+ players and 89,000+ games across Victoria, Australia.",
+    images: [`${process.env.NEXT_PUBLIC_BASE_URL || 'https://fullcourtvision.com'}/api/og?type=homepage`],
+  },
 };
 
 export default function RootLayout({

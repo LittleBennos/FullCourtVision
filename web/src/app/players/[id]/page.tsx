@@ -10,8 +10,37 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { id } = await params;
   const data = await getPlayerDetails(id);
   if (!data) return { title: "Player Not Found" };
+  
+  const { player, stats } = data;
+  const totalGames = stats.reduce((sum: number, stat: any) => sum + (stat.games_played || 0), 0);
+  const totalPoints = stats.reduce((sum: number, stat: any) => sum + (stat.total_points || 0), 0);
+  const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
+  const mostRecentTeam = stats[0]?.team_name || 'Player';
+
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fullcourtvision.com';
+  
   return {
-    title: `${data.player.first_name} ${data.player.last_name} — FullCourtVision`,
+    title: `${player.first_name} ${player.last_name} — FullCourtVision`,
+    description: `${player.first_name} ${player.last_name} from ${mostRecentTeam} averages ${ppg} PPG with ${totalPoints.toLocaleString()} total points across ${totalGames} games. View detailed basketball statistics on FullCourtVision.`,
+    openGraph: {
+      title: `${player.first_name} ${player.last_name} — FullCourtVision`,
+      description: `${player.first_name} ${player.last_name} from ${mostRecentTeam} • ${ppg} PPG • ${totalPoints.toLocaleString()} points • ${totalGames} games`,
+      images: [
+        {
+          url: `${baseUrl}/api/og?playerId=${id}&type=player`,
+          width: 1200,
+          height: 630,
+          alt: `${player.first_name} ${player.last_name} basketball statistics`,
+        },
+      ],
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${player.first_name} ${player.last_name} — FullCourtVision`,
+      description: `${player.first_name} ${player.last_name} • ${ppg} PPG • ${totalPoints.toLocaleString()} points • ${totalGames} games`,
+      images: [`${baseUrl}/api/og?playerId=${id}&type=player`],
+    },
   };
 }
 
