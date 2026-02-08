@@ -1,7 +1,6 @@
 import stats from "@/data/stats.json";
 import topPlayers from "@/data/top_players.json";
 import allPlayers from "@/data/all_players.json";
-import featuredPlayer from "@/data/featured_player.json";
 import organisations from "@/data/organisations.json";
 import teams from "@/data/teams.json";
 import competitions from "@/data/competitions.json";
@@ -29,10 +28,6 @@ export function getTopPlayers() {
   return topPlayers as TopPlayer[];
 }
 
-export function getFeaturedPlayer() {
-  return featuredPlayer as { player: { id: string; first_name: string; last_name: string }; stats: any[] };
-}
-
 export function getOrganisations() {
   return organisations as Organisation[];
 }
@@ -55,7 +50,16 @@ export function getLeaderboards() {
 
 export function getPlayerDetails(id: string) {
   const details = playerDetails as Record<string, { player: any; stats: any[] }>;
-  return details[id] || null;
+  if (details[id]) return details[id];
+  // Fallback: find in allPlayers for basic info (no per-season stats)
+  const basic = allPlayers.find((p) => p.id === id);
+  if (basic) {
+    return {
+      player: { id: basic.id, first_name: basic.first_name, last_name: basic.last_name },
+      stats: [],
+    };
+  }
+  return null;
 }
 
 export function getTeamById(id: string) {

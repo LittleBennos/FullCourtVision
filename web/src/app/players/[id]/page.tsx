@@ -4,6 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ScoringTrendChart, ShotBreakdownChart } from "@/components/charts";
 
+export const dynamicParams = true;
+
 export function generateStaticParams() {
   return getTopPlayers().map((p) => ({ id: p.id }));
 }
