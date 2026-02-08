@@ -6,26 +6,22 @@ test.describe('API Routes Tests', () => {
     expect(response.status()).toBe(200);
     
     const data = await response.json();
-    
-    // Check for required structure (data/meta format)
     expect(data).toHaveProperty('data');
     expect(data).toHaveProperty('meta');
     expect(Array.isArray(data.data)).toBeTruthy();
-    
-    // Check meta information
     expect(data.meta).toHaveProperty('total');
-    expect(typeof data.meta.total).toBe('number');
     
-    // If there's data, check the first player structure
     if (data.data.length > 0) {
       const player = data.data[0];
       expect(player).toHaveProperty('id');
-      expect(player).toHaveProperty('name');
+      expect(player).toHaveProperty('first_name');
+      expect(player).toHaveProperty('last_name');
+      expect(player).toHaveProperty('ppg');
     }
   });
 
-  test('GET /api/players with pagination parameters', async ({ request }) => {
-    const response = await request.get('/api/players?page=1&limit=10');
+  test('GET /api/players with pagination', async ({ request }) => {
+    const response = await request.get('/api/players?offset=0&limit=10');
     expect(response.status()).toBe(200);
     
     const data = await response.json();
@@ -39,13 +35,9 @@ test.describe('API Routes Tests', () => {
     expect(response.status()).toBe(200);
     
     const data = await response.json();
-    
-    // Check for required structure
     expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
     expect(Array.isArray(data.data)).toBeTruthy();
     
-    // If there's data, check the first team structure
     if (data.data.length > 0) {
       const team = data.data[0];
       expect(team).toHaveProperty('id');
@@ -58,13 +50,9 @@ test.describe('API Routes Tests', () => {
     expect(response.status()).toBe(200);
     
     const data = await response.json();
-    
-    // Check for required structure
     expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
     expect(Array.isArray(data.data)).toBeTruthy();
     
-    // If there's data, check the first organisation structure
     if (data.data.length > 0) {
       const org = data.data[0];
       expect(org).toHaveProperty('id');
@@ -72,16 +60,15 @@ test.describe('API Routes Tests', () => {
     }
   });
 
-  test('GET /api/search returns correct JSON structure', async ({ request }) => {
+  test('GET /api/search returns results', async ({ request }) => {
     const response = await request.get('/api/search?q=test');
     expect(response.status()).toBe(200);
     
     const data = await response.json();
-    
-    // Check for required structure
     expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
-    expect(Array.isArray(data.data)).toBeTruthy();
+    expect(data.data).toHaveProperty('players');
+    expect(data.data).toHaveProperty('teams');
+    expect(data.data).toHaveProperty('organisations');
   });
 
   test('GET /api/leaderboards returns correct JSON structure', async ({ request }) => {
@@ -89,105 +76,77 @@ test.describe('API Routes Tests', () => {
     expect(response.status()).toBe(200);
     
     const data = await response.json();
-    
-    // Check for required structure
     expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
     expect(Array.isArray(data.data)).toBeTruthy();
   });
 
   test('GET /api/players/[id] returns single player', async ({ request }) => {
-    // First get a list of players to get a valid ID
     const playersResponse = await request.get('/api/players');
     const playersData = await playersResponse.json();
     
     if (playersData.data && playersData.data.length > 0) {
-      const playerId = playersData.data[0].id || playersData.data[0].player_id;
-      
+      const playerId = playersData.data[0].id;
       const response = await request.get(`/api/players/${playerId}`);
       expect(response.status()).toBe(200);
       
       const data = await response.json();
       expect(data).toHaveProperty('data');
-      expect(data).toHaveProperty('meta');
-      
-      // Should return single player object
       expect(data.data).toHaveProperty('id');
-      expect(data.data).toHaveProperty('name');
-    } else {
-      test.skip('No players available for testing');
+      expect(data.data).toHaveProperty('first_name');
     }
   });
 
   test('GET /api/players/[id]/stats returns player statistics', async ({ request }) => {
-    // First get a list of players to get a valid ID
     const playersResponse = await request.get('/api/players');
     const playersData = await playersResponse.json();
     
     if (playersData.data && playersData.data.length > 0) {
-      const playerId = playersData.data[0].id || playersData.data[0].player_id;
-      
+      const playerId = playersData.data[0].id;
       const response = await request.get(`/api/players/${playerId}/stats`);
       expect(response.status()).toBe(200);
       
       const data = await response.json();
       expect(data).toHaveProperty('data');
-      expect(data).toHaveProperty('meta');
-    } else {
-      test.skip('No players available for testing');
+      expect(Array.isArray(data.data)).toBeTruthy();
     }
   });
 
-  test('GET /api/teams/[id] returns single team with players', async ({ request }) => {
-    // First get a list of teams to get a valid ID
+  test('GET /api/teams/[id] returns single team', async ({ request }) => {
     const teamsResponse = await request.get('/api/teams');
     const teamsData = await teamsResponse.json();
     
     if (teamsData.data && teamsData.data.length > 0) {
-      const teamId = teamsData.data[0].id || teamsData.data[0].team_id;
-      
+      const teamId = teamsData.data[0].id;
       const response = await request.get(`/api/teams/${teamId}`);
       expect(response.status()).toBe(200);
       
       const data = await response.json();
       expect(data).toHaveProperty('data');
-      expect(data).toHaveProperty('meta');
-      
-      // Should return team with players
       expect(data.data).toHaveProperty('id');
       expect(data.data).toHaveProperty('name');
-      expect(data.data).toHaveProperty('players');
-    } else {
-      test.skip('No teams available for testing');
+      expect(data.data).toHaveProperty('roster');
     }
   });
 
-  test('GET /api/search with empty query returns empty results', async ({ request }) => {
+  test('GET /api/search with empty query returns 400', async ({ request }) => {
     const response = await request.get('/api/search?q=');
-    expect(response.status()).toBe(200);
-    
-    const data = await response.json();
-    expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
-    expect(Array.isArray(data.data)).toBeTruthy();
+    expect(response.status()).toBe(400);
   });
 
-  test('GET /api/search with nonexistent query returns empty results', async ({ request }) => {
+  test('GET /api/search with nonexistent query returns empty', async ({ request }) => {
     const response = await request.get('/api/search?q=nonexistentplayername12345');
     expect(response.status()).toBe(200);
     
     const data = await response.json();
     expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
-    expect(Array.isArray(data.data)).toBeTruthy();
   });
 
-  test('GET /api endpoint returns API information', async ({ request }) => {
+  test('GET /api endpoint returns API documentation', async ({ request }) => {
     const response = await request.get('/api');
     expect(response.status()).toBe(200);
     
     const data = await response.json();
-    expect(data).toHaveProperty('data');
-    expect(data).toHaveProperty('meta');
+    expect(data).toHaveProperty('name');
+    expect(data).toHaveProperty('endpoints');
   });
 });

@@ -98,7 +98,7 @@ test.describe('Edge Cases Tests', () => {
         await page.waitForTimeout(1000);
         
         // Should handle gracefully - either show all results or show empty state
-        await expect(page.locator('main, .content')).toBeVisible();
+        await expect(page.locator('main').first()).toBeVisible();
       } else {
         test.skip('No search input found');
       }
@@ -115,7 +115,7 @@ test.describe('Edge Cases Tests', () => {
         await searchInput.first().press('Enter');
         
         await page.waitForTimeout(1000);
-        await expect(page.locator('main, .content')).toBeVisible();
+        await expect(page.locator('main').first()).toBeVisible();
       } else {
         test.skip('No search input found');
       }
@@ -135,7 +135,7 @@ test.describe('Edge Cases Tests', () => {
         await page.waitForTimeout(2000);
         
         // Should handle gracefully
-        await expect(page.locator('main, .content')).toBeVisible();
+        await expect(page.locator('main').first()).toBeVisible();
       } else {
         test.skip('No search input found');
       }
@@ -157,7 +157,7 @@ test.describe('Edge Cases Tests', () => {
           await page.waitForTimeout(1000);
           
           // Should handle without errors
-          await expect(page.locator('main, .content')).toBeVisible();
+          await expect(page.locator('main').first()).toBeVisible();
         }
       } else {
         test.skip('No search input found');
@@ -175,7 +175,7 @@ test.describe('Edge Cases Tests', () => {
       await page.goto('/players');
       
       // Should show loading state
-      await expect(page.locator('main, .content')).toBeVisible({ timeout: 15000 });
+      await expect(page.locator('main').first()).toBeVisible({ timeout: 15000 });
     });
 
     test('Page handles API failures gracefully', async ({ page }) => {
@@ -188,7 +188,7 @@ test.describe('Edge Cases Tests', () => {
       await page.waitForTimeout(2000);
       
       // Should show error state or fallback
-      await expect(page.locator('main, .content, .error')).toBeVisible();
+      await expect(page.locator('main').first()).toBeVisible();
     });
   });
 
@@ -225,7 +225,7 @@ test.describe('Edge Cases Tests', () => {
         }
         
         // Should handle gracefully without crashing
-        await expect(page.locator('main, .content')).toBeVisible();
+        await expect(page.locator('main').first()).toBeVisible();
       } else {
         test.skip('No search input found');
       }
@@ -296,7 +296,7 @@ test.describe('Edge Cases Tests', () => {
         expect([200, 400]).toContain(response?.status() || 200);
         
         if (response?.status() === 200) {
-          await expect(page.locator('main, .content')).toBeVisible();
+          await expect(page.locator('main').first()).toBeVisible();
         }
       }
     });
@@ -309,7 +309,7 @@ test.describe('Edge Cases Tests', () => {
       await page.waitForLoadState('networkidle');
       
       // Should handle gracefully even if some player data is missing
-      await expect(page.locator('main, .content, table')).toBeVisible();
+      await expect(page.locator('main').first()).toBeVisible();
     });
     
     test('Handles empty API responses', async ({ page }) => {
@@ -326,7 +326,7 @@ test.describe('Edge Cases Tests', () => {
       await page.waitForTimeout(1000);
       
       // Should show empty state
-      await expect(page.locator('main, .content')).toBeVisible();
+      await expect(page.locator('main').first()).toBeVisible();
     });
   });
 });

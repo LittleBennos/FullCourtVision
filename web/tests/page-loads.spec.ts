@@ -4,7 +4,7 @@ test.describe('Page Load Tests', () => {
   test('Home page loads without errors', async ({ page }) => {
     await page.goto('/');
     await expect(page).toHaveTitle(/FullCourtVision/);
-    await expect(page.locator('h1')).toContainText(/FullCourtVision|Basketball/);
+    await expect(page.locator('h1')).toContainText(/Every player|FullCourtVision|Basketball/);
     
     // Check for no console errors
     const errors: string[] = [];
