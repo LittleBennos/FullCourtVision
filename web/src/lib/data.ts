@@ -1,5 +1,23 @@
 import { supabase } from "./supabase";
 
+// Helper to fetch all rows from a table, bypassing Supabase's 1000-row default limit
+async function fetchAllRows(table: string, select: string): Promise<any[]> {
+  const PAGE_SIZE = 1000;
+  let allRows: any[] = [];
+  let from = 0;
+  while (true) {
+    const { data, error } = await supabase
+      .from(table)
+      .select(select)
+      .range(from, from + PAGE_SIZE - 1);
+    if (error || !data || data.length === 0) break;
+    allRows = allRows.concat(data);
+    if (data.length < PAGE_SIZE) break;
+    from += PAGE_SIZE;
+  }
+  return allRows;
+}
+
 export type Stats = {
   players: number;
   games: number;
@@ -87,12 +105,10 @@ export async function getAllPlayers(): Promise<Player[]> {
   // Since Supabase doesn't support GROUP BY directly, we query player_stats and aggregate client-side
   // But with 57k players that's too much data. Let's use a view or just query players + stats separately.
   
-  // Actually, let's query all player_stats and aggregate
-  const { data: stats } = await supabase
-    .from("player_stats")
-    .select("player_id, games_played, total_points");
+  // Fetch all player_stats with pagination
+  const stats = await fetchAllRows("player_stats", "player_id, games_played, total_points");
 
-  if (!stats) return [];
+  if (!stats.length) return [];
 
   // Build aggregation map
   const map = new Map<string, { total_games: number; total_points: number }>();
@@ -110,11 +126,9 @@ export async function getAllPlayers(): Promise<Player[]> {
   }
 
   // Get all players
-  const { data: players } = await supabase
-    .from("players")
-    .select("id, first_name, last_name");
+  const players = await fetchAllRows("players", "id, first_name, last_name");
 
-  if (!players) return [];
+  if (!players.length) return [];
 
   return players.map((p) => {
     const agg = map.get(p.id) || { total_games: 0, total_points: 0 };
@@ -130,12 +144,9 @@ export async function getAllPlayers(): Promise<Player[]> {
 }
 
 export async function getTopPlayers(): Promise<TopPlayer[]> {
-  // Get all players with stats, sorted by total_points desc, limit 500
-  const { data: stats } = await supabase
-    .from("player_stats")
-    .select("player_id, games_played, total_points");
+  const stats = await fetchAllRows("player_stats", "player_id, games_played, total_points");
 
-  if (!stats) return [];
+  if (!stats.length) return [];
 
   const map = new Map<string, { total_games: number; total_points: number }>();
   for (const s of stats) {
@@ -231,12 +242,10 @@ export async function getTeams(): Promise<Team[]> {
   if (!teams) return [];
 
   // Get win/loss from games
-  const { data: games } = await supabase
-    .from("games")
-    .select("home_team_id, away_team_id, home_score, away_score");
+  const games = await fetchAllRows("games", "home_team_id, away_team_id, home_score, away_score");
 
   const wlMap = new Map<string, { wins: number; losses: number; gp: number }>();
-  if (games) {
+  if (games.length) {
     for (const g of games) {
       if (g.home_score == null || g.away_score == null) continue;
       const homeWin = g.home_score > g.away_score;
@@ -357,11 +366,9 @@ export async function getSeasons(): Promise<Season[]> {
 }
 
 export async function getLeaderboards(): Promise<{ ppg: any[]; games: any[]; threes: any[] }> {
-  const { data: stats } = await supabase
-    .from("player_stats")
-    .select("player_id, games_played, total_points, three_point");
+  const stats = await fetchAllRows("player_stats", "player_id, games_played, total_points, three_point");
 
-  if (!stats) return { ppg: [], games: [], threes: [] };
+  if (!stats.length) return { ppg: [], games: [], threes: [] };
 
   const map = new Map<string, { total_games: number; total_points: number; total_threes: number }>();
   for (const s of stats) {

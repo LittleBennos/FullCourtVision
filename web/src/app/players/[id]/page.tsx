@@ -6,16 +6,18 @@ import { ScoringTrendChart, ShotBreakdownChart } from "@/components/charts";
 
 export const dynamic = "force-dynamic";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const data = await getPlayerDetails(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = await getPlayerDetails(id);
   if (!data) return { title: "Player Not Found" };
   return {
     title: `${data.player.first_name} ${data.player.last_name} — FullCourtVision`,
   };
 }
 
-export default async function PlayerPage({ params }: { params: { id: string } }) {
-  const data = await getPlayerDetails(params.id);
+export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = await getPlayerDetails(id);
   if (!data) notFound();
 
   const { player, stats } = data;
