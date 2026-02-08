@@ -1,6 +1,10 @@
 import { getPlayerDetails, getAvailableSeasons } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
-import { PlayerTrendsChart } from "@/components/player-trends-chart";
+import dynamic from "next/dynamic";
+const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(m => m.PlayerTrendsChart), {
+  loading: () => <div className="h-96 bg-card rounded-xl border border-border animate-pulse" />,
+  ssr: false,
+});
 import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 

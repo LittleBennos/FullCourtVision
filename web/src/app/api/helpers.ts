@@ -4,6 +4,7 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type, Authorization",
+  "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
   "X-RateLimit-Limit": "100",
   "X-RateLimit-Remaining": "99",
   "X-RateLimit-Reset": String(Math.floor(Date.now() / 1000) + 3600),
