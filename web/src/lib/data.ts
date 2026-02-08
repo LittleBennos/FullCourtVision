@@ -101,97 +101,36 @@ export async function getStats(): Promise<Stats> {
 }
 
 export async function getAllPlayers(): Promise<Player[]> {
-  // Aggregate player_stats per player via RPC or just query player_stats grouped
-  // Since Supabase doesn't support GROUP BY directly, we query player_stats and aggregate client-side
-  // But with 57k players that's too much data. Let's use a view or just query players + stats separately.
-  
-  // Fetch all player_stats with pagination
-  const stats = await fetchAllRows("player_stats", "player_id, games_played, total_points");
+  // Use the player_aggregates view for server-side aggregation
+  const data = await fetchAllRows("player_aggregates", "player_id, first_name, last_name, total_games, total_points, ppg");
 
-  if (!stats.length) return [];
-
-  // Build aggregation map
-  const map = new Map<string, { total_games: number; total_points: number }>();
-  for (const s of stats) {
-    const existing = map.get(s.player_id);
-    if (existing) {
-      existing.total_games += s.games_played || 0;
-      existing.total_points += s.total_points || 0;
-    } else {
-      map.set(s.player_id, {
-        total_games: s.games_played || 0,
-        total_points: s.total_points || 0,
-      });
-    }
-  }
-
-  // Get all players
-  const players = await fetchAllRows("players", "id, first_name, last_name");
-
-  if (!players.length) return [];
-
-  return players.map((p) => {
-    const agg = map.get(p.id) || { total_games: 0, total_points: 0 };
-    return {
-      id: p.id,
-      first_name: p.first_name,
-      last_name: p.last_name,
-      total_games: agg.total_games,
-      total_points: agg.total_points,
-      ppg: agg.total_games > 0 ? +((agg.total_points / agg.total_games).toFixed(1)) : 0,
-    };
-  });
+  return data.map((p) => ({
+    id: p.player_id,
+    first_name: p.first_name,
+    last_name: p.last_name,
+    total_games: p.total_games,
+    total_points: p.total_points,
+    ppg: +p.ppg,
+  }));
 }
 
 export async function getTopPlayers(): Promise<TopPlayer[]> {
-  const stats = await fetchAllRows("player_stats", "player_id, games_played, total_points");
+  const { data } = await supabase
+    .from("player_aggregates")
+    .select("player_id, first_name, last_name, total_games, total_points, ppg")
+    .order("total_points", { ascending: false })
+    .limit(500);
 
-  if (!stats.length) return [];
+  if (!data) return [];
 
-  const map = new Map<string, { total_games: number; total_points: number }>();
-  for (const s of stats) {
-    const existing = map.get(s.player_id);
-    if (existing) {
-      existing.total_games += s.games_played || 0;
-      existing.total_points += s.total_points || 0;
-    } else {
-      map.set(s.player_id, {
-        total_games: s.games_played || 0,
-        total_points: s.total_points || 0,
-      });
-    }
-  }
-
-  // Get top 500 player IDs by total_points
-  const sorted = [...map.entries()]
-    .sort((a, b) => b[1].total_points - a[1].total_points)
-    .slice(0, 500);
-
-  const playerIds = sorted.map(([id]) => id);
-
-  const { data: players } = await supabase
-    .from("players")
-    .select("id, first_name, last_name")
-    .in("id", playerIds);
-
-  if (!players) return [];
-
-  const playerMap = new Map(players.map((p) => [p.id, p]));
-
-  return sorted
-    .map(([id, agg]) => {
-      const p = playerMap.get(id);
-      if (!p) return null;
-      return {
-        id: p.id,
-        first_name: p.first_name,
-        last_name: p.last_name,
-        total_games: agg.total_games,
-        total_points: agg.total_points,
-        ppg: agg.total_games > 0 ? +((agg.total_points / agg.total_games).toFixed(1)) : 0,
-      };
-    })
-    .filter(Boolean) as TopPlayer[];
+  return data.map((p) => ({
+    id: p.player_id,
+    first_name: p.first_name,
+    last_name: p.last_name,
+    total_games: p.total_games,
+    total_points: p.total_points,
+    ppg: +p.ppg,
+  }));
 }
 
 export async function getPlayerDetails(id: string) {
@@ -366,66 +305,43 @@ export async function getSeasons(): Promise<Season[]> {
 }
 
 export async function getLeaderboards(): Promise<{ ppg: any[]; games: any[]; threes: any[] }> {
-  const stats = await fetchAllRows("player_stats", "player_id, games_played, total_points, three_point");
+  // Use the player_aggregates view — all aggregation done server-side
+  // Fetch players with min 10 games
+  const { data: ppgData } = await supabase
+    .from("player_aggregates")
+    .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg")
+    .gte("total_games", 10)
+    .order("ppg", { ascending: false })
+    .limit(100);
 
-  if (!stats.length) return { ppg: [], games: [], threes: [] };
+  const { data: gamesData } = await supabase
+    .from("player_aggregates")
+    .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg")
+    .gte("total_games", 10)
+    .order("total_games", { ascending: false })
+    .limit(100);
 
-  const map = new Map<string, { total_games: number; total_points: number; total_threes: number }>();
-  for (const s of stats) {
-    const existing = map.get(s.player_id);
-    if (existing) {
-      existing.total_games += s.games_played || 0;
-      existing.total_points += s.total_points || 0;
-      existing.total_threes += s.three_point || 0;
-    } else {
-      map.set(s.player_id, {
-        total_games: s.games_played || 0,
-        total_points: s.total_points || 0,
-        total_threes: s.three_point || 0,
-      });
-    }
-  }
+  const { data: threesData } = await supabase
+    .from("player_aggregates")
+    .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg")
+    .gte("total_games", 10)
+    .order("total_threes", { ascending: false })
+    .limit(100);
 
-  // Filter min 10 games
-  const qualified = [...map.entries()].filter(([, v]) => v.total_games >= 10);
+  const mapRow = (r: any) => ({
+    id: r.player_id,
+    first_name: r.first_name,
+    last_name: r.last_name,
+    total_games: r.total_games,
+    total_points: r.total_points,
+    total_threes: r.total_threes,
+    ppg: +r.ppg,
+    threes_pg: r.total_games > 0 ? +(r.total_threes / r.total_games).toFixed(1) : 0,
+  });
 
-  // Get all qualified player IDs
-  const playerIds = qualified.map(([id]) => id);
-
-  // Batch fetch players (Supabase .in() has limits, batch in chunks)
-  const playerMap = new Map<string, { first_name: string; last_name: string }>();
-  const chunkSize = 500;
-  for (let i = 0; i < playerIds.length; i += chunkSize) {
-    const chunk = playerIds.slice(i, i + chunkSize);
-    const { data: players } = await supabase
-      .from("players")
-      .select("id, first_name, last_name")
-      .in("id", chunk);
-    if (players) {
-      for (const p of players) playerMap.set(p.id, p);
-    }
-  }
-
-  const withNames = qualified
-    .map(([id, agg]) => {
-      const p = playerMap.get(id);
-      if (!p) return null;
-      return {
-        id,
-        first_name: p.first_name,
-        last_name: p.last_name,
-        total_games: agg.total_games,
-        total_points: agg.total_points,
-        total_threes: agg.total_threes,
-        ppg: +((agg.total_points / agg.total_games).toFixed(1)),
-        threes_pg: +((agg.total_threes / agg.total_games).toFixed(1)),
-      };
-    })
-    .filter(Boolean) as any[];
-
-  const ppg = [...withNames].sort((a, b) => b.ppg - a.ppg).slice(0, 100);
-  const games = [...withNames].sort((a, b) => b.total_games - a.total_games).slice(0, 100);
-  const threes = [...withNames].sort((a, b) => b.total_threes - a.total_threes).slice(0, 100);
-
-  return { ppg, games, threes };
+  return {
+    ppg: (ppgData || []).map(mapRow),
+    games: (gamesData || []).map(mapRow),
+    threes: (threesData || []).map(mapRow),
+  };
 }
