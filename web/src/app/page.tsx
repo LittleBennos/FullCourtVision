@@ -3,8 +3,10 @@ import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "luci
 import { StatCard } from "@/components/stat-card";
 import { getStats } from "@/lib/data";
 
-export default function Home() {
-  const stats = getStats();
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const stats = await getStats();
 
   return (
     <div>

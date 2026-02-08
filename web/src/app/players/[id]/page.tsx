@@ -1,25 +1,21 @@
-import { getPlayerDetails, getTopPlayers } from "@/lib/data";
+import { getPlayerDetails } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { ScoringTrendChart, ShotBreakdownChart } from "@/components/charts";
 
-export const dynamicParams = true;
+export const dynamic = "force-dynamic";
 
-export function generateStaticParams() {
-  return getTopPlayers().map((p) => ({ id: p.id }));
-}
-
-export function generateMetadata({ params }: { params: { id: string } }) {
-  const data = getPlayerDetails(params.id);
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const data = await getPlayerDetails(params.id);
   if (!data) return { title: "Player Not Found" };
   return {
     title: `${data.player.first_name} ${data.player.last_name} — FullCourtVision`,
   };
 }
 
-export default function PlayerPage({ params }: { params: { id: string } }) {
-  const data = getPlayerDetails(params.id);
+export default async function PlayerPage({ params }: { params: { id: string } }) {
+  const data = await getPlayerDetails(params.id);
   if (!data) notFound();
 
   const { player, stats } = data;

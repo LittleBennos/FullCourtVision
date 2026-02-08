@@ -3,8 +3,10 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-export default function TeamPage({ params }: { params: { id: string } }) {
-  const team = getTeamById(params.id);
+export const dynamic = "force-dynamic";
+
+export default async function TeamPage({ params }: { params: { id: string } }) {
+  const team = await getTeamById(params.id);
   if (!team) notFound();
 
   return (
@@ -31,12 +33,6 @@ export default function TeamPage({ params }: { params: { id: string } }) {
             <p className="text-sm text-muted-foreground">Games</p>
           </div>
         </div>
-      </div>
-
-      <div className="bg-card rounded-xl border border-border p-6">
-        <p className="text-muted-foreground text-center py-8">
-          Detailed roster and game history will be available once connected to Supabase.
-        </p>
       </div>
     </div>
   );

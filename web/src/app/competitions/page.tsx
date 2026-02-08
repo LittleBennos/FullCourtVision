@@ -5,9 +5,10 @@ export const metadata = {
   title: "Competitions — FullCourtVision",
 };
 
-export default function CompetitionsPage() {
-  const competitions = getCompetitions();
-  const seasons = getSeasons();
+export const dynamic = "force-dynamic";
+
+export default async function CompetitionsPage() {
+  const [competitions, seasons] = await Promise.all([getCompetitions(), getSeasons()]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">

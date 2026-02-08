@@ -6,8 +6,10 @@ export const metadata = {
   description: "Browse all basketball players across Victoria",
 };
 
-export default function PlayersPage() {
-  const players = getAllPlayers();
+export const dynamic = "force-dynamic";
+
+export default async function PlayersPage() {
+  const players = await getAllPlayers();
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
