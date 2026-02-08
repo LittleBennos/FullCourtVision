@@ -1,5 +1,26 @@
 import { supabase } from "./supabase";
 
+export interface RisingStar {
+  player_id: string;
+  first_name: string;
+  last_name: string;
+  team_name: string;
+  organisation_name: string;
+  previous_season_ppg: number;
+  current_season_ppg: number;
+  improvement: number;
+  previous_season_games: number;
+  current_season_games: number;
+  previous_season_name: string;
+  current_season_name: string;
+}
+
+export async function getRisingStars(): Promise<RisingStar[]> {
+  const { data, error } = await supabase.rpc("get_rising_stars");
+  if (error || !data) return [];
+  return data as RisingStar[];
+}
+
 // Helper to fetch all rows from a table, bypassing Supabase's 1000-row default limit
 async function fetchAllRows(table: string, select: string): Promise<any[]> {
   const PAGE_SIZE = 1000;

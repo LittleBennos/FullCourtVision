@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { RisingStar } from "@/lib/db";
+import { RisingStar } from "@/lib/data";
 import { TrendingUp } from "lucide-react";
 
 type Props = {
