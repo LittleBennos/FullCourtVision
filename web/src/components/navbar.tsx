@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Search, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target } from "lucide-react";
 import { useState } from "react";
+import { GlobalSearch } from "./global-search";
 
 const links = [
   { href: "/players", label: "Players", icon: Users },
@@ -15,7 +16,6 @@ const links = [
   { href: "/rising-stars", label: "Rising Stars", icon: TrendingUp },
   { href: "/heatmap", label: "Heatmap", icon: MapPin },
   { href: "/compare", label: "Compare", icon: ArrowLeftRight },
-  { href: "/search", label: "Search", icon: Search },
 ];
 
 export function Navbar() {
@@ -50,10 +50,13 @@ export function Navbar() {
           ))}
         </div>
 
-        {/* Mobile toggle */}
-        <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"}>
-          {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
+        {/* Search and Mobile toggle */}
+        <div className="flex items-center gap-2">
+          <GlobalSearch />
+          <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label={open ? "Close menu" : "Open menu"}>
+            {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile nav */}

@@ -174,46 +174,19 @@ export async function getPlayerDetails(id: string) {
 }
 
 export async function getTeams(): Promise<Team[]> {
-  const { data: teams } = await supabase
-    .from("teams")
-    .select("id, name, organisation_id, season_id, organisations(name), seasons(name)");
+  const data = await fetchAllRows("team_aggregates", "team_id, name, organisation_id, season_id, organisation_name, season_name, wins, losses, gp");
 
-  if (!teams) return [];
-
-  // Get win/loss from games
-  const games = await fetchAllRows("games", "home_team_id, away_team_id, home_score, away_score");
-
-  const wlMap = new Map<string, { wins: number; losses: number; gp: number }>();
-  if (games.length) {
-    for (const g of games) {
-      if (g.home_score == null || g.away_score == null) continue;
-      const homeWin = g.home_score > g.away_score;
-
-      for (const [tid, isHome] of [[g.home_team_id, true], [g.away_team_id, false]] as [string, boolean][]) {
-        if (!tid) continue;
-        const rec = wlMap.get(tid) || { wins: 0, losses: 0, gp: 0 };
-        rec.gp++;
-        if ((isHome && homeWin) || (!isHome && !homeWin)) rec.wins++;
-        else rec.losses++;
-        wlMap.set(tid, rec);
-      }
-    }
-  }
-
-  return teams.map((t: any) => {
-    const wl = wlMap.get(t.id) || { wins: 0, losses: 0, gp: 0 };
-    return {
-      id: t.id,
-      name: t.name,
-      organisation_id: t.organisation_id,
-      season_id: t.season_id,
-      org_name: (t.organisations as any)?.name || "",
-      season_name: (t.seasons as any)?.name || "",
-      wins: wl.wins,
-      losses: wl.losses,
-      games_played: wl.gp,
-    };
-  });
+  return data.map((t: any) => ({
+    id: t.team_id,
+    name: t.name,
+    organisation_id: t.organisation_id,
+    season_id: t.season_id,
+    org_name: t.organisation_name || "",
+    season_name: t.season_name || "",
+    wins: t.wins,
+    losses: t.losses,
+    games_played: t.gp,
+  }));
 }
 
 export async function getTeamById(id: string): Promise<Team | null> {
@@ -514,48 +487,24 @@ export async function getOrganisationById(id: string): Promise<Organisation | nu
 }
 
 export async function getOrganisationTeams(organisationId: string): Promise<Team[]> {
-  const { data: teams } = await supabase
-    .from("teams")
-    .select("id, name, organisation_id, season_id, organisations(name), seasons(name)")
+  const { data: filtered } = await supabase
+    .from("team_aggregates")
+    .select("team_id, name, organisation_id, season_id, organisation_name, season_name, wins, losses, gp")
     .eq("organisation_id", organisationId);
 
-  if (!teams) return [];
+  if (!filtered) return [];
 
-  // Get win/loss from games for all teams
-  const teamIds = teams.map(t => t.id);
-  const games = await fetchAllRows("games", "home_team_id, away_team_id, home_score, away_score");
-
-  const wlMap = new Map<string, { wins: number; losses: number; gp: number }>();
-  if (games.length) {
-    for (const g of games) {
-      if (g.home_score == null || g.away_score == null) continue;
-      const homeWin = g.home_score > g.away_score;
-
-      for (const [tid, isHome] of [[g.home_team_id, true], [g.away_team_id, false]] as [string, boolean][]) {
-        if (!tid || !teamIds.includes(tid)) continue;
-        const rec = wlMap.get(tid) || { wins: 0, losses: 0, gp: 0 };
-        rec.gp++;
-        if ((isHome && homeWin) || (!isHome && !homeWin)) rec.wins++;
-        else rec.losses++;
-        wlMap.set(tid, rec);
-      }
-    }
-  }
-
-  return teams.map((t: any) => {
-    const wl = wlMap.get(t.id) || { wins: 0, losses: 0, gp: 0 };
-    return {
-      id: t.id,
-      name: t.name,
-      organisation_id: t.organisation_id,
-      season_id: t.season_id,
-      org_name: (t.organisations as any)?.name || "",
-      season_name: (t.seasons as any)?.name || "",
-      wins: wl.wins,
-      losses: wl.losses,
-      games_played: wl.gp,
-    };
-  });
+  return filtered.map((t: any) => ({
+    id: t.team_id,
+    name: t.name,
+    organisation_id: t.organisation_id,
+    season_id: t.season_id,
+    org_name: t.organisation_name || "",
+    season_name: t.season_name || "",
+    wins: t.wins,
+    losses: t.losses,
+    games_played: t.gp,
+  }));
 }
 
 export async function getOrganisationPlayers(organisationId: string): Promise<{ id: string; first_name: string; last_name: string; total_games: number; total_points: number; ppg: number; team_name: string; }[]> {
@@ -1208,4 +1157,59 @@ export async function searchGrades(options: {
     competition_name: (g.seasons as any)?.competitions?.name || "",
     org_name: (g.seasons as any)?.competitions?.organisations?.name || "",
   }));
+}
+
+
+// Global search types and function for navbar search
+export type GlobalSearchResults = {
+  players: Array<{ id: string; name: string }>;
+  teams: Array<{ id: string; name: string; subtitle?: string }>;
+  organisations: Array<{ id: string; name: string; subtitle?: string }>;
+};
+
+export async function globalSearch(query: string, limit: number = 5): Promise<GlobalSearchResults> {
+  const searchQuery = query.toLowerCase().trim();
+  
+  if (searchQuery.length < 2) {
+    return { players: [], teams: [], organisations: [] };
+  }
+
+  // Search players
+  const { data: playersData } = await supabase
+    .from("player_aggregates")
+    .select("player_id, first_name, last_name, total_games, ppg")
+    .or("first_name.ilike.%${searchQuery}%,last_name.ilike.%${searchQuery}%")
+    .order("total_points", { ascending: false })
+    .limit(limit);
+
+  // Search teams
+  const { data: teamsData } = await supabase
+    .from("teams")
+    .select("id, name, organisations(name)")
+    .ilike("name", `%${searchQuery}%`)
+    .limit(limit);
+
+  // Search organisations
+  const { data: orgsData } = await supabase
+    .from("organisations")
+    .select("id, name, suburb, state")
+    .ilike("name", `%${searchQuery}%`)
+    .limit(limit);
+
+  return {
+    players: (playersData || []).map(p => ({
+      id: p.player_id,
+      name: ` `,
+    })),
+    teams: (teamsData || []).map((t: any) => ({
+      id: t.id,
+      name: t.name,
+      subtitle: (t.organisations as any)?.name || "",
+    })),
+    organisations: (orgsData || []).map(o => ({
+      id: o.id,
+      name: o.name,
+      subtitle: o.suburb && o.state ? `, ` : "",
+    })),
+  };
 }
