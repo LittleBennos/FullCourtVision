@@ -30,7 +30,8 @@ st.sidebar.title("🏀 FullCourtVision")
 page = st.sidebar.radio(
     "Navigate",
     ["Home", "Player Search", "Team Search", "Leaderboards",
-     "Grade Browser", "Player Comparison", "Scouting Report", "Player Archetypes", "Organisations"],
+     "Grade Browser", "Player Comparison", "Scouting Report", "Player Archetypes",
+     "Game Predictor", "Featured: Joshua Dworkin", "Organisations"],
 )
 
 st.sidebar.divider()
@@ -916,6 +917,224 @@ elif page == "Player Archetypes":
             st.plotly_chart(fig_pct, use_container_width=True)
         else:
             st.info(f"No organisations with {min_players}+ classified players.")
+
+# ── GAME PREDICTOR ──
+elif page == "Game Predictor":
+    st.header("🔮 Game Outcome Predictor")
+    st.markdown("Select two teams to predict the outcome using a Random Forest model trained on historical results.")
+
+    from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+    from sklearn.model_selection import train_test_split
+    from sklearn.metrics import accuracy_score
+
+    seasons = q("SELECT id, name FROM seasons ORDER BY start_date DESC")
+    sel_season = st.selectbox("Season", seasons['name'].tolist(), key="pred_season")
+    sid = seasons[seasons['name'] == sel_season]['id'].iloc[0]
+
+    teams_in_season = q("SELECT id, name FROM teams WHERE season_id = ? ORDER BY name", [sid])
+
+    if len(teams_in_season) < 2:
+        st.warning("Not enough teams in this season.")
+    else:
+        col1, col2 = st.columns(2)
+        with col1:
+            home_team = st.selectbox("🏠 Home Team", teams_in_season['name'].tolist(), key="pred_home")
+        with col2:
+            away_options = teams_in_season[teams_in_season['name'] != home_team]['name'].tolist()
+            away_team = st.selectbox("✈️ Away Team", away_options, key="pred_away")
+
+        if st.button("🔮 Predict Outcome", type="primary"):
+            home_id = teams_in_season[teams_in_season['name'] == home_team]['id'].iloc[0]
+            away_id = teams_in_season[teams_in_season['name'] == away_team]['id'].iloc[0]
+
+            # Build features from all completed games
+            all_games = q("""
+                SELECT home_team_id, away_team_id, home_score, away_score
+                FROM games WHERE status = 'FINAL' AND home_score IS NOT NULL
+            """)
+
+            if len(all_games) < 50:
+                st.error("Not enough historical games to train model.")
+            else:
+                # Build team strength lookup
+                team_stats = {}
+                for _, g in all_games.iterrows():
+                    for tid, pf, pa in [(g['home_team_id'], g['home_score'], g['away_score']),
+                                         (g['away_team_id'], g['away_score'], g['home_score'])]:
+                        if tid not in team_stats:
+                            team_stats[tid] = {'pf': [], 'pa': []}
+                        team_stats[tid]['pf'].append(pf)
+                        team_stats[tid]['pa'].append(pa)
+
+                def feat(tid):
+                    s = team_stats.get(tid)
+                    if not s or len(s['pf']) < 2:
+                        return None
+                    wins = sum(1 for f, a in zip(s['pf'], s['pa']) if f > a)
+                    return [np.mean(s['pf']), np.mean(s['pa']), wins / len(s['pf']), np.std(s['pf'])]
+
+                # Training data
+                rows_X, rows_y = [], []
+                for _, g in all_games.iterrows():
+                    hf = feat(g['home_team_id'])
+                    af = feat(g['away_team_id'])
+                    if hf and af:
+                        rows_X.append(hf + af)
+                        rows_y.append(1 if g['home_score'] > g['away_score'] else 0)
+
+                X = np.array(rows_X)
+                y = np.array(rows_y)
+
+                clf = RandomForestClassifier(n_estimators=100, random_state=42)
+                X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42)
+                clf.fit(X_tr, y_tr)
+                acc = accuracy_score(y_te, clf.predict(X_te))
+
+                hf = feat(home_id)
+                af = feat(away_id)
+
+                if not hf or not af:
+                    st.error("One or both teams have insufficient game history for prediction.")
+                else:
+                    pred_X = np.array([hf + af])
+                    prob = clf.predict_proba(pred_X)[0]
+                    home_prob = prob[1] * 100 if len(prob) > 1 else 50
+                    away_prob = prob[0] * 100 if len(prob) > 1 else 50
+
+                    st.divider()
+                    winner = home_team if home_prob > away_prob else away_team
+                    win_prob = max(home_prob, away_prob)
+
+                    st.markdown(f"""
+                    <div style="background: linear-gradient(135deg, #1a1a2e, #0f3460); padding: 30px;
+                                border-radius: 15px; text-align: center; border: 2px solid #e94560;">
+                        <h2 style="color: #e94560; margin: 0;">🏆 Predicted Winner: {winner}</h2>
+                        <p style="color: #ccc; font-size: 1.2em;">{win_prob:.1f}% win probability</p>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                    st.write("")
+                    c1, c2 = st.columns(2)
+                    c1.metric(f"🏠 {home_team}", f"{home_prob:.1f}%", delta=f"Avg {hf[0]:.1f} PPG")
+                    c2.metric(f"✈️ {away_team}", f"{away_prob:.1f}%", delta=f"Avg {af[0]:.1f} PPG")
+
+                    # Feature importance
+                    feat_names = ['Home Avg PF', 'Home Avg PA', 'Home Win%', 'Home Scoring Var',
+                                  'Away Avg PF', 'Away Avg PA', 'Away Win%', 'Away Scoring Var']
+                    imp = pd.DataFrame({'Feature': feat_names, 'Importance': clf.feature_importances_})
+                    imp = imp.sort_values('Importance', ascending=True)
+                    fig = px.bar(imp, x='Importance', y='Feature', orientation='h',
+                                 title=f'Feature Importance (Model Accuracy: {acc:.1%})')
+                    fig.update_layout(template='plotly_dark', height=350)
+                    st.plotly_chart(fig, use_container_width=True)
+
+                    st.caption(f"Model trained on {len(X_tr):,} games, tested on {len(X_te):,} games.")
+
+# ── FEATURED: JOSHUA DWORKIN ──
+elif page == "Featured: Joshua Dworkin":
+    st.header("⭐ Featured Player: Joshua Dworkin")
+
+    JOSH_ID = "f1fa18fc-a93f-45b9-ac91-f70652744dd7"
+
+    stats = q("""
+        SELECT ps.*, g.name as grade, s.name as season, s.start_date
+        FROM player_stats ps
+        JOIN grades g ON ps.grade_id = g.id
+        JOIN seasons s ON g.season_id = s.id
+        WHERE ps.player_id = ?
+        ORDER BY s.start_date
+    """, [JOSH_ID])
+
+    if stats.empty:
+        st.warning("Joshua Dworkin not found in database.")
+    else:
+        total_gp = int(stats['games_played'].sum())
+        total_pts = int(stats['total_points'].sum())
+        total_fouls = int(stats['total_fouls'].sum())
+        total_ft = int(stats['one_point'].sum())
+        total_2pt = int(stats['two_point'].sum())
+        total_3pt = int(stats['three_point'].sum())
+        ppg = round(total_pts / max(total_gp, 1), 1)
+        fpg = round(total_fouls / max(total_gp, 1), 1)
+
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+                    padding: 30px; border-radius: 15px; margin-bottom: 20px; border: 2px solid #ffc300;">
+            <h1 style="color: #ffc300; margin:0;">🏀 Joshua Dworkin</h1>
+            <p style="color: #a8a8a8; font-size: 1.1em;">Teams: {', '.join(stats['team_name'].dropna().unique())}</p>
+            <p style="color: #ccc; font-size: 1.3em; margin-top: 10px;">
+                <strong>{total_gp}</strong> games &nbsp;|&nbsp;
+                <strong>{total_pts}</strong> career points &nbsp;|&nbsp;
+                <strong>{ppg}</strong> PPG &nbsp;|&nbsp;
+                <strong>{total_3pt}</strong> three-pointers
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Career metrics
+        c1, c2, c3, c4, c5, c6 = st.columns(6)
+        c1.metric("Games", total_gp)
+        c2.metric("Points", total_pts)
+        c3.metric("PPG", ppg)
+        c4.metric("FPG", fpg)
+        c5.metric("3PT", total_3pt)
+        c6.metric("2PT", total_2pt)
+
+        st.divider()
+
+        # Season breakdown
+        st.subheader("📊 Season-by-Season Breakdown")
+        display = stats[['season', 'team_name', 'grade', 'games_played', 'total_points',
+                         'one_point', 'two_point', 'three_point', 'total_fouls']].copy()
+        gp_col = display['games_played'].clip(lower=1)
+        display['PPG'] = (display['total_points'] / gp_col).round(1)
+        st.dataframe(display, use_container_width=True, hide_index=True)
+
+        # Scoring trend chart
+        st.subheader("📈 Scoring Trend")
+        season_agg = stats.groupby(['season', 'start_date']).agg({
+            'games_played': 'sum', 'total_points': 'sum', 'total_fouls': 'sum',
+            'three_point': 'sum',
+        }).reset_index().sort_values('start_date')
+
+        season_agg['PPG'] = (season_agg['total_points'] / season_agg['games_played'].clip(lower=1)).round(1)
+        season_agg['3PT/G'] = (season_agg['three_point'] / season_agg['games_played'].clip(lower=1)).round(1)
+        season_agg['FPG'] = (season_agg['total_fouls'] / season_agg['games_played'].clip(lower=1)).round(1)
+
+        fig = go.Figure()
+        fig.add_trace(go.Scatter(x=season_agg['season'], y=season_agg['PPG'],
+                                 mode='lines+markers', name='PPG', line=dict(color='#ffc300', width=3)))
+        fig.add_trace(go.Scatter(x=season_agg['season'], y=season_agg['3PT/G'],
+                                 mode='lines+markers', name='3PT/G', line=dict(color='#e94560', width=2)))
+        fig.add_trace(go.Scatter(x=season_agg['season'], y=season_agg['FPG'],
+                                 mode='lines+markers', name='FPG', line=dict(color='#00d2ff', width=2, dash='dot')))
+        fig.update_layout(template='plotly_dark', title='Joshua Dworkin — Performance Trend', height=400)
+        st.plotly_chart(fig, use_container_width=True)
+
+        # Scoring breakdown pie
+        st.subheader("🎯 Scoring Style")
+        total_makes = total_ft + total_2pt + total_3pt
+        if total_makes > 0:
+            pts_1 = total_ft * 1
+            pts_2 = total_2pt * 2
+            pts_3 = total_3pt * 3
+            fig_pie = go.Figure(data=[go.Pie(
+                labels=['Free Throws', '2-Pointers', '3-Pointers'],
+                values=[pts_1, pts_2, pts_3], hole=0.4,
+                marker_colors=['#00d2ff', '#e94560', '#ffc300'],
+            )])
+            fig_pie.update_layout(template='plotly_dark', title='Points by Shot Type', height=350)
+            st.plotly_chart(fig_pie, use_container_width=True)
+
+        # PPG trend direction
+        if len(season_agg) >= 2:
+            slope = np.polyfit(range(len(season_agg)), season_agg['PPG'].values, 1)[0]
+            if slope > 0.5:
+                st.success("📈 **Trend: IMPROVING** — PPG trending upward across seasons")
+            elif slope < -0.5:
+                st.warning("📉 **Trend: DECLINING** — PPG trending downward")
+            else:
+                st.info("➡️ **Trend: STABLE** — Consistent performance across seasons")
 
 # ── ORGANISATIONS ──
 elif page == "Organisations":

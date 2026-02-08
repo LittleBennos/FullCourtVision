@@ -62,6 +62,8 @@ The data feeds into a **SQLite database**, a **Python analysis pipeline** (regre
 | **Scouting Reports** | In-depth player scouting reports with strengths, weaknesses, and projections |
 | **Player Archetypes** | K-Means clustering to identify distinct player archetypes |
 | **Organisation Directory** | Browse 887 basketball organisations across Victoria |
+| **Game Predictor** | Random Forest model to predict matchup outcomes with win probabilities |
+| **Featured Player** | Joshua Dworkin spotlight with full career breakdown and trend analysis |
 | **ML Models** | Linear Regression, Random Forest, K-Means Clustering, XGBoost |
 | **Age Group Benchmarks** | Percentile rankings — what's "good" for U12 vs U16? |
 
@@ -192,8 +194,14 @@ FullCourtVision/
 │   ├── 06_player_case_study.ipynb
 │   └── 07_player_comparison.ipynb
 ├── analysis_output/              # Generated charts & visualisations
-├── analysis.py                   # Core statistical analysis
-├── advanced_analysis.py          # ML models (RF, clustering)
+├── analysis/                      # Modular analysis package
+│   ├── data_loader.py                # SQLite → pandas DataFrames
+│   ├── player_analysis.py            # Player profiles, trends, consistency
+│   ├── team_analysis.py              # Team records, home/away splits
+│   ├── predictions.py                # Linear regression, Random Forest predictions
+│   └── clustering.py                 # K-Means player archetype clustering
+├── analysis.py                   # Core statistical analysis (legacy)
+├── advanced_analysis.py          # ML models (RF, clustering) (legacy)
 ├── streamlit_app.py              # Interactive Streamlit dashboard
 ├── requirements.txt              # Python dependencies
 ├── DATA_DICTIONARY.md            # Database schema documentation
