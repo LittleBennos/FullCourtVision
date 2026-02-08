@@ -1,5 +1,6 @@
 const https = require('https');
 const db = require('./playhq-db');
+const { syncToSupabase } = require('../scripts/sync-to-supabase');
 
 const TENANT = 'basketball-victoria';
 
@@ -328,6 +329,13 @@ async function scrapeAssociation(orgId, options = {}) {
     
   } finally {
     database.close();
+  }
+
+  // Sync to Supabase after scrape
+  try {
+    await syncToSupabase();
+  } catch (e) {
+    console.error('Supabase sync failed (SQLite data is safe):', e.message);
   }
 }
 
