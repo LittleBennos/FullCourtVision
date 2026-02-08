@@ -608,3 +608,218 @@ export async function getOrganisationStats(organisationId: string): Promise<{
     top_scorer: topScorer,
   };
 }
+
+// Helper function to extract region/suburb from organisation name
+function extractRegion(orgName: string): string {
+  // Remove common suffixes and prefixes
+  let name = orgName.toLowerCase()
+    .replace(/basketball.*/i, '')
+    .replace(/\b(club|inc|association|assoc|academy|stadium|junior|senior|abl|vnbl|nbl1|big v|state championship)\b/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Handle special cases with specific patterns
+  const specialCases: Record<string, string> = {
+    'aba wolverines': 'Albury/Wodonga',
+    'aberfeldie jets': 'Aberfeldie',
+    'aitken creek ravens': 'Aitken Creek',
+    'alamanda': 'Berwick',
+    'albert park': 'Albert Park',
+    'albury': 'Albury',
+    'altona': 'Altona',
+    'altona bay': 'Altona',
+    'altona gators': 'Altona',
+    'altona laverton eagles': 'Altona/Laverton',
+    'altona meadows sharks': 'Altona Meadows',
+    'altona pirates': 'Altona',
+    'anglesea aireys': 'Anglesea',
+    'ararat': 'Ararat',
+    'ashwood wolves': 'Ashwood',
+    'aspendale gardens giants': 'Aspendale Gardens',
+    'avondale raiders': 'Avondale',
+    'bacchus marsh': 'Bacchus Marsh',
+    'bairnsdale': 'Bairnsdale',
+    'ballarat': 'Ballarat',
+    'ballan brumbies': 'Ballan',
+    'eastern districts': 'Eastern Melbourne',
+    'eltham wildcats': 'Eltham',
+    'box hill': 'Box Hill',
+    'broadmeadows': 'Broadmeadows',
+    'brunswick': 'Brunswick',
+    'camberwell': 'Camberwell',
+    'dandenong': 'Dandenong',
+    'diamond valley': 'Diamond Valley',
+    'doncaster': 'Doncaster',
+    'footscray': 'Footscray',
+    'frankston': 'Frankston',
+    'geelong': 'Geelong',
+    'hawthorn': 'Hawthorn',
+    'heidelberg': 'Heidelberg',
+    'keilor': 'Keilor',
+    'knox': 'Knox',
+    'melbourne': 'Melbourne',
+    'monash': 'Monash',
+    'northcote': 'Northcote',
+    'oakleigh': 'Oakleigh',
+    'preston': 'Preston',
+    'richmond': 'Richmond',
+    'ringwood': 'Ringwood',
+    'sandringham': 'Sandringham',
+    'st kilda': 'St Kilda',
+    'sunshine': 'Sunshine',
+    'waverley': 'Waverley',
+    'werribee': 'Werribee',
+    'williamstown': 'Williamstown',
+    'bendigo': 'Bendigo',
+    'shepparton': 'Shepparton',
+    'warrnambool': 'Warrnambool',
+    'mildura': 'Mildura',
+    'horsham': 'Horsham',
+    'traralgon': 'Traralgon',
+    'morwell': 'Morwell',
+    'sale': 'Sale',
+    'wonthaggi': 'Wonthaggi',
+    'colac': 'Colac',
+    'portland': 'Portland',
+    'hamilton': 'Hamilton',
+    'apollo bay': 'Apollo Bay',
+    'torquay': 'Torquay',
+    'lorne': 'Lorne',
+    'mount gambier': 'Mount Gambier',
+    'millicent': 'Millicent',
+    'naracoorte': 'Naracoorte'
+  };
+
+  // Check exact matches first
+  if (specialCases[name]) {
+    return specialCases[name];
+  }
+
+  // Check if any special case key is contained in the name
+  for (const [key, value] of Object.entries(specialCases)) {
+    if (name.includes(key)) {
+      return value;
+    }
+  }
+
+  // Try to extract first meaningful word(s)
+  const words = name.split(' ').filter(w => w.length > 2);
+  if (words.length > 0) {
+    // Return first 1-2 meaningful words, capitalized
+    const region = words.slice(0, 2).join(' ');
+    return region.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  }
+
+  return 'Other';
+}
+
+export type HeatmapRegion = {
+  region: string;
+  organisations: number;
+  players: number;
+  games: number;
+  teams: number;
+  density: number; // players per organisation
+};
+
+export async function getHeatmapData(): Promise<HeatmapRegion[]> {
+  // Get all organisations with their stats
+  const { data: organisations } = await supabase
+    .from("organisations")
+    .select(`
+      id,
+      name,
+      competitions!inner(
+        id,
+        seasons!inner(
+          id,
+          grades!inner(
+            id,
+            player_stats(player_id, games_played, total_points)
+          )
+        )
+      )
+    `);
+
+  if (!organisations) return [];
+
+  // Build a map of region stats
+  const regionMap = new Map<string, {
+    organisations: Set<string>;
+    players: Set<string>;
+    games: number;
+    teams: Set<string>;
+  }>();
+
+  // Get teams and games data separately for performance
+  const { data: teams } = await supabase.from("teams").select("id, organisation_id");
+  const { data: games } = await supabase.from("games").select("id, home_team_id, away_team_id");
+
+  // Create lookup maps
+  const teamsByOrg = new Map<string, string[]>();
+  if (teams) {
+    for (const team of teams) {
+      if (!teamsByOrg.has(team.organisation_id)) {
+        teamsByOrg.set(team.organisation_id, []);
+      }
+      teamsByOrg.get(team.organisation_id)!.push(team.id);
+    }
+  }
+
+  // Process each organisation
+  for (const org of organisations) {
+    const region = extractRegion(org.name);
+    
+    if (!regionMap.has(region)) {
+      regionMap.set(region, {
+        organisations: new Set(),
+        players: new Set(),
+        games: 0,
+        teams: new Set(),
+      });
+    }
+
+    const regionData = regionMap.get(region)!;
+    regionData.organisations.add(org.id);
+
+    // Add teams for this organisation
+    const orgTeams = teamsByOrg.get(org.id) || [];
+    orgTeams.forEach(teamId => regionData.teams.add(teamId));
+
+    // Process player stats
+    for (const competition of org.competitions) {
+      for (const season of competition.seasons) {
+        for (const grade of season.grades) {
+          for (const playerStat of grade.player_stats) {
+            regionData.players.add(playerStat.player_id);
+          }
+        }
+      }
+    }
+
+    // Count games for this organisation's teams
+    if (games && orgTeams.length > 0) {
+      const orgTeamSet = new Set(orgTeams);
+      for (const game of games) {
+        if (orgTeamSet.has(game.home_team_id) || orgTeamSet.has(game.away_team_id)) {
+          regionData.games++;
+        }
+      }
+    }
+  }
+
+  // Convert map to array with calculated metrics
+  const result: HeatmapRegion[] = Array.from(regionMap.entries())
+    .map(([region, data]) => ({
+      region,
+      organisations: data.organisations.size,
+      players: data.players.size,
+      games: data.games,
+      teams: data.teams.size,
+      density: data.organisations.size > 0 ? +(data.players.size / data.organisations.size).toFixed(1) : 0,
+    }))
+    .filter(r => r.players > 0) // Only include regions with actual players
+    .sort((a, b) => b.players - a.players); // Sort by player count
+
+  return result;
+}
