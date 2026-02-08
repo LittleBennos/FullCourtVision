@@ -5,7 +5,8 @@ __pycache__/
 .venv/
 venv/
 
-# Database journals (main DB is tracked for Streamlit Cloud)
+# Database (too large for git — use parquet exports instead)
+data/*.db
 data/*.db-shm
 data/*.db-wal
 data/*.sqlite

@@ -1,6 +1,5 @@
 """FullCourtVision — Victorian Basketball Analytics Dashboard."""
 
-import sqlite3
 import os
 import re
 import numpy as np
@@ -11,18 +10,9 @@ import streamlit as st
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
 
-DB_PATH = os.path.join(os.path.dirname(__file__), "data", "playhq.db")
-
 st.set_page_config(page_title="FullCourtVision", page_icon="🏀", layout="wide")
 
-
-@st.cache_resource
-def get_conn():
-    return sqlite3.connect(DB_PATH, check_same_thread=False)
-
-
-def q(sql, params=None):
-    return pd.read_sql_query(sql, get_conn(), params=params or [])
+from db import q, get_data_source
 
 
 # ── Sidebar ──
@@ -1164,3 +1154,16 @@ elif page == "Organisations":
             fig2 = px.bar(by_state, x='state', y='count', title='Organisations by State')
             fig2.update_layout(template='plotly_dark')
             st.plotly_chart(fig2, use_container_width=True)
+
+# ── FOOTER ──
+st.divider()
+st.markdown(
+    f"""<div style="text-align: center; color: #666; padding: 20px 0;">
+    <p><strong>FullCourtVision</strong> — Victorian Basketball Analytics Platform</p>
+    <p>Data sourced from <a href="https://www.playhq.com" target="_blank" style="color: #FF6B35;">PlayHQ</a>
+    &nbsp;|&nbsp; Built by <a href="https://github.com/LittleBennos" target="_blank" style="color: #FF6B35;">Ben Dworkin</a>
+    &nbsp;|&nbsp; <a href="https://github.com/LittleBennos/FullCourtVision" target="_blank" style="color: #FF6B35;">GitHub</a></p>
+    <p style="font-size: 0.8em;">Data source: {get_data_source()} &nbsp;|&nbsp; 57,735 players &nbsp;|&nbsp; 380,815 stat lines &nbsp;|&nbsp; 89,823 games</p>
+    </div>""",
+    unsafe_allow_html=True,
+)
