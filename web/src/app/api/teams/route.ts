@@ -12,31 +12,38 @@ const supabase = createClient(
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const search = params.get("search") || "";
+  const org = params.get("org") || "";
   const limit = parseIntParam(params.get("limit"), 25, 100);
   const offset = parseIntParam(params.get("offset"), 0);
 
   let query = supabase
-    .from("player_aggregates")
-    .select("player_id, first_name, last_name, total_games, total_points, ppg", { count: "exact" });
+    .from("team_aggregates")
+    .select("team_id, name, organisation_id, season_id, organisation_name, season_name, wins, losses, gp", { count: "exact" });
 
   if (search) {
-    query = query.or(`first_name.ilike.%${search}%,last_name.ilike.%${search}%`);
+    query = query.ilike("name", `%${search}%`);
+  }
+  if (org) {
+    query = query.eq("organisation_id", org);
   }
 
   const { data, count, error: dbError } = await query
-    .order("total_points", { ascending: false })
+    .order("name")
     .range(offset, offset + limit - 1);
 
   if (dbError) return error(dbError.message, 500);
 
   return json({
-    data: (data || []).map((p: any) => ({
-      id: p.player_id,
-      first_name: p.first_name,
-      last_name: p.last_name,
-      total_games: p.total_games,
-      total_points: p.total_points,
-      ppg: +p.ppg,
+    data: (data || []).map((t: any) => ({
+      id: t.team_id,
+      name: t.name,
+      organisation_id: t.organisation_id,
+      organisation_name: t.organisation_name || "",
+      season_id: t.season_id,
+      season_name: t.season_name || "",
+      wins: t.wins,
+      losses: t.losses,
+      games_played: t.gp,
     })),
     meta: { total: count || 0, limit, offset },
   });
