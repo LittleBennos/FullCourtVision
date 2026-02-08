@@ -4,8 +4,9 @@ import { PlayerTrendsChart } from "@/components/player-trends-chart";
 import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 
-export async function generateMetadata({ params }: { params: { id: string } }) {
-  const playerData = await getPlayerDetails(params.id);
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const playerData = await getPlayerDetails(id);
   
   if (!playerData) {
     return { title: "Player Not Found" };
@@ -37,8 +38,9 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 
 export const dynamic = "force-dynamic";
 
-export default async function PlayerDetailPage({ params }: { params: { id: string } }) {
-  const playerData = await getPlayerDetails(params.id);
+export default async function PlayerDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const playerData = await getPlayerDetails(id);
 
   if (!playerData) {
     notFound();
@@ -77,7 +79,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
             "@context": "https://schema.org",
             "@type": "Person",
             name: playerName,
-            url: `https://fullcourtvision.vercel.app/players/${params.id}`,
+            url: `https://fullcourtvision.vercel.app/players/${id}`,
             description: `Basketball player with ${totalStats.games} games and ${totalStats.points} total points across Victorian basketball.`,
             sport: "Basketball",
           }),
@@ -123,7 +125,7 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
         <PlayerTrendsChart 
           playerStats={stats} 
           seasons={seasons}
-          playerId={params.id}
+          playerId={id}
         />
       </div>
 

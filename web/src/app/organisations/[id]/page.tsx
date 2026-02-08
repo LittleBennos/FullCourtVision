@@ -13,9 +13,10 @@ export const dynamic = "force-dynamic";
 export async function generateMetadata({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }> 
 }): Promise<Metadata> {
-  const organisation = await getOrganisationById(params.id);
+  const { id } = await params;
+  const organisation = await getOrganisationById(id);
   
   if (!organisation) {
     return {
@@ -39,13 +40,14 @@ export async function generateMetadata({
 export default async function OrganisationDetailPage({ 
   params 
 }: { 
-  params: { id: string } 
+  params: Promise<{ id: string }> 
 }) {
+  const { id } = await params;
   const [organisation, teams, players, stats] = await Promise.all([
-    getOrganisationById(params.id),
-    getOrganisationTeams(params.id),
-    getOrganisationPlayers(params.id),
-    getOrganisationStats(params.id),
+    getOrganisationById(id),
+    getOrganisationTeams(id),
+    getOrganisationPlayers(id),
+    getOrganisationStats(id),
   ]);
 
   if (!organisation) {
