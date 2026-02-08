@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fullcourtvision.com';
   
   return {
-    title: `${grade.name} — ${grade.competition_name} — FullCourtVision`,
+    title: `${grade.name} — ${grade.competition_name}`,
     description: `${grade.name} grade in ${grade.competition_name} (${grade.season_name}). View team standings, top scorers, and fixtures.`,
     openGraph: {
       title: `${grade.name} — ${grade.competition_name}`,

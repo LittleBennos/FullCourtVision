@@ -23,9 +23,16 @@ export async function generateMetadata({
     };
   }
 
+  const desc = `View teams, players, and statistics for ${organisation.name}${organisation.suburb ? ` in ${organisation.suburb}, ${organisation.state}` : ""}.`;
   return {
-    title: `${organisation.name} — FullCourtVision`,
-    description: `View teams, players, and statistics for ${organisation.name}${organisation.suburb ? ` in ${organisation.suburb}, ${organisation.state}` : ""}.`,
+    title: `${organisation.name}`,
+    description: desc,
+    openGraph: {
+      title: `${organisation.name} | FullCourtVision`,
+      description: desc,
+      type: "website",
+    },
+    twitter: { card: "summary_large_image" as const, title: `${organisation.name} | FullCourtVision`, description: desc },
   };
 }
 

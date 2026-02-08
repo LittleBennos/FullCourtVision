@@ -2,7 +2,8 @@ import { getLeaderboards, getAvailableSeasons } from "@/lib/data";
 import { LeaderboardsClient } from "./leaderboards-client";
 
 export const metadata = {
-  title: "Leaderboards — FullCourtVision",
+  title: "Leaderboards",
+  description: "Top scorers, most games played, and statistical leaders across all Victorian basketball competitions.",
 };
 
 export const dynamic = "force-dynamic";

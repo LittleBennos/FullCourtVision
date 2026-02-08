@@ -2,8 +2,8 @@ import { getRisingStars } from "@/lib/db";
 import { RisingStarsClient } from "./rising-stars-client";
 
 export const metadata = {
-  title: "Rising Stars — FullCourtVision",
-  description: "Players with the biggest PPG improvement between their most recent and previous seasons",
+  title: "Rising Stars",
+  description: "Players with the biggest PPG improvement between their most recent and previous seasons in Victorian basketball.",
 };
 
 export const dynamic = "force-dynamic";

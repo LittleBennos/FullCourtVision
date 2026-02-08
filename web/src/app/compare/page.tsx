@@ -4,7 +4,8 @@ import CompareClient from "./compare-client";
 export const dynamic = "force-dynamic";
 
 export const metadata = {
-  title: "Compare Players — FullCourtVision",
+  title: "Compare Players",
+  description: "Compare basketball players side by side. View stats, trends, and head-to-head performance across Victorian competitions.",
 };
 
 export default function ComparePage() {

@@ -2,7 +2,8 @@ import { getTeams } from "@/lib/data";
 import { TeamsClient } from "./teams-client";
 
 export const metadata = {
-  title: "Teams — FullCourtVision",
+  title: "Teams",
+  description: "Browse all basketball teams across Victoria. View records, rosters, and statistics.",
 };
 
 export const dynamic = "force-dynamic";

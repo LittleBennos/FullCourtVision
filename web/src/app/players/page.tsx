@@ -2,8 +2,8 @@ import { getAllPlayers } from "@/lib/data";
 import { PlayerTable } from "@/components/player-table";
 
 export const metadata = {
-  title: "Players — FullCourtVision",
-  description: "Browse all basketball players across Victoria",
+  title: "Players",
+  description: "Browse 57,000+ basketball players across Victoria. Search by name, view career stats and performance trends.",
 };
 
 export const dynamic = "force-dynamic";

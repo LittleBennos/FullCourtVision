@@ -2,7 +2,8 @@ import { getCompetitions, getSeasons } from "@/lib/data";
 import Link from "next/link";
 
 export const metadata = {
-  title: "Competitions — FullCourtVision",
+  title: "Competitions",
+  description: "Browse all basketball competitions across Victoria, Australia. Filter by season and view grades.",
 };
 
 export const dynamic = "force-dynamic";

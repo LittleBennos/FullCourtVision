@@ -8,15 +8,30 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   const playerData = await getPlayerDetails(params.id);
   
   if (!playerData) {
-    return {
-      title: "Player Not Found — FullCourtVision",
-    };
+    return { title: "Player Not Found" };
   }
 
-  const { player } = playerData;
+  const { player, stats } = playerData;
+  const totalGames = stats.reduce((s, st) => s + (st.games_played || 0), 0);
+  const totalPoints = stats.reduce((s, st) => s + (st.total_points || 0), 0);
+  const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
+  const name = `${player.first_name} ${player.last_name}`;
+  const desc = `${name} basketball stats: ${totalGames} games, ${totalPoints} points, ${ppg} PPG across ${stats.length} competition${stats.length !== 1 ? "s" : ""} in Victoria.`;
+
   return {
-    title: `${player.first_name} ${player.last_name} — FullCourtVision`,
-    description: `Basketball statistics for ${player.first_name} ${player.last_name}`,
+    title: `${name} Stats`,
+    description: desc,
+    openGraph: {
+      title: `${name} Stats | FullCourtVision`,
+      description: desc,
+      type: "profile",
+      images: [`/api/og?type=player&name=${encodeURIComponent(name)}&ppg=${ppg}&games=${totalGames}`],
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title: `${name} Stats | FullCourtVision`,
+      description: desc,
+    },
   };
 }
 
@@ -51,8 +66,23 @@ export default async function PlayerDetailPage({ params }: { params: { id: strin
     foulsPg: totalStats.games > 0 ? +(totalStats.fouls / totalStats.games).toFixed(1) : 0,
   };
 
+  const playerName = `${player.first_name} ${player.last_name}`;
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Person",
+            name: playerName,
+            url: `https://fullcourtvision.vercel.app/players/${params.id}`,
+            description: `Basketball player with ${totalStats.games} games and ${totalStats.points} total points across Victorian basketball.`,
+            sport: "Basketball",
+          }),
+        }}
+      />
       {/* Player Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">

@@ -11,9 +11,16 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const team = await getTeamById(id);
   if (!team) return { title: "Team Not Found — FullCourtVision" };
 
+  const desc = `${team.name} from ${team.org_name}. ${team.wins}W-${team.losses}L across ${team.games_played} games in Victorian basketball.`;
   return {
-    title: `${team.name} — FullCourtVision`,
-    description: `${team.name} from ${team.org_name}. ${team.wins}W-${team.losses}L across ${team.games_played} games.`,
+    title: `${team.name} — ${team.org_name}`,
+    description: desc,
+    openGraph: {
+      title: `${team.name} | FullCourtVision`,
+      description: desc,
+      type: "website",
+    },
+    twitter: { card: "summary_large_image" as const, title: `${team.name} | FullCourtVision`, description: desc },
   };
 }
 
@@ -36,6 +43,19 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
         <ArrowLeft className="w-4 h-4" /> Back to Teams
       </Link>
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SportsTeam",
+            name: team.name,
+            url: `https://fullcourtvision.vercel.app/teams/${id}`,
+            sport: "Basketball",
+            memberOf: team.org_name ? { "@type": "SportsOrganization", name: team.org_name } : undefined,
+          }),
+        }}
+      />
       {/* Header */}
       <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">
         <h1 className="text-3xl md:text-4xl font-bold mb-2">{team.name}</h1>
