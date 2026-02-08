@@ -304,29 +304,101 @@ export async function getSeasons(): Promise<Season[]> {
   }));
 }
 
-export async function getLeaderboards(): Promise<{ ppg: any[]; games: any[]; threes: any[] }> {
-  // Use the player_aggregates view — all aggregation done server-side
-  // Fetch players with min 10 games
-  const { data: ppgData } = await supabase
-    .from("player_aggregates")
-    .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg")
-    .gte("total_games", 10)
-    .order("ppg", { ascending: false })
-    .limit(100);
+export async function getAvailableSeasons(): Promise<Season[]> {
+  const { data } = await supabase
+    .from("seasons")
+    .select("id, name, start_date, end_date, status, competitions(name)")
+    .order("start_date", { ascending: false });
 
-  const { data: gamesData } = await supabase
-    .from("player_aggregates")
-    .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg")
-    .gte("total_games", 10)
-    .order("total_games", { ascending: false })
-    .limit(100);
+  return (data || []).map((s: any) => ({
+    id: s.id,
+    competition_id: "",
+    name: s.name,
+    start_date: s.start_date,
+    end_date: s.end_date,
+    status: s.status,
+    competition_name: s.competitions?.name || "",
+  }));
+}
 
-  const { data: threesData } = await supabase
-    .from("player_aggregates")
-    .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg")
-    .gte("total_games", 10)
-    .order("total_threes", { ascending: false })
-    .limit(100);
+export async function getLeaderboards(seasonId?: string): Promise<{ ppg: any[]; games: any[]; threes: any[] }> {
+  let processedData: any[];
+  
+  if (seasonId) {
+    // When filtering by season, we need to aggregate manually since player_aggregates shows all seasons
+    const { data: seasonData } = await supabase
+      .from("player_stats")
+      .select(`
+        player_id,
+        players!inner(first_name, last_name),
+        games_played,
+        total_points,
+        three_point,
+        grades!inner(season_id, seasons!inner(id, name))
+      `)
+      .eq("grades.season_id", seasonId);
+
+    // Aggregate data by player when filtering by season
+    const playerMap = new Map<string, {
+      player_id: string;
+      first_name: string;
+      last_name: string;
+      total_games: number;
+      total_points: number;
+      total_threes: number;
+    }>();
+
+    if (seasonData) {
+      for (const row of seasonData) {
+        const playerId = row.player_id;
+        const existing = playerMap.get(playerId);
+        
+        if (existing) {
+          existing.total_games += row.games_played || 0;
+          existing.total_points += row.total_points || 0;
+          existing.total_threes += row.three_point || 0;
+        } else {
+          playerMap.set(playerId, {
+            player_id: playerId,
+            first_name: (row.players as any)?.first_name || '',
+            last_name: (row.players as any)?.last_name || '',
+            total_games: row.games_played || 0,
+            total_points: row.total_points || 0,
+            total_threes: row.three_point || 0,
+          });
+        }
+      }
+    }
+
+    processedData = Array.from(playerMap.values())
+      .filter(p => p.total_games >= 10)
+      .map(p => ({
+        player_id: p.player_id,
+        first_name: p.first_name,
+        last_name: p.last_name,
+        total_games: p.total_games,
+        total_points: p.total_points,
+        total_threes: p.total_threes,
+        ppg: p.total_games > 0 ? +(p.total_points / p.total_games).toFixed(1) : 0,
+      }));
+  } else {
+    // Use the player_aggregates view for all seasons
+    const { data: allSeasonsData } = await supabase
+      .from("player_aggregates")
+      .select("player_id, first_name, last_name, total_games, total_points, total_threes, ppg");
+
+    processedData = (allSeasonsData || [])
+      .filter((r: any) => r.total_games >= 10)
+      .map((r: any) => ({
+        player_id: r.player_id,
+        first_name: r.first_name,
+        last_name: r.last_name,
+        total_games: r.total_games,
+        total_points: r.total_points,
+        total_threes: r.total_threes,
+        ppg: +r.ppg,
+      }));
+  }
 
   const mapRow = (r: any) => ({
     id: r.player_id,
@@ -339,10 +411,15 @@ export async function getLeaderboards(): Promise<{ ppg: any[]; games: any[]; thr
     threes_pg: r.total_games > 0 ? +(r.total_threes / r.total_games).toFixed(1) : 0,
   });
 
+  // Sort by different criteria for each leaderboard
+  const ppgData = [...processedData].sort((a, b) => b.ppg - a.ppg).slice(0, 100);
+  const gamesData = [...processedData].sort((a, b) => b.total_games - a.total_games).slice(0, 100);
+  const threesData = [...processedData].sort((a, b) => b.total_threes - a.total_threes).slice(0, 100);
+
   return {
-    ppg: (ppgData || []).map(mapRow),
-    games: (gamesData || []).map(mapRow),
-    threes: (threesData || []).map(mapRow),
+    ppg: ppgData.map(mapRow),
+    games: gamesData.map(mapRow),
+    threes: threesData.map(mapRow),
   };
 }
 

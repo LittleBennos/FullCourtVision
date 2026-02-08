@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Season } from "@/lib/data";
 
 const tabs = [
   { key: "ppg", label: "Points Per Game", valueKey: "ppg", valueLabel: "PPG" },
@@ -11,15 +13,64 @@ const tabs = [
 
 type TabKey = (typeof tabs)[number]["key"];
 
-export function LeaderboardsClient({ leaderboards }: { leaderboards: { ppg: any[]; games: any[]; threes: any[] } }) {
+type Props = {
+  leaderboards: { ppg: any[]; games: any[]; threes: any[] };
+  seasons: Season[];
+  selectedSeasonId?: string;
+};
+
+export function LeaderboardsClient({ leaderboards, seasons, selectedSeasonId }: Props) {
   const [tab, setTab] = useState<TabKey>("ppg");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  
   const activeTab = tabs.find((t) => t.key === tab)!;
   const data = leaderboards[tab] as any[];
+
+  const handleSeasonChange = (seasonId: string) => {
+    const params = new URLSearchParams(searchParams);
+    if (seasonId === "all") {
+      params.delete("season");
+    } else {
+      params.set("season", seasonId);
+    }
+    const newUrl = `/leaderboards${params.toString() ? `?${params.toString()}` : ""}`;
+    router.push(newUrl);
+  };
+
+  const selectedSeason = selectedSeasonId 
+    ? seasons.find(s => s.id === selectedSeasonId)
+    : null;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-2">Leaderboards</h1>
-      <p className="text-muted-foreground mb-6">Top performers across Victorian basketball (min. 10 games)</p>
+      <p className="text-muted-foreground mb-4">Top performers across Victorian basketball (min. 10 games)</p>
+
+      {/* Season Filter */}
+      <div className="mb-6">
+        <label htmlFor="season-select" className="block text-sm font-medium text-foreground mb-2">
+          Filter by Season
+        </label>
+        <select
+          id="season-select"
+          value={selectedSeasonId || "all"}
+          onChange={(e) => handleSeasonChange(e.target.value)}
+          className="px-3 py-2 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent focus:border-accent min-w-[200px]"
+        >
+          <option value="all">All Seasons</option>
+          {seasons.map((season) => (
+            <option key={season.id} value={season.id}>
+              {season.name}
+            </option>
+          ))}
+        </select>
+        {selectedSeason && (
+          <p className="text-xs text-muted-foreground mt-1">
+            Showing data for {selectedSeason.name}
+          </p>
+        )}
+      </div>
 
       <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
         {tabs.map((t) => (
