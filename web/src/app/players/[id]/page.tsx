@@ -1,153 +1,149 @@
-import { getPlayerDetails } from "@/lib/data";
+import { getPlayerDetails, getAvailableSeasons } from "@/lib/data";
+import { StatCard } from "@/components/stat-card";
+import { PlayerTrendsChart } from "@/components/player-trends-chart";
+import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
-import { ScoringTrendChart, ShotBreakdownChart } from "@/components/charts";
 
-export const dynamic = "force-dynamic";
-
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const data = await getPlayerDetails(id);
-  if (!data) return { title: "Player Not Found" };
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const playerData = await getPlayerDetails(params.id);
   
-  const { player, stats } = data;
-  const totalGames = stats.reduce((sum: number, stat: any) => sum + (stat.games_played || 0), 0);
-  const totalPoints = stats.reduce((sum: number, stat: any) => sum + (stat.total_points || 0), 0);
-  const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
-  const mostRecentTeam = stats[0]?.team_name || 'Player';
+  if (!playerData) {
+    return {
+      title: "Player Not Found — FullCourtVision",
+    };
+  }
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://fullcourtvision.com';
-  
+  const { player } = playerData;
   return {
     title: `${player.first_name} ${player.last_name} — FullCourtVision`,
-    description: `${player.first_name} ${player.last_name} from ${mostRecentTeam} averages ${ppg} PPG with ${totalPoints.toLocaleString()} total points across ${totalGames} games. View detailed basketball statistics on FullCourtVision.`,
-    openGraph: {
-      title: `${player.first_name} ${player.last_name} — FullCourtVision`,
-      description: `${player.first_name} ${player.last_name} from ${mostRecentTeam} • ${ppg} PPG • ${totalPoints.toLocaleString()} points • ${totalGames} games`,
-      images: [
-        {
-          url: `${baseUrl}/api/og?playerId=${id}&type=player`,
-          width: 1200,
-          height: 630,
-          alt: `${player.first_name} ${player.last_name} basketball statistics`,
-        },
-      ],
-      type: 'website',
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: `${player.first_name} ${player.last_name} — FullCourtVision`,
-      description: `${player.first_name} ${player.last_name} • ${ppg} PPG • ${totalPoints.toLocaleString()} points • ${totalGames} games`,
-      images: [`${baseUrl}/api/og?playerId=${id}&type=player`],
-    },
+    description: `Basketball statistics for ${player.first_name} ${player.last_name}`,
   };
 }
 
-export default async function PlayerPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const data = await getPlayerDetails(id);
-  if (!data) notFound();
+export const dynamic = "force-dynamic";
 
-  const { player, stats } = data;
-  const totalGames = stats.reduce((s: number, st: any) => s + (st.games_played || 0), 0);
-  const totalPoints = stats.reduce((s: number, st: any) => s + (st.total_points || 0), 0);
-  const totalOnePoint = stats.reduce((s: number, st: any) => s + (st.one_point || 0), 0);
-  const totalTwoPoint = stats.reduce((s: number, st: any) => s + (st.two_point || 0), 0);
-  const totalThreePoint = stats.reduce((s: number, st: any) => s + (st.three_point || 0), 0);
-  const totalFouls = stats.reduce((s: number, st: any) => s + (st.total_fouls || 0), 0);
-  const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
+export default async function PlayerDetailPage({ params }: { params: { id: string } }) {
+  const playerData = await getPlayerDetails(params.id);
 
-  const trendData = stats.map((st: any) => ({
-    name: st.season_name || st.grade_name || "Unknown",
-    ppg: st.games_played > 0 ? +(st.total_points / st.games_played).toFixed(1) : 0,
-    totalPoints: st.total_points || 0,
-  }));
+  if (!playerData) {
+    notFound();
+  }
 
-  const shotData = [
-    { name: "1-Pointers", value: totalOnePoint },
-    { name: "2-Pointers", value: totalTwoPoint },
-    { name: "3-Pointers", value: totalThreePoint },
-  ].filter((d) => d.value > 0);
+  const { player, stats } = playerData;
+  const seasons = await getAvailableSeasons();
+
+  // Calculate total stats across all seasons
+  const totalStats = stats.reduce(
+    (acc, stat) => ({
+      games: acc.games + (stat.games_played || 0),
+      points: acc.points + (stat.total_points || 0),
+      twoPoint: acc.twoPoint + (stat.two_point || 0),
+      threePoint: acc.threePoint + (stat.three_point || 0),
+      fouls: acc.fouls + (stat.total_fouls || 0),
+    }),
+    { games: 0, points: 0, twoPoint: 0, threePoint: 0, fouls: 0 }
+  );
+
+  const averages = {
+    ppg: totalStats.games > 0 ? +(totalStats.points / totalStats.games).toFixed(1) : 0,
+    twoPtPg: totalStats.games > 0 ? +(totalStats.twoPoint / totalStats.games).toFixed(1) : 0,
+    threePtPg: totalStats.games > 0 ? +(totalStats.threePoint / totalStats.games).toFixed(1) : 0,
+    foulsPg: totalStats.games > 0 ? +(totalStats.fouls / totalStats.games).toFixed(1) : 0,
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <Link href="/players" className="inline-flex items-center gap-1 text-accent hover:underline text-sm mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back to Players
-      </Link>
-
-      {/* Header */}
-      <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-4">
+      {/* Player Header */}
+      <div className="mb-8">
+        <h1 className="text-4xl font-bold mb-2">
           {player.first_name} {player.last_name}
         </h1>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6">
-          {[
-            { label: "PPG", value: ppg, accent: true },
-            { label: "Total Points", value: totalPoints.toLocaleString() },
-            { label: "Games", value: totalGames },
-            { label: "Total Fouls", value: totalFouls },
-            { label: "Seasons", value: stats.length },
-          ].map(({ label, value, accent }) => (
-            <div key={label}>
-              <p className={`text-2xl md:text-3xl font-bold ${accent ? "text-accent" : ""}`}>{value}</p>
-              <p className="text-sm text-muted-foreground">{label}</p>
-            </div>
-          ))}
-        </div>
+        <p className="text-muted-foreground">
+          Basketball player across {stats.length} competition{stats.length !== 1 ? 's' : ''}
+        </p>
       </div>
 
-      {/* Charts */}
-      <div className="grid md:grid-cols-2 gap-8 mb-8">
-        <div className="bg-card rounded-xl border border-border p-6">
-          <h2 className="text-lg font-semibold mb-4">Scoring Trend</h2>
-          <ScoringTrendChart data={trendData} />
-        </div>
-        <div className="bg-card rounded-xl border border-border p-6">
-          <h2 className="text-lg font-semibold mb-4">Shot Type Breakdown</h2>
-          <ShotBreakdownChart data={shotData} />
-        </div>
+      {/* Career Stats Overview */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <StatCard
+          label="Games Played"
+          value={totalStats.games}
+          icon={Users}
+        />
+        <StatCard
+          label="Points Per Game"
+          value={averages.ppg}
+          icon={TrendingUp}
+        />
+        <StatCard
+          label="Total Points"
+          value={totalStats.points}
+          icon={Target}
+        />
+        <StatCard
+          label="Total Fouls"
+          value={totalStats.fouls}
+          icon={AlertTriangle}
+        />
       </div>
 
-      {/* Season Breakdown */}
+      {/* Performance Trends Section */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-6">Performance Trends</h2>
+        <PlayerTrendsChart 
+          playerStats={stats} 
+          seasons={seasons}
+          playerId={params.id}
+        />
+      </div>
+
+      {/* Season Breakdown Table */}
       <div className="bg-card rounded-xl border border-border p-6">
-        <h2 className="text-lg font-semibold mb-4">Season Breakdown</h2>
+        <h3 className="text-xl font-semibold mb-4">Season Breakdown</h3>
         <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead className="bg-muted/50">
-              <tr>
-                <th className="text-left px-4 py-3 font-medium">Season</th>
-                <th className="text-left px-4 py-3 font-medium">Grade</th>
-                <th className="text-left px-4 py-3 font-medium">Team</th>
-                <th className="text-right px-4 py-3 font-medium">GP</th>
-                <th className="text-right px-4 py-3 font-medium">PTS</th>
-                <th className="text-right px-4 py-3 font-medium">PPG</th>
-                <th className="text-right px-4 py-3 font-medium">1PT</th>
-                <th className="text-right px-4 py-3 font-medium">2PT</th>
-                <th className="text-right px-4 py-3 font-medium">3PT</th>
-                <th className="text-right px-4 py-3 font-medium">Fouls</th>
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border">
+                <th className="text-left py-3 px-4">Competition</th>
+                <th className="text-left py-3 px-4">Season</th>
+                <th className="text-left py-3 px-4">Grade</th>
+                <th className="text-left py-3 px-4">Team</th>
+                <th className="text-center py-3 px-4">GP</th>
+                <th className="text-center py-3 px-4">PTS</th>
+                <th className="text-center py-3 px-4">PPG</th>
+                <th className="text-center py-3 px-4">2PM</th>
+                <th className="text-center py-3 px-4">3PM</th>
+                <th className="text-center py-3 px-4">FOULS</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
-              {stats.map((st: any, i: number) => (
-                <tr key={i} className="hover:bg-muted/30">
-                  <td className="px-4 py-3">{st.season_name}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{st.grade_name}</td>
-                  <td className="px-4 py-3 text-muted-foreground">{st.team_name}</td>
-                  <td className="px-4 py-3 text-right tabular-nums">{st.games_played}</td>
-                  <td className="px-4 py-3 text-right tabular-nums font-semibold">{st.total_points}</td>
-                  <td className="px-4 py-3 text-right tabular-nums text-accent">
-                    {st.games_played > 0 ? (st.total_points / st.games_played).toFixed(1) : "-"}
+            <tbody>
+              {stats.map((stat) => (
+                <tr key={stat.id} className="border-b border-border/50">
+                  <td className="py-3 px-4">{stat.competition_name || '-'}</td>
+                  <td className="py-3 px-4">{stat.season_name || '-'}</td>
+                  <td className="py-3 px-4">{stat.grade_name || '-'}</td>
+                  <td className="py-3 px-4">{stat.team_name || '-'}</td>
+                  <td className="text-center py-3 px-4">{stat.games_played || 0}</td>
+                  <td className="text-center py-3 px-4">{stat.total_points || 0}</td>
+                  <td className="text-center py-3 px-4">
+                    {stat.games_played > 0 
+                      ? ((stat.total_points || 0) / stat.games_played).toFixed(1)
+                      : '0.0'
+                    }
                   </td>
-                  <td className="px-4 py-3 text-right tabular-nums">{st.one_point}</td>
-                  <td className="px-4 py-3 text-right tabular-nums">{st.two_point}</td>
-                  <td className="px-4 py-3 text-right tabular-nums">{st.three_point}</td>
-                  <td className="px-4 py-3 text-right tabular-nums">{st.total_fouls}</td>
+                  <td className="text-center py-3 px-4">{stat.two_point || 0}</td>
+                  <td className="text-center py-3 px-4">{stat.three_point || 0}</td>
+                  <td className="text-center py-3 px-4">{stat.total_fouls || 0}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
+        {stats.length === 0 && (
+          <p className="text-muted-foreground text-center py-8">
+            No statistics available for this player.
+          </p>
+        )}
       </div>
     </div>
   );
