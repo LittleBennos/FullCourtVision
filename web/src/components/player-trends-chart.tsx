@@ -236,7 +236,7 @@ export function PlayerTrendsChart({ playerStats, seasons, playerId: _playerId }:
       </div>
 
       {/* Chart */}
-      <div className="h-96 w-full">
+      <div className="h-96 w-full" role="img" aria-label={`Performance trends chart showing ${Array.from(selectedStats).map(s => STAT_CONFIG[s].label).join(', ')} across ${chartData.length} competition entries`}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart 
             data={chartData} 

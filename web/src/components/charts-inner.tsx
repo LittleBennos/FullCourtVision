@@ -10,7 +10,7 @@ const COLORS = ["#3b82f6", "#22c55e", "#f59e0b", "#ef4444", "#8b5cf6"];
 
 export function ScoringTrendChart({ data }: { data: { name: string; ppg: number; totalPoints: number }[] }) {
   return (
-    <div className="h-72">
+    <div className="h-72" role="img" aria-label={`Scoring trend chart showing points per game across ${data.length} periods`}>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -29,7 +29,7 @@ export function ScoringTrendChart({ data }: { data: { name: string; ppg: number;
 
 export function MarginDistributionChart({ data }: { data: { range: string; count: number }[] }) {
   return (
-    <div className="h-48">
+    <div className="h-48" role="img" aria-label={`Score margin distribution chart across ${data.length} ranges`}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: -10 }}>
           <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
@@ -48,7 +48,7 @@ export function MarginDistributionChart({ data }: { data: { range: string; count
 
 export function DailyGamesChart({ data }: { data: { date: string; games: number; points: number }[] }) {
   return (
-    <div className="h-40">
+    <div className="h-40" role="img" aria-label={`Daily games chart showing game activity over ${data.length} days`}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 5, right: 10, bottom: 5, left: -10 }}>
           <defs>
@@ -76,7 +76,7 @@ export function ShotBreakdownChart({ data }: { data: { name: string; value: numb
   if (total === 0) return <p className="text-muted-foreground text-center py-8">No shot data available</p>;
 
   return (
-    <div className="h-72">
+    <div className="h-72" role="img" aria-label={`Shot breakdown pie chart showing ${data.map(d => d.name).join(', ')} distribution`}>
       <ResponsiveContainer width="100%" height="100%">
         <PieChart>
           <Pie

@@ -109,6 +109,10 @@ export function GlobalSearch() {
               value={query}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              aria-label="Search players, teams, and organisations"
+              role="combobox"
+              aria-expanded={isOpen && query.length >= 2}
+              aria-haspopup="listbox"
               className="w-48 sm:w-80 pl-10 pr-4 py-2 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>

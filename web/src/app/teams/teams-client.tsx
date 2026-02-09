@@ -118,6 +118,7 @@ export function TeamsClient({ teams: teamsData }: { teams: Team[] }) {
             placeholder="Search teams..."
             value={query}
             onChange={(e) => { setQuery(e.target.value); setPage(0); }}
+            aria-label="Search teams"
             className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
@@ -158,13 +159,13 @@ export function TeamsClient({ teams: teamsData }: { teams: Team[] }) {
         {filtered.length.toLocaleString()} teams{hasActiveFilters ? " (filtered)" : ""}
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border border-border" role="region" aria-label="Teams table">
+        <table className="w-full text-sm" aria-label="Team directory">
           <thead className="bg-muted/50">
             <tr>
               <SortableHeader label="Team" sortKey="name" currentSort={sortKey} currentDir={sortDir} onSort={toggleSort} />
               <SortableHeader label="Organisation" sortKey="org_name" currentSort={sortKey} currentDir={sortDir} onSort={toggleSort} />
-              <th className="text-left px-4 py-3 font-medium">Season</th>
+              <th scope="col" className="text-left px-4 py-3 font-medium">Season</th>
               <SortableHeader label="W" sortKey="wins" currentSort={sortKey} currentDir={sortDir} onSort={toggleSort} align="right" />
               <SortableHeader label="L" sortKey="losses" currentSort={sortKey} currentDir={sortDir} onSort={toggleSort} align="right" />
               <SortableHeader label="GP" sortKey="games_played" currentSort={sortKey} currentDir={sortDir} onSort={toggleSort} align="right" />
@@ -199,10 +200,12 @@ export function TeamsClient({ teams: teamsData }: { teams: Team[] }) {
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
           <button disabled={page === 0} onClick={() => setPage(page - 1)}
-            className="px-3 py-1.5 text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Previous</button>
-          <span className="text-sm text-muted-foreground">Page {page + 1} of {totalPages}</span>
+            aria-label="Previous page"
+            className="px-3 py-2 min-h-[44px] text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Previous</button>
+          <span className="text-sm text-muted-foreground" aria-live="polite">Page {page + 1} of {totalPages}</span>
           <button disabled={page >= totalPages - 1} onClick={() => setPage(page + 1)}
-            className="px-3 py-1.5 text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Next</button>
+            aria-label="Next page"
+            className="px-3 py-2 min-h-[44px] text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Next</button>
         </div>
       )}
     </div>

@@ -69,7 +69,7 @@ export function Navbar() {
   const isMoreActive = moreLinks.some((l) => pathname.startsWith(l.href));
 
   return (
-    <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border">
+    <nav className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border" aria-label="Main navigation">
       <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 font-bold text-xl" aria-label="FullCourtVision home">
           <div className="w-8 h-8 bg-accent rounded-lg flex items-center justify-center">

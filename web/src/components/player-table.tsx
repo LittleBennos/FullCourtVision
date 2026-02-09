@@ -151,6 +151,7 @@ export function PlayerTable() {
             placeholder="Search players..."
             value={searchInput}
             onChange={(e) => setSearchInput(e.target.value)}
+            aria-label="Search players"
             className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
@@ -212,7 +213,7 @@ export function PlayerTable() {
             <Loader2 className="w-6 h-6 animate-spin text-blue-400" />
           </div>
         )}
-        <table className="w-full text-sm">
+        <table className="w-full text-sm" aria-label="Player directory">
           <thead className="bg-muted/50">
             <tr>
               <th className="text-left px-4 py-3 font-medium" scope="col">Rank</th>

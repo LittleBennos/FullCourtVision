@@ -73,11 +73,13 @@ export function LeaderboardsClient({ leaderboards, seasons, selectedSeasonId }: 
         )}
       </div>
 
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-2">
+      <div className="flex gap-2 mb-6 overflow-x-auto pb-2" role="tablist" aria-label="Leaderboard categories">
         {tabs.map((t) => (
           <button
             key={t.key}
             onClick={() => setTab(t.key)}
+            role="tab"
+            aria-selected={tab === t.key}
             className={`px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
               tab === t.key
                 ? "bg-accent text-white"
@@ -89,14 +91,14 @@ export function LeaderboardsClient({ leaderboards, seasons, selectedSeasonId }: 
         ))}
       </div>
 
-      <div className="overflow-x-auto rounded-xl border border-border">
-        <table className="w-full text-sm">
+      <div className="overflow-x-auto rounded-xl border border-border" role="region" aria-label="Leaderboard table">
+        <table className="w-full text-sm" aria-label={`${activeTab.label} leaderboard`}>
           <thead className="bg-muted/50">
             <tr>
-              <th className="text-left px-4 py-3 font-medium w-12">#</th>
-              <th className="text-left px-4 py-3 font-medium">Player</th>
-              <th className="text-right px-4 py-3 font-medium">Games</th>
-              <th className="text-right px-4 py-3 font-medium">{activeTab.valueLabel}</th>
+              <th scope="col" className="text-left px-4 py-3 font-medium w-12">#</th>
+              <th scope="col" className="text-left px-4 py-3 font-medium">Player</th>
+              <th scope="col" className="text-right px-4 py-3 font-medium">Games</th>
+              <th scope="col" className="text-right px-4 py-3 font-medium">{activeTab.valueLabel}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">

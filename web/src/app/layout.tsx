@@ -113,8 +113,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
         <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
+          >
+            Skip to main content
+          </a>
           <Navbar />
-          <main className="min-h-[calc(100vh-64px)]">
+          <main id="main-content" className="min-h-[calc(100vh-64px)]" tabIndex={-1}>
             {children}
           </main>
           <Footer />

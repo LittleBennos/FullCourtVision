@@ -178,7 +178,7 @@ export function SeasonProgressionChart({ playerId }: SeasonProgressionChartProps
       </div>
 
       {/* Chart */}
-      <div className="h-80 w-full">
+      <div className="h-80 w-full" role="img" aria-label={`Season progression chart showing points per game across ${chartData.length} competition entries with trend line`}>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={chartData} margin={{ top: 30, right: 30, left: 20, bottom: 80 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
