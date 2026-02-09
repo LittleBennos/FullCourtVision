@@ -1,7 +1,7 @@
 import { getTeamById, getTeamPlayers } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Users, CalendarDays } from "lucide-react";
+import { Users, CalendarDays, Sparkles } from "lucide-react";
 import { HeadToHeadSelector } from "@/components/head-to-head-selector";
 import { FavouriteButton } from "@/components/favourite-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -129,6 +129,16 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
       >
         <CalendarDays className="w-5 h-5 text-accent" />
         <span className="font-medium group-hover:text-accent transition-colors">View Full Schedule &amp; Results</span>
+        <span className="ml-auto text-muted-foreground text-sm">→</span>
+      </Link>
+
+      {/* Chemistry Link */}
+      <Link
+        href={`/teams/${id}/chemistry`}
+        className="flex items-center gap-3 bg-card rounded-xl border border-border p-5 mb-8 hover:bg-accent/5 transition-colors group"
+      >
+        <Sparkles className="w-5 h-5 text-accent" />
+        <span className="font-medium group-hover:text-accent transition-colors">Team Chemistry Analysis</span>
         <span className="ml-auto text-muted-foreground text-sm">→</span>
       </Link>
 
