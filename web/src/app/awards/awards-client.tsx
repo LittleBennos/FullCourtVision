@@ -96,15 +96,8 @@ export function AwardsClient({ seasons, awardsMap: initialMap }: Props) {
   const awards = awardsCache[selectedSeason] || emptyAwards;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <div className="flex items-center gap-3">
-          <Award className="w-8 h-8 text-accent" />
-          <div>
-            <h1 className="text-3xl font-bold">Season Awards</h1>
-            <p className="text-muted-foreground">Celebrating the best performers of each season</p>
-          </div>
-        </div>
+    <div>
+      <div className="flex justify-end mb-6">
         <select
           value={selectedSeason}
           onChange={(e) => setSelectedSeason(e.target.value)}
