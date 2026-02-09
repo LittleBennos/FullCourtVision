@@ -3,6 +3,7 @@ import { StatCard } from "@/components/stat-card";
 import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
+import { ArchetypeBadge } from "@/components/archetype-badge";
 
 // Dynamically import the heavy chart component to reduce initial bundle size
 const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
@@ -102,9 +103,19 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
         <h1 className="text-4xl font-bold mb-2">
           {player.first_name} {player.last_name}
         </h1>
-        <p className="text-muted-foreground">
-          Basketball player across {stats.length} competition{stats.length !== 1 ? 's' : ''}
-        </p>
+        <div className="flex items-center gap-3 mt-1">
+          <p className="text-muted-foreground">
+            Basketball player across {stats.length} competition{stats.length !== 1 ? 's' : ''}
+          </p>
+          {totalStats.games >= 3 && (
+            <ArchetypeBadge
+              ppg={averages.ppg}
+              threePtPg={averages.threePtPg}
+              twoPtPg={averages.twoPtPg}
+              foulsPg={averages.foulsPg}
+            />
+          )}
+        </div>
       </div>
 
       {/* Career Stats Overview */}
