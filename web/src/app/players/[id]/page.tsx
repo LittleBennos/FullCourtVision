@@ -10,6 +10,7 @@ import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PlayerShareButton } from "@/components/player-share-button";
 import { PlayerAvailability } from "@/components/player-availability";
 import { MilestoneTimeline } from "@/components/milestone-timeline";
+import { PlayerFoulCard } from "@/components/player-foul-card";
 
 // Dynamically import chart components to reduce initial bundle size
 const SeasonProgressionChart = dynamic(() => import("@/components/season-progression-chart").then(mod => ({ default: mod.SeasonProgressionChart })), {
@@ -189,6 +190,18 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           icon={AlertTriangle}
         />
       </div>
+
+      {/* Foul Profile Card */}
+      {totalStats.games >= 3 && (
+        <div className="mb-8">
+          <PlayerFoulCard
+            totalFouls={totalStats.fouls}
+            totalGames={totalStats.games}
+            foulsPg={averages.foulsPg}
+            stats={stats.map(s => ({ games_played: s.games_played || 0, total_fouls: s.total_fouls || 0 }))}
+          />
+        </div>
+      )}
 
       {/* Season Progression Section */}
       <div className="mb-8">
