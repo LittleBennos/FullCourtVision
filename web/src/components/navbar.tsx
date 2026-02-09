@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info, Heart, Sparkles, Star, ClipboardList } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info, Heart, Sparkles, Star, ClipboardList, Swords } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
 import { ThemeToggle } from "./theme-toggle";
@@ -28,6 +28,7 @@ const moreLinks = [
   { href: "/all-stars", label: "All-Star Team", icon: Star },
   { href: "/draft", label: "Mock Draft", icon: Sparkles },
   { href: "/roster-builder", label: "Roster Builder", icon: ClipboardList },
+  { href: "/matchup", label: "Matchup Predictor", icon: Swords },
   { href: "/about", label: "About", icon: Info },
 ];
 
