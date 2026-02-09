@@ -50,7 +50,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-3">Quick Links</h3>
+            <h2 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-3">Quick Links</h2>
             <ul className="space-y-2">
               {navLinks.map((link) => (
                 <li key={link.href}>
@@ -64,7 +64,7 @@ export function Footer() {
 
           {/* More */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-3">Explore</h3>
+            <h2 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-3">Explore</h2>
             <ul className="space-y-2">
               {moreLinks.map((link) => (
                 <li key={link.href}>
@@ -78,7 +78,7 @@ export function Footer() {
 
           {/* Tech & Data */}
           <div>
-            <h3 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-3">Built With</h3>
+            <h2 className="text-sm font-semibold text-slate-200 uppercase tracking-wider mb-3">Built With</h2>
             <div className="flex flex-wrap gap-2 mb-4">
               {["Next.js", "Supabase", "PlayHQ"].map((tech) => (
                 <span

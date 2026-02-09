@@ -10,6 +10,21 @@ const supabase = createClient(
 export const metadata = {
   title: "Players — FullCourtVision",
   description: "Browse 57,000+ basketball players across Victoria. Search by name, view career stats and performance trends.",
+  alternates: {
+    canonical: "https://fullcourtvision.vercel.app/players",
+  },
+  openGraph: {
+    title: "Players — FullCourtVision",
+    description: "Browse 57,000+ basketball players across Victoria. Search by name, view career stats and performance trends.",
+    url: "https://fullcourtvision.vercel.app/players",
+    type: "website",
+    siteName: "FullCourtVision",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Players — FullCourtVision",
+    description: "Browse 57,000+ basketball players across Victoria. Search by name, view career stats and performance trends.",
+  },
 };
 
 export const revalidate = 3600;

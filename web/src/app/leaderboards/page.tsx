@@ -4,6 +4,21 @@ import { LeaderboardsClient } from "./leaderboards-client";
 export const metadata = {
   title: "Leaderboards",
   description: "Top scorers, most games played, and statistical leaders across all Victorian basketball competitions.",
+  alternates: {
+    canonical: "https://fullcourtvision.vercel.app/leaderboards",
+  },
+  openGraph: {
+    title: "Leaderboards | FullCourtVision",
+    description: "Top scorers, most games played, and statistical leaders across all Victorian basketball competitions.",
+    url: "https://fullcourtvision.vercel.app/leaderboards",
+    type: "website",
+    siteName: "FullCourtVision",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Leaderboards | FullCourtVision",
+    description: "Top scorers, most games played, and statistical leaders across all Victorian basketball competitions.",
+  },
 };
 
 export const revalidate = 3600;
