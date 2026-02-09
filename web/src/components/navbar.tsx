@@ -39,6 +39,7 @@ const moreLinks = [
   { href: "/availability", label: "Availability", icon: Shield },
   { href: "/clutch", label: "Clutch", icon: Flame },
   { href: "/fantasy", label: "Fantasy", icon: Gamepad2 },
+  { href: "/analytics/season-recap", label: "Season Recap", icon: Award },
   { href: "/hall-of-fame", label: "Hall of Fame", icon: Trophy },
   { href: "/glossary", label: "Learn", icon: BookOpen },
   { href: "/about", label: "About", icon: Info },
