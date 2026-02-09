@@ -1,6 +1,6 @@
 import { getGradeById, getGradeStandings, getGradeTopScorers, getGradeFixtures, getGradeFinalsGames } from "@/lib/data";
 import { notFound } from "next/navigation";
-import { Trophy, Target, Calendar } from "lucide-react";
+import { Trophy, Target, Calendar, ArrowLeftRight } from "lucide-react";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { BracketView } from "@/components/bracket-view";
@@ -77,7 +77,14 @@ export default async function GradePage({ params }: { params: Promise<{ id: stri
             </div>
           </div>
           
-          <div className="flex gap-4">
+          <div className="flex items-center gap-4">
+            <Link
+              href={`/grades/compare?g1=${id}`}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/20 text-blue-400 hover:bg-blue-500/20 transition-colors text-sm font-medium"
+            >
+              <ArrowLeftRight className="w-4 h-4" />
+              Compare
+            </Link>
             <div className="text-center">
               <p className="text-2xl font-bold text-accent">{standings.length}</p>
               <p className="text-sm text-muted-foreground">Teams</p>
