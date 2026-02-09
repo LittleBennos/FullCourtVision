@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/lib/supabase";
-import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { Search, X, ArrowLeftRight } from "lucide-react";
 import Link from "next/link";
 
@@ -223,12 +223,20 @@ export default function CompareClient() {
     const id1 = searchParams.get("p1");
     const id2 = searchParams.get("p2");
     if (id1 || id2) {
-      setLoading(true);
-      Promise.all([id1 ? getPlayerStats(id1) : null, id2 ? getPlayerStats(id2) : null]).then(([r1, r2]) => {
-        if (r1) setP1(r1);
-        if (r2) setP2(r2);
-        setLoading(false);
-      });
+      const loadPlayers = async () => {
+        setLoading(true);
+        try {
+          const [r1, r2] = await Promise.all([
+            id1 ? getPlayerStats(id1) : null, 
+            id2 ? getPlayerStats(id2) : null
+          ]);
+          if (r1) setP1(r1);
+          if (r2) setP2(r2);
+        } finally {
+          setLoading(false);
+        }
+      };
+      loadPlayers();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 

@@ -120,7 +120,7 @@ test.describe('Dynamic Routes Tests', () => {
         await expect(page.locator('main, .content')).toBeVisible();
       }
     } else {
-      test.skip('No grade links found for testing');
+      test.skip(true, 'No grade links found for testing');
     }
   });
 

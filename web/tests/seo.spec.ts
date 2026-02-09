@@ -115,7 +115,7 @@ test.describe('SEO Tests', () => {
           expect(pageTitle.length).toBeGreaterThan(5);
         }
       } else {
-        test.skip('No player links found for OG tag testing');
+        test.skip(true, 'No player links found for OG tag testing');
       }
     });
   });
@@ -164,7 +164,7 @@ test.describe('SEO Tests', () => {
         expect(structuredData).toHaveProperty('@context');
         expect(structuredData).toHaveProperty('@type');
       } else {
-        test.skip('No JSON-LD structured data found');
+        test.skip(true, 'No JSON-LD structured data found');
       }
     });
 
@@ -201,7 +201,7 @@ test.describe('SEO Tests', () => {
           expect(foundPerson).toBeTruthy();
         }
       } else {
-        test.skip('No player links found for structured data testing');
+        test.skip(true, 'No player links found for structured data testing');
       }
     });
 
@@ -236,7 +236,7 @@ test.describe('SEO Tests', () => {
           expect(foundOrg).toBeTruthy();
         }
       } else {
-        test.skip('No organisation links found for structured data testing');
+        test.skip(true, 'No organisation links found for structured data testing');
       }
     });
   });

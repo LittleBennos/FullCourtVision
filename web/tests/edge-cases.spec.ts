@@ -100,7 +100,7 @@ test.describe('Edge Cases Tests', () => {
         // Should handle gracefully - either show all results or show empty state
         await expect(page.locator('main').first()).toBeVisible();
       } else {
-        test.skip('No search input found');
+        test.skip(true, 'No search input found');
       }
     });
 
@@ -117,7 +117,7 @@ test.describe('Edge Cases Tests', () => {
         await page.waitForTimeout(1000);
         await expect(page.locator('main').first()).toBeVisible();
       } else {
-        test.skip('No search input found');
+        test.skip(true, 'No search input found');
       }
     });
 
@@ -137,7 +137,7 @@ test.describe('Edge Cases Tests', () => {
         // Should handle gracefully
         await expect(page.locator('main').first()).toBeVisible();
       } else {
-        test.skip('No search input found');
+        test.skip(true, 'No search input found');
       }
     });
 
@@ -160,7 +160,7 @@ test.describe('Edge Cases Tests', () => {
           await expect(page.locator('main').first()).toBeVisible();
         }
       } else {
-        test.skip('No search input found');
+        test.skip(true, 'No search input found');
       }
     });
   });
@@ -227,7 +227,7 @@ test.describe('Edge Cases Tests', () => {
         // Should handle gracefully without crashing
         await expect(page.locator('main').first()).toBeVisible();
       } else {
-        test.skip('No search input found');
+        test.skip(true, 'No search input found');
       }
     });
 
@@ -261,7 +261,7 @@ test.describe('Edge Cases Tests', () => {
           expect(alerts).toHaveLength(0);
         }
       } else {
-        test.skip('No search input found');
+        test.skip(true, 'No search input found');
       }
     });
   });

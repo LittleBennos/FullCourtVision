@@ -1,5 +1,4 @@
 import { getCompetitions, getSeasons } from "@/lib/data";
-import Link from "next/link";
 
 export const metadata = {
   title: "Competitions",

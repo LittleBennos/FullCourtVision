@@ -660,7 +660,7 @@ export async function getOrganisationStats(organisationId: string): Promise<{
 // Helper function to extract region/suburb from organisation name
 function extractRegion(orgName: string): string {
   // Remove common suffixes and prefixes
-  let name = orgName.toLowerCase()
+  const name = orgName.toLowerCase()
     .replace(/basketball.*/i, '')
     .replace(/\b(club|inc|association|assoc|academy|stadium|junior|senior|abl|vnbl|nbl1|big v|state championship)\b/gi, '')
     .replace(/\s+/g, ' ')

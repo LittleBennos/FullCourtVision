@@ -27,7 +27,7 @@ test.describe('User Flow Tests', () => {
           await expect(page.locator('table, .players-list')).toBeVisible();
         }
       } else {
-        test.skip('No search input found on players page');
+        test.skip(true, 'No search input found on players page');
       }
     });
 
@@ -47,7 +47,7 @@ test.describe('User Flow Tests', () => {
         // Verify search was executed
         await expect(page.locator('table, .players-list, .search-results')).toBeVisible();
       } else {
-        test.skip('No search input found on players page');
+        test.skip(true, 'No search input found on players page');
       }
     });
 
@@ -67,7 +67,7 @@ test.describe('User Flow Tests', () => {
         // Should show all players
         await expect(page.locator('table, .players-list')).toBeVisible();
       } else {
-        test.skip('No search input found on players page');
+        test.skip(true, 'No search input found on players page');
       }
     });
 
@@ -87,7 +87,7 @@ test.describe('User Flow Tests', () => {
         const url = page.url();
         expect(url.includes('/search') || url.includes('q=')).toBeTruthy();
       } else {
-        test.skip('No global search found');
+        test.skip(true, 'No global search found');
       }
     });
 
@@ -114,7 +114,7 @@ test.describe('User Flow Tests', () => {
         await page.waitForTimeout(1000);
         await expect(page.locator('table, .players-list')).toBeVisible();
       } else {
-        test.skip('No search input found on players page');
+        test.skip(true, 'No search input found on players page');
       }
     });
   });
@@ -151,7 +151,7 @@ test.describe('User Flow Tests', () => {
           }
         }
       } else {
-        test.skip('No pagination controls found');
+        test.skip(true, 'No pagination controls found');
       }
     });
 
@@ -178,7 +178,7 @@ test.describe('User Flow Tests', () => {
           await page.waitForTimeout(1000);
         }
       } else {
-        test.skip('No pagination navigation available');
+        test.skip(true, 'No pagination navigation available');
       }
     });
   });
@@ -215,7 +215,7 @@ test.describe('User Flow Tests', () => {
         // We just verify the mechanism works by checking the table is still visible
         await expect(page.locator('table, .players-list')).toBeVisible();
       } else {
-        test.skip('No sortable columns found');
+        test.skip(true, 'No sortable columns found');
       }
     });
 
@@ -249,7 +249,7 @@ test.describe('User Flow Tests', () => {
           await expect(sortIndicators.first()).toBeVisible();
         }
       } else {
-        test.skip('No sortable columns found');
+        test.skip(true, 'No sortable columns found');
       }
     });
   });
