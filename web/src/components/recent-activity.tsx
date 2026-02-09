@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Calendar, Trophy, Target, TrendingUp, Users, Timer, BarChart3, Percent } from "lucide-react";
 import { RecentGame, FeaturedGame, WeeklyNumbers } from "@/lib/data";
-import { MarginDistributionChart, DailyGamesChart } from "@/components/charts";
+import { MarginDistributionChart, DailyGamesChart } from "@/components/charts-optimized";
 
 function formatGameDate(dateString: string): string {
   const date = new Date(dateString);

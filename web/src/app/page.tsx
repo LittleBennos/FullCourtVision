@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "lucide-react";
 import { StatCard } from "@/components/stat-card";
-import { RecentActivity } from "@/components/recent-activity";
+import { RecentActivityLazy } from "@/components/recent-activity-lazy";
 import { DataFreshnessBadge } from "@/components/data-freshness-badge";
-import { getStats, getRecentGames, getWeeklyFeaturedGames, getThisWeekInNumbers } from "@/lib/data";
+import { getStats } from "@/lib/data";
 
 export const revalidate = 3600; // Revalidate every hour
 
@@ -28,12 +28,8 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
-  const [stats, recentGames, featuredGames, weeklyNumbers] = await Promise.all([
-    getStats(),
-    getRecentGames(20),
-    getWeeklyFeaturedGames(),
-    getThisWeekInNumbers(),
-  ]);
+  // Only fetch essential stats for LCP - defer heavy activity feed
+  const stats = await getStats();
 
   return (
     <div>
@@ -87,12 +83,8 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Recent Activity Feed */}
-      <RecentActivity 
-        games={recentGames}
-        featuredGames={featuredGames}
-        weeklyNumbers={weeklyNumbers}
-      />
+      {/* Recent Activity Feed - Lazy loaded */}
+      <RecentActivityLazy />
 
       {/* Quick Links */}
       <section className="max-w-7xl mx-auto px-4 mb-16">
