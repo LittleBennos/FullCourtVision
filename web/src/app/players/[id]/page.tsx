@@ -1,7 +1,7 @@
 import { getPlayerDetails, getAvailableSeasons, getSimilarPlayers } from "@/lib/data";
 import Link from "next/link";
 import { StatCard } from "@/components/stat-card";
-import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
+import { Users, TrendingUp, Target, AlertTriangle, ClipboardList } from "lucide-react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
@@ -127,6 +127,14 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           <h1 className="text-4xl font-bold">
             {player.first_name} {player.last_name}
           </h1>
+          <div className="flex items-center gap-3">
+          <Link
+            href={`/players/${id}/report-card`}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/30 hover:bg-amber-500/20 transition-colors text-sm font-medium"
+          >
+            <ClipboardList className="w-4 h-4" />
+            Report Card
+          </Link>
           <PlayerShareButton
             name={playerName}
             games={totalStats.games}
@@ -138,6 +146,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
             foulsPg={averages.foulsPg}
             competitions={stats.length}
           />
+          </div>
         </div>
         <div className="flex items-center gap-3 mt-2">
           <p className="text-muted-foreground">
