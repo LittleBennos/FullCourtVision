@@ -1,35 +1,45 @@
 import Link from "next/link";
-import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "lucide-react";
-import { StatCard } from "@/components/stat-card";
+import { ArrowRight, TrendingUp } from "lucide-react";
+import { StatsSection } from "@/components/stats-section";
 import { RecentActivityLazy } from "@/components/recent-activity-lazy";
+import { QuickLinksLazy } from "@/components/quick-links-lazy";
 import { DataFreshnessBadge } from "@/components/data-freshness-badge";
 import { getStats } from "@/lib/data";
 
 export const revalidate = 3600; // Revalidate every hour
 
 export async function generateMetadata() {
-  const stats = await getStats();
-  
+  // Use static values for metadata to avoid blocking on database
   return {
     title: "FullCourtVision | Basketball Victoria Analytics",
-    description: `Comprehensive basketball analytics covering ${stats.players.toLocaleString()} players, ${stats.games.toLocaleString()} games, and ${stats.organisations.toLocaleString()} organisations across Victorian basketball.`,
+    description: "Comprehensive basketball analytics covering 57,000+ players, 89,000+ games, and 150+ organisations across Victorian basketball.",
     openGraph: {
       title: "FullCourtVision | Basketball Victoria Analytics",
-      description: `Comprehensive basketball analytics covering ${stats.players.toLocaleString()} players, ${stats.games.toLocaleString()} games, and ${stats.organisations.toLocaleString()} organisations across Victorian basketball.`,
+      description: "Comprehensive basketball analytics covering 57,000+ players, 89,000+ games, and 150+ organisations across Victorian basketball.",
       type: "website",
       images: ["/api/og?type=homepage"],
     },
     twitter: {
       card: "summary_large_image" as const,
       title: "FullCourtVision | Basketball Victoria Analytics",
-      description: `Comprehensive basketball analytics covering ${stats.players.toLocaleString()} players, ${stats.games.toLocaleString()} games, and ${stats.organisations.toLocaleString()} organisations across Victorian basketball.`,
+      description: "Comprehensive basketball analytics covering 57,000+ players, 89,000+ games, and 150+ organisations across Victorian basketball.",
     },
   };
 }
 
 export default async function Home() {
-  // Only fetch essential stats for LCP - defer heavy activity feed
-  const stats = await getStats();
+  // Try to get stats server-side, but don't block if slow
+  let serverStats;
+  try {
+    const statsPromise = getStats();
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('Timeout')), 500)
+    );
+    serverStats = await Promise.race([statsPromise, timeoutPromise]);
+  } catch {
+    // If stats are slow, use fallback and load client-side
+    serverStats = null;
+  }
 
   return (
     <div>
@@ -47,8 +57,7 @@ export default async function Home() {
               <span className="text-accent">Every stat.</span>
             </h1>
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl">
-              Comprehensive analytics covering {stats.players.toLocaleString()} players,{" "}
-              {stats.games.toLocaleString()} games, and {stats.organisations.toLocaleString()} organisations
+              Comprehensive analytics covering 57,000+ players, 89,000+ games, and 150+ organisations
               across Victorian basketball.
             </p>
             <div className="flex flex-wrap gap-3">
@@ -73,40 +82,14 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="max-w-7xl mx-auto px-4 -mt-8 mb-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <StatCard label="Players" value={stats.players} icon={Users} />
-          <StatCard label="Games" value={stats.games} icon={Gamepad2} />
-          <StatCard label="Organisations" value={stats.organisations} icon={Building2} />
-          <StatCard label="Competitions" value={stats.competitions} icon={Trophy} />
-        </div>
-      </section>
+      {/* Stats - Lazy loaded for better LCP */}
+      <StatsSection initialStats={serverStats} />
 
       {/* Recent Activity Feed - Lazy loaded */}
       <RecentActivityLazy />
 
-      {/* Quick Links */}
-      <section className="max-w-7xl mx-auto px-4 mb-16">
-        <h2 className="text-2xl font-bold mb-6">Explore</h2>
-        <div className="grid md:grid-cols-3 gap-4">
-          {[
-            { href: "/players", title: "Player Directory", desc: "Search and filter all tracked players", icon: Users },
-            { href: "/leaderboards", title: "Leaderboards", desc: "Top scorers, most games, best shooters", icon: Trophy },
-            { href: "/teams", title: "Team Directory", desc: "Browse teams and their records", icon: Building2 },
-          ].map(({ href, title, desc, icon: Icon }) => (
-            <Link
-              key={href}
-              href={href}
-              className="group bg-card rounded-xl border border-border p-6 hover:border-accent/50 transition-colors"
-            >
-              <Icon className="w-8 h-8 text-accent mb-3" />
-              <h3 className="font-semibold mb-1 group-hover:text-accent transition-colors">{title}</h3>
-              <p className="text-sm text-muted-foreground">{desc}</p>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {/* Quick Links - Lazy loaded as not critical for LCP */}
+      <QuickLinksLazy />
     </div>
   );
 }
