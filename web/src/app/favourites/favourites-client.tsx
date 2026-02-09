@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Heart, Users, Activity, Loader2 } from "lucide-react";
 import { FavouriteButton } from "@/components/favourite-button";
 import { WhatsNew } from "@/components/whats-new";
+import { EmailDigest } from "@/components/email-digest";
 
 type PlayerInfo = { id: string; first_name: string; last_name: string; total_games: number; ppg: number };
 type TeamInfo = { id: string; name: string; organisation_name?: string; wins: number; losses: number; games_played: number };
@@ -58,6 +59,9 @@ export function FavouritesClient() {
         <h1 className="text-3xl font-bold">Favourites</h1>
       </div>
       <p className="text-muted-foreground mb-8">Your watchlist of players and teams</p>
+
+      {/* Email Digest */}
+      {!empty && <EmailDigest playerIds={favourites.players} teamIds={favourites.teams} />}
 
       {/* What's New section */}
       {!empty && <WhatsNew />}
