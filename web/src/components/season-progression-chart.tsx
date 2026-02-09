@@ -160,19 +160,19 @@ export function SeasonProgressionChart({ playerId }: SeasonProgressionChartProps
       </div>
 
       {/* Annotations summary */}
-      <div className="flex flex-wrap gap-4 mb-4 text-sm">
+      <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-4 mb-4 text-sm">
         {peak && (
-          <div className="flex items-center gap-2 bg-green-950/50 border border-green-800/50 rounded-lg px-3 py-1.5">
-            <span className="w-3 h-3 rounded-full bg-green-500" />
-            <span className="text-green-400">Peak: {peak.ppg} PPG</span>
-            <span className="text-slate-500">— {peak.competition_name} {peak.season_name}</span>
+          <div className="flex items-center gap-2 bg-green-950/50 border border-green-800/50 rounded-lg px-3 py-1.5 min-w-0">
+            <span className="w-3 h-3 rounded-full bg-green-500 shrink-0" />
+            <span className="text-green-400 shrink-0">Peak: {peak.ppg} PPG</span>
+            <span className="text-slate-500 truncate">— {peak.competition_name} {peak.season_name}</span>
           </div>
         )}
         {valley && (
-          <div className="flex items-center gap-2 bg-red-950/50 border border-red-800/50 rounded-lg px-3 py-1.5">
-            <span className="w-3 h-3 rounded-full bg-red-500" />
-            <span className="text-red-400">Valley: {valley.ppg} PPG</span>
-            <span className="text-slate-500">— {valley.competition_name} {valley.season_name}</span>
+          <div className="flex items-center gap-2 bg-red-950/50 border border-red-800/50 rounded-lg px-3 py-1.5 min-w-0">
+            <span className="w-3 h-3 rounded-full bg-red-500 shrink-0" />
+            <span className="text-red-400 shrink-0">Valley: {valley.ppg} PPG</span>
+            <span className="text-slate-500 truncate">— {valley.competition_name} {valley.season_name}</span>
           </div>
         )}
       </div>

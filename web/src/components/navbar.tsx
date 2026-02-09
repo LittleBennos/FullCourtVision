@@ -146,7 +146,7 @@ export function Navbar() {
           </Link>
           <GlobalSearch />
           <ThemeToggle />
-          <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>
+          <button className="md:hidden p-2 min-w-[44px] min-h-[44px] flex items-center justify-center" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
         </div>
@@ -160,7 +160,7 @@ export function Navbar() {
               key={href}
               href={href}
               onClick={() => setMobileOpen(false)}
-              className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium ${
+              className={`flex items-center gap-2 px-3 py-3 rounded-lg text-sm font-medium min-h-[44px] ${
                 pathname.startsWith(href)
                   ? "bg-accent text-white"
                   : "text-muted-foreground hover:text-foreground"

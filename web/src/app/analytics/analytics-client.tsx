@@ -16,7 +16,7 @@ function TabButton({ isActive, onClick, children }: TabButtonProps) {
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-lg font-medium transition-colors ${
+      className={`px-4 py-2 min-h-[44px] rounded-lg font-medium whitespace-nowrap transition-colors ${
         isActive
           ? 'bg-accent text-white'
           : 'bg-muted text-muted-foreground hover:text-foreground hover:bg-muted/80'
@@ -432,7 +432,7 @@ export function AnalyticsClient() {
       </div>
 
       {/* Tab Navigation */}
-      <div className="flex gap-2 mb-8 overflow-x-auto">
+      <div className="flex gap-2 mb-8 overflow-x-auto pb-2">
         <TabButton 
           isActive={activeTab === 'stats'} 
           onClick={() => setActiveTab('stats')}

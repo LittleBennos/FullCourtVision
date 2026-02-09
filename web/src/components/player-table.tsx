@@ -253,10 +253,10 @@ export function PlayerTable() {
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
           <button disabled={page === 0} onClick={() => setPage(page - 1)}
-            className="px-3 py-1.5 text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Previous</button>
-          <span className="text-sm text-muted-foreground">Page {page + 1} of {totalPages.toLocaleString()}</span>
+            className="px-3 py-2 min-h-[44px] text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Previous</button>
+          <span className="text-sm text-muted-foreground">{page + 1} / {totalPages.toLocaleString()}</span>
           <button disabled={page >= totalPages - 1} onClick={() => setPage(page + 1)}
-            className="px-3 py-1.5 text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Next</button>
+            className="px-3 py-2 min-h-[44px] text-sm bg-card border border-border rounded-lg disabled:opacity-40 hover:bg-muted">Next</button>
         </div>
       )}
     </div>

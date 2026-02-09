@@ -105,11 +105,11 @@ export function GlobalSearch() {
             <input
               ref={inputRef}
               type="text"
-              placeholder="Search players, teams, organizations..."
+              placeholder="Search players, teams..."
               value={query}
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
-              className="w-80 pl-10 pr-4 py-2 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
+              className="w-48 sm:w-80 pl-10 pr-4 py-2 bg-card border border-border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-accent"
             />
           </div>
         )}
@@ -117,7 +117,7 @@ export function GlobalSearch() {
 
       {/* Search Dropdown */}
       {isOpen && (
-        <div className="absolute top-full right-0 mt-2 w-96 bg-card border border-border rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto">
+        <div className="absolute top-full right-0 mt-2 w-[calc(100vw-2rem)] sm:w-96 max-w-[384px] bg-card border border-border rounded-xl shadow-lg z-50 max-h-96 overflow-y-auto">
           {isLoading && query.length >= 2 && (
             <div className="p-4 text-center text-muted-foreground">
               <Search className="w-5 h-5 mx-auto mb-2 animate-pulse" />

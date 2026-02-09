@@ -107,10 +107,10 @@ export function GamesTable() {
               <div className="flex items-center justify-between gap-4">
                 {/* Teams and Score */}
                 <div className="flex-1">
-                  <div className="flex items-center justify-center gap-6 mb-3">
+                  <div className="flex items-center justify-center gap-3 sm:gap-6 mb-3">
                     {/* Home Team */}
-                    <div className="text-right flex-1">
-                      <div className="font-medium text-lg">{game.home_team.name}</div>
+                    <div className="text-right flex-1 min-w-0">
+                      <div className="font-medium text-base sm:text-lg truncate">{game.home_team.name}</div>
                       <div className="text-2xl font-bold">
                         {game.home_score ?? "-"}
                       </div>
@@ -122,8 +122,8 @@ export function GamesTable() {
                     </div>
 
                     {/* Away Team */}
-                    <div className="text-left flex-1">
-                      <div className="font-medium text-lg">{game.away_team.name}</div>
+                    <div className="text-left flex-1 min-w-0">
+                      <div className="font-medium text-base sm:text-lg truncate">{game.away_team.name}</div>
                       <div className="text-2xl font-bold">
                         {game.away_score ?? "-"}
                       </div>
@@ -131,7 +131,7 @@ export function GamesTable() {
                   </div>
 
                   {/* Game Details */}
-                  <div className="flex items-center justify-center gap-6 text-sm text-muted-foreground">
+                  <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-sm text-muted-foreground">
                     <div className="flex items-center gap-1">
                       <Calendar className="w-4 h-4" />
                       {formatDate(game.date)}
@@ -162,7 +162,7 @@ export function GamesTable() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between pt-4 border-t border-border">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-border">
           <div className="text-sm text-muted-foreground">
             Showing {page * perPage + 1} to{" "}
             {Math.min((page + 1) * perPage, total)} of {total.toLocaleString()}{" "}
@@ -172,18 +172,18 @@ export function GamesTable() {
             <button
               onClick={() => setPage(Math.max(0, page - 1))}
               disabled={page === 0 || loading}
-              className="flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+              className="flex items-center gap-1 px-3 py-2 min-h-[44px] text-sm font-medium rounded-lg border border-border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
             >
               <ChevronLeft className="w-4 h-4" />
               Previous
             </button>
             <span className="px-3 py-2 text-sm font-medium">
-              Page {page + 1} of {totalPages}
+              {page + 1} / {totalPages}
             </span>
             <button
               onClick={() => setPage(Math.min(totalPages - 1, page + 1))}
               disabled={page >= totalPages - 1 || loading}
-              className="flex items-center gap-1 px-3 py-2 text-sm font-medium rounded-lg border border-border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
+              className="flex items-center gap-1 px-3 py-2 min-h-[44px] text-sm font-medium rounded-lg border border-border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-muted transition-colors"
             >
               Next
               <ChevronRight className="w-4 h-4" />

@@ -131,8 +131,8 @@ export function ConferencesClient() {
 
               {/* Standings table */}
               {isExpanded && (
-                <div className="px-5 pb-4">
-                  <table className="w-full text-sm">
+                <div className="px-5 pb-4 overflow-x-auto">
+                  <table className="w-full text-sm min-w-[500px]">
                     <thead>
                       <tr className="text-muted-foreground text-xs uppercase tracking-wider border-b border-slate-800">
                         <th className="text-left py-2 w-10">Seed</th>
