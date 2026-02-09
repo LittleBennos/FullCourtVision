@@ -24,6 +24,17 @@ const SeasonProgressionChart = dynamic(() => import("@/components/season-progres
   )
 });
 
+const MultiSeasonComparison = dynamic(() => import("@/components/multi-season-comparison").then(mod => ({ default: mod.MultiSeasonComparison })), {
+  loading: () => (
+    <div className="h-64 bg-slate-950 rounded-xl border border-amber-500/20 flex items-center justify-center">
+      <div className="text-center text-slate-400">
+        <div className="w-8 h-8 mx-auto mb-4 border-2 border-amber-500/50 border-t-transparent rounded-full animate-spin" />
+        <p>Loading multi-season comparison...</p>
+      </div>
+    </div>
+  )
+});
+
 const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
   loading: () => (
     <div className="h-80 bg-card rounded-xl border border-border flex items-center justify-center">
@@ -202,6 +213,12 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           />
         </div>
       )}
+
+      {/* Multi-Season Comparison */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-6">Multi-Season Comparison</h2>
+        <MultiSeasonComparison playerId={id} />
+      </div>
 
       {/* Season Progression Section */}
       <div className="mb-8">
