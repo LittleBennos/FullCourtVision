@@ -8,7 +8,18 @@ import { ArchetypeBadge } from "@/components/archetype-badge";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PlayerShareButton } from "@/components/player-share-button";
 
-// Dynamically import the heavy chart component to reduce initial bundle size
+// Dynamically import chart components to reduce initial bundle size
+const SeasonProgressionChart = dynamic(() => import("@/components/season-progression-chart").then(mod => ({ default: mod.SeasonProgressionChart })), {
+  loading: () => (
+    <div className="h-80 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center">
+      <div className="text-center text-slate-400">
+        <div className="w-8 h-8 mx-auto mb-4 border-2 border-slate-400 border-t-transparent rounded-full animate-spin" />
+        <p>Loading season progression...</p>
+      </div>
+    </div>
+  )
+});
+
 const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
   loading: () => (
     <div className="h-80 bg-card rounded-xl border border-border flex items-center justify-center">
@@ -164,6 +175,12 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           value={totalStats.fouls}
           icon={AlertTriangle}
         />
+      </div>
+
+      {/* Season Progression Section */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-6">Season Progression</h2>
+        <SeasonProgressionChart playerId={id} />
       </div>
 
       {/* Performance Trends Section */}
