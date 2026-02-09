@@ -58,8 +58,10 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const { player, stats } = playerData;
   const totalGames = stats.reduce((s, st) => s + (st.games_played || 0), 0);
   const totalPoints = stats.reduce((s, st) => s + (st.total_points || 0), 0);
+  const totalThreePoint = stats.reduce((s, st) => s + (st.three_point || 0), 0);
   const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
   const name = `${player.first_name} ${player.last_name}`;
+  const mostRecentTeam = stats[0]?.team_name || 'Basketball Victoria';
   const desc = `${name} basketball stats: ${totalGames} games, ${totalPoints} points, ${ppg} PPG across ${stats.length} competition${stats.length !== 1 ? "s" : ""} in Victoria.`;
 
   return {
@@ -69,7 +71,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
       title: `${name} Stats | FullCourtVision`,
       description: desc,
       type: "profile",
-      images: [`/api/og?type=player&name=${encodeURIComponent(name)}&ppg=${ppg}&games=${totalGames}`],
+      images: [`/api/og?name=${encodeURIComponent(name)}&team=${encodeURIComponent(mostRecentTeam)}&ppg=${ppg}&gp=${totalGames}&3pt=${totalThreePoint}`],
     },
     twitter: {
       card: "summary_large_image" as const,

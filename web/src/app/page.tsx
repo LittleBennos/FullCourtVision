@@ -7,6 +7,26 @@ import { getStats, getRecentGames, getWeeklyFeaturedGames, getThisWeekInNumbers 
 
 export const revalidate = 3600; // Revalidate every hour
 
+export async function generateMetadata() {
+  const stats = await getStats();
+  
+  return {
+    title: "FullCourtVision | Basketball Victoria Analytics",
+    description: `Comprehensive basketball analytics covering ${stats.players.toLocaleString()} players, ${stats.games.toLocaleString()} games, and ${stats.organisations.toLocaleString()} organisations across Victorian basketball.`,
+    openGraph: {
+      title: "FullCourtVision | Basketball Victoria Analytics",
+      description: `Comprehensive basketball analytics covering ${stats.players.toLocaleString()} players, ${stats.games.toLocaleString()} games, and ${stats.organisations.toLocaleString()} organisations across Victorian basketball.`,
+      type: "website",
+      images: ["/api/og?type=homepage"],
+    },
+    twitter: {
+      card: "summary_large_image" as const,
+      title: "FullCourtVision | Basketball Victoria Analytics",
+      description: `Comprehensive basketball analytics covering ${stats.players.toLocaleString()} players, ${stats.games.toLocaleString()} games, and ${stats.organisations.toLocaleString()} organisations across Victorian basketball.`,
+    },
+  };
+}
+
 export default async function Home() {
   const [stats, recentGames, featuredGames, weeklyNumbers] = await Promise.all([
     getStats(),

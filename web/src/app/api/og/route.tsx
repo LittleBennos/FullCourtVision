@@ -1,13 +1,16 @@
 import { ImageResponse } from 'next/og';
 import { NextRequest } from 'next/server';
-import { getPlayerDetails } from '@/lib/data';
 
 export const runtime = 'edge';
 
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const playerId = searchParams.get('playerId');
+    const name = searchParams.get('name');
+    const team = searchParams.get('team');
+    const ppg = searchParams.get('ppg');
+    const gp = searchParams.get('gp') || searchParams.get('games');
+    const threePt = searchParams.get('3pt') || searchParams.get('threepoint');
     const type = searchParams.get('type') || 'player';
 
     // Homepage OG image
@@ -55,7 +58,7 @@ export async function GET(request: NextRequest) {
               <p
                 style={{
                   fontSize: '32px',
-                  color: '#2563eb',
+                  color: '#ea580c',
                   margin: '20px 0 0 0',
                   textAlign: 'center',
                 }}
@@ -83,23 +86,16 @@ export async function GET(request: NextRequest) {
     }
 
     // Player OG image
-    if (!playerId) {
-      return new Response('Missing playerId parameter', { status: 400 });
+    if (!name) {
+      return new Response('Missing name parameter', { status: 400 });
     }
 
-    const playerData = await getPlayerDetails(playerId);
-    
-    if (!playerData) {
-      return new Response('Player not found', { status: 404 });
-    }
-
-    const { player, stats } = playerData;
-    const totalGames = stats.reduce((sum: number, stat: any) => sum + (stat.games_played || 0), 0);
-    const totalPoints = stats.reduce((sum: number, stat: any) => sum + (stat.total_points || 0), 0);
-    const ppg = totalGames > 0 ? (totalPoints / totalGames).toFixed(1) : "0";
-    
-    // Get most recent team name
-    const mostRecentTeam = stats[0]?.team_name || 'Unknown Team';
+    // Use provided parameters directly
+    const playerName = name;
+    const teamName = team || 'Unknown Team';
+    const pointsPerGame = ppg || '0.0';
+    const gamesPlayed = gp || '0';
+    const threePointMakes = threePt || '0';
 
     return new ImageResponse(
       (
@@ -139,7 +135,7 @@ export async function GET(request: NextRequest) {
               <span
                 style={{
                   fontSize: '28px',
-                  color: '#2563eb',
+                  color: '#ea580c',
                   fontWeight: 'bold',
                   margin: 0,
                 }}
@@ -197,19 +193,19 @@ export async function GET(request: NextRequest) {
                 lineHeight: 1.1,
               }}
             >
-              {player.first_name} {player.last_name}
+              {playerName}
             </h1>
 
             {/* Team Name */}
             <p
               style={{
                 fontSize: '28px',
-                color: '#2563eb',
+                color: '#ea580c',
                 margin: '0 0 40px 0',
                 textAlign: 'center',
               }}
             >
-              {mostRecentTeam}
+              {teamName}
             </p>
 
             {/* Stats Grid */}
@@ -226,11 +222,11 @@ export async function GET(request: NextRequest) {
                   style={{
                     fontSize: '48px',
                     fontWeight: 'bold',
-                    color: '#2563eb',
+                    color: '#ea580c',
                     margin: 0,
                   }}
                 >
-                  {ppg}
+                  {pointsPerGame}
                 </span>
                 <span
                   style={{
@@ -260,7 +256,7 @@ export async function GET(request: NextRequest) {
                     margin: 0,
                   }}
                 >
-                  {totalPoints.toLocaleString()}
+                  {gamesPlayed}
                 </span>
                 <span
                   style={{
@@ -269,7 +265,7 @@ export async function GET(request: NextRequest) {
                     margin: 0,
                   }}
                 >
-                  Total Points
+                  GP
                 </span>
               </div>
 
@@ -290,7 +286,7 @@ export async function GET(request: NextRequest) {
                     margin: 0,
                   }}
                 >
-                  {totalGames}
+                  {threePointMakes}
                 </span>
                 <span
                   style={{
@@ -299,7 +295,7 @@ export async function GET(request: NextRequest) {
                     margin: 0,
                   }}
                 >
-                  Games Played
+                  3PT
                 </span>
               </div>
             </div>
