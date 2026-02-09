@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { PlayerShareButton } from "@/components/player-share-button";
 
 // Dynamically import the heavy chart component to reduce initial bundle size
 const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
@@ -110,10 +111,23 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
 
       {/* Player Header */}
       <div className="mb-8">
-        <h1 className="text-4xl font-bold mb-2">
-          {player.first_name} {player.last_name}
-        </h1>
-        <div className="flex items-center gap-3 mt-1">
+        <div className="flex items-center justify-between flex-wrap gap-4">
+          <h1 className="text-4xl font-bold">
+            {player.first_name} {player.last_name}
+          </h1>
+          <PlayerShareButton
+            name={playerName}
+            games={totalStats.games}
+            ppg={averages.ppg}
+            totalPoints={totalStats.points}
+            totalFouls={totalStats.fouls}
+            threePtPg={averages.threePtPg}
+            twoPtPg={averages.twoPtPg}
+            foulsPg={averages.foulsPg}
+            competitions={stats.length}
+          />
+        </div>
+        <div className="flex items-center gap-3 mt-2">
           <p className="text-muted-foreground">
             Basketball player across {stats.length} competition{stats.length !== 1 ? 's' : ''}
           </p>

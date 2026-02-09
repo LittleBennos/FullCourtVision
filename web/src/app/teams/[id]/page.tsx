@@ -5,6 +5,7 @@ import { Users, CalendarDays } from "lucide-react";
 import { HeadToHeadSelector } from "@/components/head-to-head-selector";
 import { FavouriteButton } from "@/components/favourite-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { TeamShareButton } from "@/components/team-share-button";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -64,9 +65,19 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
       <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <h1 className="text-3xl md:text-4xl font-bold mb-2">{team.name}</h1>
               <FavouriteButton id={id} type="team" />
+              <TeamShareButton
+                name={team.name}
+                orgName={team.org_name || "Unknown"}
+                seasonName={team.season_name || "Unknown Season"}
+                wins={team.wins}
+                losses={team.losses}
+                games={totalGames}
+                totalPoints={totalPoints}
+                avgPPG={avgPPG}
+              />
             </div>
             <p className="text-muted-foreground mb-1">
               {team.org_name ? (
