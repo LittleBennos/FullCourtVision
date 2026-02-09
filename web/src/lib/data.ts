@@ -1368,6 +1368,66 @@ export async function getGradeStandings(gradeId: string): Promise<StandingsEntry
   return entries;
 }
 
+// ==================== Finals / Playoff Bracket ====================
+
+export type FinalsGame = {
+  id: string;
+  round_name: string;
+  home_team_id: string | null;
+  away_team_id: string | null;
+  home_team_name: string;
+  away_team_name: string;
+  home_score: number | null;
+  away_score: number | null;
+  date: string | null;
+  venue: string | null;
+};
+
+const FINALS_ROUND_ORDER: Record<string, number> = {
+  "finals round 1": 0,
+  "quarter finals": 1,
+  "semi finals": 2,
+  "preliminary final": 3,
+  "preliminary finals": 3,
+  "finals round 2": 3,
+  "finals round 3": 4,
+  "grand final": 5,
+};
+
+function finalsRoundOrder(roundName: string): number {
+  return FINALS_ROUND_ORDER[roundName.toLowerCase()] ?? 99;
+}
+
+export async function getGradeFinalsGames(gradeId: string): Promise<FinalsGame[]> {
+  const { data } = await supabase
+    .from("games")
+    .select(`
+      id, round_name, home_team_id, away_team_id, home_score, away_score, date, venue,
+      home_teams:teams!home_team_id(name),
+      away_teams:teams!away_team_id(name)
+    `)
+    .eq("grade_id", gradeId)
+    .or("round_name.ilike.%final%,round_name.ilike.%semi%,round_name.ilike.%preliminary%,round_name.ilike.%quarter%")
+    .order("date", { ascending: true });
+
+  if (!data || data.length === 0) return [];
+
+  return data
+    .map((g: any) => ({
+      id: g.id,
+      round_name: g.round_name || "",
+      home_team_id: g.home_team_id,
+      away_team_id: g.away_team_id,
+      home_team_name: g.home_teams?.name || "TBD",
+      away_team_name: g.away_teams?.name || "TBD",
+      home_score: g.home_score,
+      away_score: g.away_score,
+      date: g.date,
+      venue: g.venue,
+    }))
+    .sort((a, b) => finalsRoundOrder(a.round_name) - finalsRoundOrder(b.round_name));
+}
+
 // Global search types and function for navbar search
 export type GlobalSearchResults = {
   players: Array<{ id: string; name: string }>;

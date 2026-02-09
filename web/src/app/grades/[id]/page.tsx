@@ -1,8 +1,9 @@
-import { getGradeById, getGradeStandings, getGradeTopScorers, getGradeFixtures } from "@/lib/data";
+import { getGradeById, getGradeStandings, getGradeTopScorers, getGradeFixtures, getGradeFinalsGames } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { Trophy, Target, Calendar } from "lucide-react";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { BracketView } from "@/components/bracket-view";
 
 export const revalidate = 3600;
 
@@ -41,11 +42,12 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function GradePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   
-  const [grade, standings, topScorers, fixtures] = await Promise.all([
+  const [grade, standings, topScorers, fixtures, finalsGames] = await Promise.all([
     getGradeById(id),
     getGradeStandings(id),
     getGradeTopScorers(id, 10),
     getGradeFixtures(id),
+    getGradeFinalsGames(id),
   ]);
   
   if (!grade) notFound();
@@ -91,6 +93,20 @@ export default async function GradePage({ params }: { params: Promise<{ id: stri
           </div>
         </div>
       </div>
+
+      {/* Finals Bracket */}
+      {finalsGames.length > 0 && (
+        <div className="bg-card rounded-xl border border-border p-6 mb-8">
+          <div className="flex items-center gap-2 mb-4">
+            <Trophy className="w-5 h-5 text-yellow-400" />
+            <h2 className="text-lg font-semibold">Finals Bracket</h2>
+            <span className="text-xs text-muted-foreground ml-2">
+              {finalsGames.length} game{finalsGames.length !== 1 ? "s" : ""}
+            </span>
+          </div>
+          <BracketView games={finalsGames} />
+        </div>
+      )}
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Team Standings */}
