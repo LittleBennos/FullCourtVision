@@ -2145,3 +2145,61 @@ export async function getThisWeekInNumbers(): Promise<WeeklyNumbers> {
     highest_scorer: highestScorer,
   };
 }
+
+// ── Team Schedule ──────────────────────────────────────────────
+
+export interface TeamScheduleGame {
+  id: string;
+  date: string;
+  time: string | null;
+  venue: string | null;
+  round_name: string | null;
+  home_team_id: string;
+  away_team_id: string;
+  home_team_name: string;
+  away_team_name: string;
+  home_score: number | null;
+  away_score: number | null;
+  season_id: string;
+  season_name: string;
+}
+
+export async function getTeamSchedule(teamId: string): Promise<TeamScheduleGame[]> {
+  const { data: games } = await supabase
+    .from("games")
+    .select(`
+      id, date, time, venue, round_name,
+      home_team_id, away_team_id, home_score, away_score,
+      season_id, seasons(name),
+      home_teams:teams!home_team_id(name),
+      away_teams:teams!away_team_id(name)
+    `)
+    .or(`home_team_id.eq.${teamId},away_team_id.eq.${teamId}`)
+    .order("date", { ascending: false });
+
+  if (!games) return [];
+
+  return games.map((g: any) => ({
+    id: g.id,
+    date: g.date,
+    time: g.time,
+    venue: g.venue,
+    round_name: g.round_name,
+    home_team_id: g.home_team_id,
+    away_team_id: g.away_team_id,
+    home_team_name: g.home_teams?.name || "TBD",
+    away_team_name: g.away_teams?.name || "TBD",
+    home_score: g.home_score,
+    away_score: g.away_score,
+    season_id: g.season_id,
+    season_name: (g.seasons as any)?.name || "Unknown Season",
+  }));
+}
+
+export async function getSeasonsList(): Promise<{ id: string; name: string }[]> {
+  const { data } = await supabase
+    .from("seasons")
+    .select("id, name")
+    .order("name", { ascending: false });
+  return data || [];
+}
