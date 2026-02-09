@@ -1,6 +1,6 @@
 import { getGameDetails } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
-import { Calendar, MapPin, Users, Trophy } from "lucide-react";
+import { Calendar, MapPin, Users, Trophy, Zap } from "lucide-react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -154,6 +154,22 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
             </div>
           )}
         </div>
+      </div>
+
+      {/* Game Day Experience Link */}
+      <div className="mb-8">
+        <Link
+          href={`/games/${id}/live`}
+          className="flex items-center justify-center gap-3 p-4 rounded-xl border border-amber-500/30 bg-amber-500/5 hover:bg-amber-500/10 transition-colors group"
+        >
+          <Zap className="w-5 h-5 text-amber-400 group-hover:animate-pulse" />
+          <span className="font-semibold text-amber-400">
+            View Game Day Experience
+          </span>
+          <span className="text-sm text-muted-foreground">
+            — Box scores, stat leaders, charts &amp; more
+          </span>
+        </Link>
       </div>
 
       {/* Game Stats Summary */}
