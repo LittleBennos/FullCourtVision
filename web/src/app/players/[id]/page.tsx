@@ -7,6 +7,7 @@ import dynamic from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PlayerShareButton } from "@/components/player-share-button";
+import { PlayerAvailability } from "@/components/player-availability";
 
 // Dynamically import chart components to reduce initial bundle size
 const SeasonProgressionChart = dynamic(() => import("@/components/season-progression-chart").then(mod => ({ default: mod.SeasonProgressionChart })), {
@@ -191,6 +192,12 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           seasons={seasons}
           playerId={id}
         />
+      </div>
+
+      {/* Availability Section */}
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold mb-6">Availability</h2>
+        <PlayerAvailability playerId={id} />
       </div>
 
       {/* Season Breakdown Table */}
