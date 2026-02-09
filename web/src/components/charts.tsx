@@ -31,3 +31,21 @@ export function ScoringTrendChart({ data }: { data: { name: string; ppg: number;
 export function ShotBreakdownChart({ data }: { data: { name: string; value: number }[] }) {
   return <ShotBreakdownChartInner data={data} />;
 }
+
+const MarginDistributionChartInner = dynamic(
+  () => import("./charts-inner").then((m) => m.MarginDistributionChart),
+  { loading: () => <ChartSkeleton />, ssr: false }
+);
+
+const DailyGamesChartInner = dynamic(
+  () => import("./charts-inner").then((m) => m.DailyGamesChart),
+  { loading: () => <ChartSkeleton />, ssr: false }
+);
+
+export function MarginDistributionChart({ data }: { data: { range: string; count: number }[] }) {
+  return <MarginDistributionChartInner data={data} />;
+}
+
+export function DailyGamesChart({ data }: { data: { date: string; games: number; points: number }[] }) {
+  return <DailyGamesChartInner data={data} />;
+}
