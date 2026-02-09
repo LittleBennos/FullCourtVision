@@ -17,6 +17,7 @@ const primaryLinks = [
 ];
 
 const moreLinks = [
+  { href: "/rankings", label: "Rankings", icon: TrendingUp },
   { href: "/leaderboards", label: "Leaderboards", icon: BarChart3 },
   { href: "/analytics", label: "Coach's Corner", icon: PieChart },
   { href: "/conferences", label: "Standings", icon: Trophy },
