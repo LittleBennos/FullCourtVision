@@ -30,6 +30,7 @@ const moreLinks = [
   { href: "/roster-builder", label: "Roster Builder", icon: ClipboardList },
   { href: "/matchup", label: "Matchup Predictor", icon: Swords },
   { href: "/availability", label: "Availability", icon: Shield },
+  { href: "/hall-of-fame", label: "Hall of Fame", icon: Trophy },
   { href: "/about", label: "About", icon: Info },
 ];
 
