@@ -18,6 +18,7 @@ const primaryLinks = [
 const moreLinks = [
   { href: "/leaderboards", label: "Leaderboards", icon: BarChart3 },
   { href: "/analytics", label: "Coach's Corner", icon: PieChart },
+  { href: "/conferences", label: "Standings", icon: Trophy },
   { href: "/organisations", label: "Organisations", icon: Building2 },
   { href: "/competitions", label: "Competitions", icon: Trophy },
   { href: "/grades", label: "Grades", icon: Target },
