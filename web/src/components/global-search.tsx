@@ -91,10 +91,13 @@ export function GlobalSearch() {
         {!isOpen ? (
           <button
             onClick={handleSearchClick}
-            className="p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+            className="flex items-center gap-1.5 p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
             aria-label="Open search"
           >
             <Search className="w-5 h-5" />
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] font-medium bg-slate-800 border border-slate-600 rounded text-muted-foreground">
+              ⌘K
+            </kbd>
           </button>
         ) : (
           <div className="relative">

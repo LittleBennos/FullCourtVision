@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { CommandPalette } from "@/components/command-palette";
+import { BackToTop } from "@/components/back-to-top";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -114,6 +116,8 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <CommandPalette />
+        <BackToTop />
       </body>
     </html>
   );
