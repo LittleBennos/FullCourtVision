@@ -42,3 +42,8 @@ models/*.joblib
 # Next.js
 web/.next/
 web/out/
+
+# Test results
+test-results/
+web/test-results/
+**/test-results/

@@ -1,4 +1,15 @@
 {
+  "name": "fullcourtvision",
+  "version": "1.0.0",
+  "description": "The most comprehensive Victorian basketball analytics platform tracking 58,000+ players across 90,000+ games",
+  "homepage": "https://fullcourtvision.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LittleBennos/FullCourtVision.git"
+  },
+  "author": "LittleBennos",
+  "license": "MIT",
+  "keywords": ["basketball", "analytics", "victoria", "playhq", "sports-data", "statistics"],
   "dependencies": {
     "@supabase/supabase-js": "^2.95.3",
     "better-sqlite3": "^12.6.2"
