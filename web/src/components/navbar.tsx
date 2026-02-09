@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info, Heart, Sparkles, Star, ClipboardList, Swords, Shield, Clock, BookOpen } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info, Heart, Sparkles, Star, ClipboardList, Swords, Shield, Clock, BookOpen, Flame } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
 import { ThemeToggle } from "./theme-toggle";
@@ -34,6 +34,7 @@ const moreLinks = [
   { href: "/matchup", label: "Matchup Predictor", icon: Swords },
   { href: "/timeline", label: "Season Timeline", icon: Clock },
   { href: "/availability", label: "Availability", icon: Shield },
+  { href: "/clutch", label: "Clutch", icon: Flame },
   { href: "/hall-of-fame", label: "Hall of Fame", icon: Trophy },
   { href: "/glossary", label: "Learn", icon: BookOpen },
   { href: "/about", label: "About", icon: Info },
