@@ -5,6 +5,7 @@ import { Users, TrendingUp, Target, AlertTriangle, ClipboardList } from "lucide-
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
+import { AnomalyBadges } from "@/components/anomaly-badges";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { PlayerShareButton } from "@/components/player-share-button";
 import { PlayerAvailability } from "@/components/player-availability";
@@ -161,6 +162,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
             />
           )}
         </div>
+        <AnomalyBadges playerId={id} />
       </div>
 
       {/* Career Stats Overview */}
