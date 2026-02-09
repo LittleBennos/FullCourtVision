@@ -737,6 +737,191 @@ export async function getOrganisationStats(organisationId: string): Promise<{
   };
 }
 
+export type OrgAnalyticsData = {
+  totalPlayers: number;
+  totalGames: number;
+  totalPoints: number;
+  avgPPG: number;
+  teamPerformance: Array<{
+    name: string;
+    season: string;
+    wins: number;
+    losses: number;
+    gamesPlayed: number;
+    winRate: number;
+    ppg: number;
+  }>;
+  seasonGrowth: Array<{
+    season: string;
+    players: number;
+    games: number;
+  }>;
+  topScorers: Array<{
+    id: string;
+    first_name: string;
+    last_name: string;
+    total_games: number;
+    total_points: number;
+    ppg: number;
+    team_name: string;
+  }>;
+  ageDistribution: Array<{
+    group: string;
+    count: number;
+  }>;
+};
+
+export async function getOrganisationAnalytics(organisationId: string): Promise<OrgAnalyticsData> {
+  // Get teams with season info
+  const { data: teamAggs } = await supabase
+    .from("team_aggregates")
+    .select("team_id, name, season_name, wins, losses, gp")
+    .eq("organisation_id", organisationId);
+
+  const teams = teamAggs || [];
+
+  // Get players
+  const players = await getOrganisationPlayers(organisationId);
+
+  const totalPlayers = players.length;
+  const totalPoints = players.reduce((s, p) => s + p.total_points, 0);
+  const totalGames = teams.reduce((s, t) => s + (t.gp || 0), 0);
+  const avgPPG = totalPlayers > 0
+    ? +(players.reduce((s, p) => s + p.ppg, 0) / totalPlayers).toFixed(1)
+    : 0;
+
+  // Team performance - compute PPG per team from player data
+  const teamPointsMap = new Map<string, number>();
+  const teamGamesMap = new Map<string, number>();
+  for (const p of players) {
+    const teamNames = p.team_name.split(", ");
+    for (const tn of teamNames) {
+      teamPointsMap.set(tn, (teamPointsMap.get(tn) || 0) + p.total_points);
+      teamGamesMap.set(tn, Math.max(teamGamesMap.get(tn) || 0, p.total_games));
+    }
+  }
+
+  const teamPerformance = teams.map(t => {
+    const gp = t.gp || 0;
+    const pts = teamPointsMap.get(t.name) || 0;
+    return {
+      name: t.name,
+      season: t.season_name || "",
+      wins: t.wins || 0,
+      losses: t.losses || 0,
+      gamesPlayed: gp,
+      winRate: gp > 0 ? +((t.wins || 0) / gp * 100).toFixed(1) : 0,
+      ppg: gp > 0 ? +(pts / gp).toFixed(1) : 0,
+    };
+  }).sort((a, b) => b.winRate - a.winRate);
+
+  // Season growth
+  const seasonMap = new Map<string, { players: Set<string>; games: number }>();
+  // Use teams to group by season
+  for (const t of teams) {
+    const sn = t.season_name || "Unknown";
+    if (!seasonMap.has(sn)) seasonMap.set(sn, { players: new Set(), games: 0 });
+    seasonMap.get(sn)!.games += t.gp || 0;
+  }
+  // We don't have per-season player mapping easily, so approximate with team count
+  // Get teams with season for player counts
+  const { data: teamRows } = await supabase
+    .from("teams")
+    .select("id, name, season_id, seasons(name)")
+    .eq("organisation_id", organisationId);
+
+  if (teamRows) {
+    const teamIdToSeason = new Map<string, string>();
+    for (const tr of teamRows) {
+      const sn = (tr.seasons as any)?.name || "Unknown";
+      teamIdToSeason.set(tr.id, sn);
+      if (!seasonMap.has(sn)) seasonMap.set(sn, { players: new Set(), games: 0 });
+    }
+
+    // Get player-team associations via player_stats
+    const teamIds = teamRows.map(t => t.id);
+    if (teamIds.length > 0) {
+      const { data: ps } = await supabase
+        .from("player_stats")
+        .select("player_id, grades!inner(teams!inner(id, season_id, seasons(name)))")
+        .in("grades.teams.id", teamIds);
+
+      if (ps) {
+        for (const row of ps) {
+          const sn = (row.grades as any)?.teams?.seasons?.name || "Unknown";
+          if (seasonMap.has(sn)) {
+            seasonMap.get(sn)!.players.add(row.player_id);
+          }
+        }
+      }
+    }
+  }
+
+  const seasonGrowth = Array.from(seasonMap.entries())
+    .map(([season, data]) => ({
+      season,
+      players: data.players.size,
+      games: data.games,
+    }))
+    .sort((a, b) => a.season.localeCompare(b.season));
+
+  // Top scorers - already sorted by total_points
+  const topScorers = players.slice(0, 20);
+
+  // Age distribution - check if players have date_of_birth
+  const ageDistribution: Array<{ group: string; count: number }> = [];
+  if (totalPlayers > 0) {
+    const { data: teamData } = await supabase
+      .from("teams")
+      .select("id")
+      .eq("organisation_id", organisationId);
+
+    if (teamData && teamData.length > 0) {
+      const tIds = teamData.map(t => t.id);
+      const { data: playerDobs } = await supabase
+        .from("player_stats")
+        .select("player_id, players!inner(date_of_birth), grades!inner(teams!inner(id))")
+        .in("grades.teams.id", tIds);
+
+      if (playerDobs) {
+        const seen = new Set<string>();
+        const ageBuckets = new Map<string, number>();
+        const now = new Date();
+        for (const row of playerDobs) {
+          const dob = (row.players as any)?.date_of_birth;
+          if (!dob || seen.has(row.player_id)) continue;
+          seen.add(row.player_id);
+          const age = Math.floor((now.getTime() - new Date(dob).getTime()) / (365.25 * 24 * 60 * 60 * 1000));
+          let group: string;
+          if (age < 10) group = "Under 10";
+          else if (age < 13) group = "10-12";
+          else if (age < 16) group = "13-15";
+          else if (age < 19) group = "16-18";
+          else if (age < 25) group = "19-24";
+          else if (age < 35) group = "25-34";
+          else group = "35+";
+          ageBuckets.set(group, (ageBuckets.get(group) || 0) + 1);
+        }
+        const order = ["Under 10", "10-12", "13-15", "16-18", "19-24", "25-34", "35+"];
+        for (const g of order) {
+          if (ageBuckets.has(g)) ageDistribution.push({ group: g, count: ageBuckets.get(g)! });
+        }
+      }
+    }
+  }
+
+  return {
+    totalPlayers,
+    totalGames,
+    totalPoints,
+    avgPPG,
+    teamPerformance,
+    seasonGrowth,
+    topScorers,
+    ageDistribution,
+  };
+}
+
 // Helper function to extract region/suburb from organisation name
 function extractRegion(orgName: string): string {
   // Remove common suffixes and prefixes

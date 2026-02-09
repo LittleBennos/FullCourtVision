@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Building2, MapPin, Globe, Users, Trophy, Target, Crown } from "lucide-react";
+import { Building2, MapPin, Globe, Users, Trophy, Target, Crown, BarChart3 } from "lucide-react";
 import type { Organisation, Team } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -62,6 +62,13 @@ export function OrganisationDetailClient({
                   {organisation.suburb}, {organisation.state}
                 </div>
               )}
+              <Link
+                href={`/organisations/${organisation.id}/analytics`}
+                className="flex items-center gap-1 text-accent hover:underline"
+              >
+                <BarChart3 className="w-4 h-4" />
+                Analytics
+              </Link>
               {organisation.website && (
                 <a
                   href={organisation.website}
