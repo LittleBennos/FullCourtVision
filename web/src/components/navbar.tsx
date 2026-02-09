@@ -30,6 +30,7 @@ const moreLinks = [
   { href: "/compare", label: "Compare", icon: ArrowLeftRight },
   { href: "/all-stars", label: "All-Star Team", icon: Star },
   { href: "/draft", label: "Mock Draft", icon: Sparkles },
+  { href: "/analytics/draft-board", label: "Draft Board", icon: Target },
   { href: "/roster-builder", label: "Roster Builder", icon: ClipboardList },
   { href: "/analytics/per", label: "Efficiency Ratings", icon: Zap },
   { href: "/analytics/win-probability", label: "Win Probability", icon: Percent },
