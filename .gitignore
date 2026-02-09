@@ -47,3 +47,10 @@ web/out/
 test-results/
 web/test-results/
 **/test-results/
+
+# Temp utility scripts
+_check*.js
+_counts.js
+_find_edjba.js
+scraper/_check*.js
+scraper/_quick-sync.js
