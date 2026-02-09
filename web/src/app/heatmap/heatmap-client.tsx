@@ -50,7 +50,7 @@ type Props = {
 
 // Custom treemap component to better handle data
 const CustomizedTreemap = ({ data }: { data: HeatmapRegion[] }) => {
-  const treemapData = data.map((region, index) => ({
+  const treemapData = data.map((region, _index) => ({
     name: region.region,
     value: region.players,
     organisations: region.organisations,
@@ -66,7 +66,7 @@ const CustomizedTreemap = ({ data }: { data: HeatmapRegion[] }) => {
         dataKey="value"
         aspectRatio={16 / 9}
         stroke="#374151"
-        content={({ root, depth, x, y, width, height, index, name, value }) => {
+        content={({ _root, depth, x, y, width, height, index, name, value }) => {
           if (depth === 1) {
             const data = treemapData[index];
             return (

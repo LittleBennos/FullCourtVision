@@ -1,6 +1,6 @@
 import { getGradeById, getGradeTeamStandings, getGradeTopScorers, getGradeFixtures } from "@/lib/data";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Trophy, Target, Calendar, Users } from "lucide-react";
+import { ArrowLeft, Trophy, Target, Calendar } from "lucide-react";
 import Link from "next/link";
 
 export const revalidate = 3600;

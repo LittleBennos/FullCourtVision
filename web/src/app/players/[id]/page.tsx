@@ -152,7 +152,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
               </tr>
             </thead>
             <tbody>
-              {stats.map((stat, index) => (
+              {stats.map((stat, _index) => (
                 <tr key={stat.id} className="border-b border-border/50">
                   <th className="py-3 px-4 text-left font-normal" scope="row">
                     {stat.competition_name || '-'}

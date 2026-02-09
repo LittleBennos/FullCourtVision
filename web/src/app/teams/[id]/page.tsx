@@ -1,7 +1,7 @@
 import { getTeamById, getTeamPlayers } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Users, Trophy, Target } from "lucide-react";
+import { ArrowLeft, Users } from "lucide-react";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;

@@ -73,7 +73,7 @@ const STAT_CONFIG = {
 
 type StatKey = keyof typeof STAT_CONFIG;
 
-export function PlayerTrendsChart({ playerStats, seasons, playerId }: PlayerTrendsChartProps) {
+export function PlayerTrendsChart({ playerStats, seasons, playerId: _playerId }: PlayerTrendsChartProps) {
   const [selectedStats, setSelectedStats] = useState<Set<StatKey>>(new Set(['ppg']));
   const [selectedSeason, setSelectedSeason] = useState<string>('all');
 
