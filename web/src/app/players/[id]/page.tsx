@@ -11,6 +11,7 @@ import { PlayerShareButton } from "@/components/player-share-button";
 import { PlayerAvailability } from "@/components/player-availability";
 import { MilestoneTimeline } from "@/components/milestone-timeline";
 import { PlayerFoulCard } from "@/components/player-foul-card";
+import { PERBadge } from "@/components/per-badge";
 
 // Dynamically import chart components to reduce initial bundle size
 const SeasonProgressionChart = dynamic(() => import("@/components/season-progression-chart").then(mod => ({ default: mod.SeasonProgressionChart })), {
@@ -181,6 +182,9 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
               foulsPg={averages.foulsPg}
             />
           )}
+        </div>
+        <div className="mt-2">
+          <PERBadge playerId={id} />
         </div>
         <AnomalyBadges playerId={id} />
       </div>
