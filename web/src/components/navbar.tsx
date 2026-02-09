@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
 
@@ -17,6 +17,7 @@ const moreLinks = [
   { href: "/organisations", label: "Organisations", icon: Building2 },
   { href: "/competitions", label: "Competitions", icon: Trophy },
   { href: "/grades", label: "Grades", icon: Target },
+  { href: "/awards", label: "Awards", icon: Award },
   { href: "/rising-stars", label: "Rising Stars", icon: TrendingUp },
   { href: "/heatmap", label: "Heatmap", icon: MapPin },
   { href: "/compare", label: "Compare", icon: ArrowLeftRight },

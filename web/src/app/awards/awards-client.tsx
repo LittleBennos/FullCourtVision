@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Trophy, Target, TrendingUp, Crosshair, Shield, Crown, Award } from "lucide-react";
+import { Trophy, Target, TrendingUp, Crosshair, Shield, Crown, Award, Loader2 } from "lucide-react";
 import type { SeasonAwards, AwardWinner } from "@/lib/data";
 
 type Props = {
@@ -74,9 +74,26 @@ function AwardCard({ award, config }: { award: AwardWinner | null; config: typeo
   );
 }
 
-export function AwardsClient({ seasons, awardsMap }: Props) {
+const emptyAwards: SeasonAwards = { mvp: null, top_scorer: null, most_improved: null, sharpshooter: null, iron_man: null, best_team: null };
+
+export function AwardsClient({ seasons, awardsMap: initialMap }: Props) {
   const [selectedSeason, setSelectedSeason] = useState(seasons[0]?.name || "");
-  const awards = awardsMap[selectedSeason] || { mvp: null, top_scorer: null, most_improved: null, sharpshooter: null, iron_man: null, best_team: null };
+  const [awardsCache, setAwardsCache] = useState(initialMap);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (awardsCache[selectedSeason]) return;
+    setLoading(true);
+    fetch(`/api/awards?season=${encodeURIComponent(selectedSeason)}`)
+      .then(r => r.json())
+      .then(data => {
+        setAwardsCache(prev => ({ ...prev, [selectedSeason]: data }));
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, [selectedSeason]);
+
+  const awards = awardsCache[selectedSeason] || emptyAwards;
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -99,11 +116,17 @@ export function AwardsClient({ seasons, awardsMap }: Props) {
         </select>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {awardConfig.map((config) => (
-          <AwardCard key={config.key} award={awards[config.key]} config={config} />
-        ))}
-      </div>
+      {loading ? (
+        <div className="flex items-center justify-center py-20">
+          <Loader2 className="w-8 h-8 animate-spin text-accent" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {awardConfig.map((config) => (
+            <AwardCard key={config.key} award={awards[config.key]} config={config} />
+          ))}
+        </div>
+      )}
 
       <div className="mt-8 bg-card rounded-xl border border-border p-6 text-sm text-muted-foreground">
         <h2 className="text-lg font-semibold text-foreground mb-3">How Awards Are Determined</h2>

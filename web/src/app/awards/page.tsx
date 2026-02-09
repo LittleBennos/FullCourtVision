@@ -6,17 +6,18 @@ export const metadata = {
   description: "Season awards celebrating the best players and teams in Victorian basketball — MVP, Top Scorer, Most Improved, and more.",
 };
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
 
 export default async function AwardsPage() {
   const seasons = await getAwardSeasons();
   
-  // Pre-fetch awards for the first 3 seasons
+  // Only show the first 3 seasons
   const topSeasons = seasons.slice(0, 3);
   const awardsMap: Record<string, SeasonAwards> = {};
   
-  for (const season of topSeasons) {
-    awardsMap[season.name] = await getSeasonAwards(season.name);
+  // Pre-fetch just the first season to keep load time fast
+  if (topSeasons.length > 0) {
+    awardsMap[topSeasons[0].name] = await getSeasonAwards(topSeasons[0].name);
   }
 
   return <AwardsClient seasons={topSeasons} awardsMap={awardsMap} />;
