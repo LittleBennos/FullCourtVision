@@ -5,6 +5,7 @@ import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { CommandPalette } from "@/components/command-palette";
 import { BackToTop } from "@/components/back-to-top";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,7 +57,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -111,13 +112,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-background text-foreground`}
       >
-        <Navbar />
-        <main className="min-h-[calc(100vh-64px)]">
-          {children}
-        </main>
-        <Footer />
-        <CommandPalette />
-        <BackToTop />
+        <ThemeProvider>
+          <Navbar />
+          <main className="min-h-[calc(100vh-64px)]">
+            {children}
+          </main>
+          <Footer />
+          <CommandPalette />
+          <BackToTop />
+        </ThemeProvider>
       </body>
     </html>
   );

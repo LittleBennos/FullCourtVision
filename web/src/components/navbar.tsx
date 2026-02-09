@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info, Heart } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
+import { ThemeToggle } from "./theme-toggle";
 import { useFavourites } from "@/hooks/useFavourites";
 
 const primaryLinks = [
@@ -130,6 +131,7 @@ export function Navbar() {
             )}
           </Link>
           <GlobalSearch />
+          <ThemeToggle />
           <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>

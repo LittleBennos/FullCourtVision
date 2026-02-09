@@ -1,6 +1,20 @@
 @import "tailwindcss";
 
+/* Light mode (default when no .dark class) */
 :root {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --muted: #e2e8f0;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+}
+
+/* Dark mode */
+.dark {
   --background: #0f172a;
   --foreground: #f1f5f9;
   --card: #1e293b;
@@ -30,6 +44,14 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans, Arial, Helvetica, sans-serif);
+}
+
+/* Smooth theme transition */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
 }
 
 /* Custom scrollbar */
