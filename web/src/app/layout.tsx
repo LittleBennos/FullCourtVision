@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -112,12 +113,7 @@ export default function RootLayout({
         <main className="min-h-[calc(100vh-64px)]">
           {children}
         </main>
-        <footer className="border-t border-border bg-card py-8">
-          <div className="max-w-7xl mx-auto px-4 text-center text-muted-foreground text-sm">
-            <p>FullCourtVision © 2025 — Basketball Victoria Analytics</p>
-            <p className="mt-1">Data sourced from PlayHQ. Not affiliated with Basketball Victoria.</p>
-          </div>
-        </footer>
+        <Footer />
       </body>
     </html>
   );
