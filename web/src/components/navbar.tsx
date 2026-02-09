@@ -7,6 +7,7 @@ import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
 import { ThemeToggle } from "./theme-toggle";
 import { useFavourites } from "@/hooks/useFavourites";
+import { useWhatsNewCount } from "@/hooks/useWhatsNewCount";
 
 const primaryLinks = [
   { href: "/players", label: "Players", icon: Users },
@@ -35,6 +36,7 @@ export function Navbar() {
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
   const { totalCount } = useFavourites();
+  const whatsNewCount = useWhatsNewCount();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -124,11 +126,15 @@ export function Navbar() {
             title="Favourites"
           >
             <Heart className="w-5 h-5" />
-            {totalCount > 0 && (
+            {whatsNewCount > 0 ? (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-blue-500 text-white text-[10px] font-bold rounded-full px-1 animate-pulse">
+                {whatsNewCount}
+              </span>
+            ) : totalCount > 0 ? (
               <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-blue-400 text-white text-[10px] font-bold rounded-full px-1">
                 {totalCount}
               </span>
-            )}
+            ) : null}
           </Link>
           <GlobalSearch />
           <ThemeToggle />
