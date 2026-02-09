@@ -1,7 +1,7 @@
 import { getTeamById, getHeadToHeadData } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Trophy, Calendar, Users, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import { ArrowLeft, Trophy, Calendar, Users, TrendingUp, TrendingDown, Minus, ClipboardList } from "lucide-react";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -65,9 +65,18 @@ export default async function HeadToHeadPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <Link href={`/teams/${id}`} className="inline-flex items-center gap-1 text-accent hover:underline text-sm mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back to {team1.name}
-      </Link>
+      <div className="flex items-center gap-4 mb-6 flex-wrap">
+        <Link href={`/teams/${id}`} className="inline-flex items-center gap-1 text-accent hover:underline text-sm">
+          <ArrowLeft className="w-4 h-4" /> Back to {team1.name}
+        </Link>
+        <Link
+          href={`/game-plan/${id}/vs/${opponentId}`}
+          className="inline-flex items-center gap-1.5 text-sm px-3 py-1.5 bg-accent/10 text-accent border border-accent/30 rounded-lg hover:bg-accent/20 transition-colors"
+        >
+          <ClipboardList className="w-4 h-4" />
+          Coach&apos;s Game Plan
+        </Link>
+      </div>
 
       {/* Header */}
       <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">

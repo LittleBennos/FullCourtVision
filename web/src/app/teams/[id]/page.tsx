@@ -1,7 +1,7 @@
 import { getTeamById, getTeamPlayers } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Users, CalendarDays, Sparkles, History, BarChart3 } from "lucide-react";
+import { Users, CalendarDays, Sparkles, History, BarChart3, ClipboardList } from "lucide-react";
 import { HeadToHeadSelector } from "@/components/head-to-head-selector";
 import { FavouriteButton } from "@/components/favourite-button";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -161,6 +161,15 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
         <span className="font-medium group-hover:text-accent transition-colors">Roster History</span>
         <span className="ml-auto text-muted-foreground text-sm">→</span>
       </Link>
+
+      {/* Game Plan Link - requires selecting an opponent via head-to-head */}
+      <div className="flex items-center gap-3 bg-card rounded-xl border border-border p-5 mb-8">
+        <ClipboardList className="w-5 h-5 text-accent" />
+        <div>
+          <span className="font-medium">Coach&apos;s Game Plan</span>
+          <p className="text-xs text-muted-foreground">Select an opponent via Head-to-Head above to generate a scouting report</p>
+        </div>
+      </div>
 
       {/* Roster */}
       <div className="bg-card rounded-xl border border-border p-6 md:p-8">
