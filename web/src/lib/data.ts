@@ -1428,30 +1428,14 @@ export async function getGameDetails(gameId: string) {
       venue,
       date,
       time,
-      round:rounds(
-        id, 
-        name, 
-        grade:grades(
-          id, 
-          name, 
-          season:seasons(
-            id, 
-            name,
-            competition:competitions(
-              id,
-              name,
-              organisation:organisations(id, name)
-            )
-          )
-        )
-      )
+      round_id
     `)
     .eq("id", gameId)
     .single();
 
   if (!game) return null;
 
-  // Get team details separately to avoid foreign key constraint issues
+  // Get team details separately
   const { data: homeTeam } = await supabase
     .from("teams")
     .select("id, name, season_id")
@@ -1464,9 +1448,84 @@ export async function getGameDetails(gameId: string) {
     .eq("id", game.away_team_id)
     .single();
 
+  // Get round details separately
+  const { data: round } = await supabase
+    .from("rounds")
+    .select(`
+      id, 
+      name,
+      grade_id
+    `)
+    .eq("id", game.round_id)
+    .single();
+
+  // Get grade details if round exists
+  let grade = null;
+  if (round) {
+    const { data: gradeData } = await supabase
+      .from("grades")
+      .select(`
+        id, 
+        name, 
+        season_id
+      `)
+      .eq("id", round.grade_id)
+      .single();
+    
+    if (gradeData) {
+      // Get season details
+      const { data: season } = await supabase
+        .from("seasons")
+        .select(`
+          id, 
+          name,
+          competition_id
+        `)
+        .eq("id", gradeData.season_id)
+        .single();
+      
+      if (season) {
+        // Get competition details
+        const { data: competition } = await supabase
+          .from("competitions")
+          .select(`
+            id,
+            name,
+            organisation_id
+          `)
+          .eq("id", season.competition_id)
+          .single();
+        
+        if (competition) {
+          // Get organisation details
+          const { data: organisation } = await supabase
+            .from("organisations")
+            .select("id, name")
+            .eq("id", competition.organisation_id)
+            .single();
+          
+          grade = {
+            ...gradeData,
+            season: {
+              ...season,
+              competition: {
+                ...competition,
+                organisation: organisation,
+              },
+            },
+          };
+        }
+      }
+    }
+  }
+
   return {
     ...game,
     home_team: homeTeam,
     away_team: awayTeam,
+    round: round ? {
+      ...round,
+      grade: grade,
+    } : null,
   };
 }
