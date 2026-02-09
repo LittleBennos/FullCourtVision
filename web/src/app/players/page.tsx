@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { PlayerTable } from "@/components/player-table";
 import { createClient } from "@supabase/supabase-js";
 
@@ -14,7 +15,6 @@ export const metadata = {
 export const revalidate = 3600;
 
 export default async function PlayersPage() {
-  // Just get the count for the header — table handles its own data fetching
   const { count } = await supabase
     .from("player_aggregates")
     .select("player_id", { count: "exact", head: true });
@@ -25,7 +25,9 @@ export default async function PlayersPage() {
       <p className="text-muted-foreground mb-6">
         {(count || 0).toLocaleString()} players with recorded statistics
       </p>
-      <PlayerTable />
+      <Suspense fallback={<div className="text-muted-foreground">Loading...</div>}>
+        <PlayerTable />
+      </Suspense>
     </div>
   );
 }
