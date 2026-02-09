@@ -1,7 +1,7 @@
 import { getPlayerDetails, getAvailableSeasons, getSimilarPlayers } from "@/lib/data";
 import Link from "next/link";
 import { StatCard } from "@/components/stat-card";
-import { Users, TrendingUp, Target, AlertTriangle, ClipboardList } from "lucide-react";
+import { Users, TrendingUp, Target, AlertTriangle, ClipboardList, Crosshair } from "lucide-react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
@@ -142,6 +142,13 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
             {player.first_name} {player.last_name}
           </h1>
           <div className="flex items-center gap-3">
+          <Link
+            href={`/scouting/${id}`}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/30 hover:bg-amber-500/20 transition-colors text-sm font-medium"
+          >
+            <Crosshair className="w-4 h-4" />
+            Scouting Report
+          </Link>
           <Link
             href={`/players/${id}/report-card`}
             className="flex items-center gap-2 px-4 py-2 rounded-lg bg-amber-500/10 text-amber-500 border border-amber-500/30 hover:bg-amber-500/20 transition-colors text-sm font-medium"
