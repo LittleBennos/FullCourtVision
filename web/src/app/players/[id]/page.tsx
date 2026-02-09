@@ -1,8 +1,20 @@
 import { getPlayerDetails, getAvailableSeasons } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
-import { PlayerTrendsChart } from "@/components/player-trends-chart";
 import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
+import dynamic from "next/dynamic";
+
+// Dynamically import the heavy chart component to reduce initial bundle size
+const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
+  loading: () => (
+    <div className="h-80 bg-card rounded-xl border border-border flex items-center justify-center">
+      <div className="text-center text-muted-foreground">
+        <div className="w-8 h-8 mx-auto mb-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
+        <p>Loading performance trends...</p>
+      </div>
+    </div>
+  )
+});
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -36,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export const revalidate = 1800; // 30 minutes
+export const revalidate = 3600; // 1 hour - player stats don't change frequently
 
 export default async function PlayerDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

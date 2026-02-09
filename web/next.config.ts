@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
       ],
     },
   ],
+  // Fix turbopack workspace root warning
+  output: "standalone",
+  outputFileTracingRoot: process.cwd(),
 };
 
-export default nextConfig;
+// Bundle analyzer (can be enabled with ANALYZE=true)
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+export default withBundleAnalyzer(nextConfig);
