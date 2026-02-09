@@ -6,6 +6,7 @@ import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2,
 import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
 import { ThemeToggle } from "./theme-toggle";
+import { DataFreshnessBadge } from "./data-freshness-badge";
 import { useFavourites } from "@/hooks/useFavourites";
 import { useWhatsNewCount } from "@/hooks/useWhatsNewCount";
 
@@ -123,6 +124,7 @@ export function Navbar() {
 
         {/* Search and Mobile toggle */}
         <div className="flex items-center gap-2">
+          <DataFreshnessBadge variant="dot" />
           <Link
             href="/favourites"
             className={`relative p-2 rounded-lg transition-colors ${

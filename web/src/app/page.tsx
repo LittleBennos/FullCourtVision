@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "lucide-react";
 import { StatCard } from "@/components/stat-card";
 import { RecentActivity } from "@/components/recent-activity";
+import { DataFreshnessBadge } from "@/components/data-freshness-badge";
 import { getStats, getRecentGames, getWeeklyFeaturedGames, getThisWeekInNumbers } from "@/lib/data";
 
 export const revalidate = 3600; // Revalidate every hour
@@ -48,6 +49,9 @@ export default async function Home() {
               >
                 Leaderboards
               </Link>
+            </div>
+            <div className="mt-6">
+              <DataFreshnessBadge />
             </div>
           </div>
         </div>
