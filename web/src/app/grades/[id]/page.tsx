@@ -1,4 +1,4 @@
-import { getGradeById, getGradeTeamStandings, getGradeTopScorers, getGradeFixtures } from "@/lib/data";
+import { getGradeById, getGradeStandings, getGradeTopScorers, getGradeFixtures } from "@/lib/data";
 import { notFound } from "next/navigation";
 import { ArrowLeft, Trophy, Target, Calendar } from "lucide-react";
 import Link from "next/link";
@@ -42,7 +42,7 @@ export default async function GradePage({ params }: { params: Promise<{ id: stri
   
   const [grade, standings, topScorers, fixtures] = await Promise.all([
     getGradeById(id),
-    getGradeTeamStandings(id),
+    getGradeStandings(id),
     getGradeTopScorers(id, 10),
     getGradeFixtures(id),
   ]);
@@ -106,20 +106,20 @@ export default async function GradePage({ params }: { params: Promise<{ id: stri
                 <table className="w-full text-sm">
                   <thead className="bg-muted/50">
                     <tr>
-                      <th className="text-left px-3 py-3 font-medium">Pos</th>
+                      <th className="text-left px-3 py-3 font-medium">#</th>
                       <th className="text-left px-3 py-3 font-medium">Team</th>
                       <th className="text-right px-3 py-3 font-medium">W</th>
                       <th className="text-right px-3 py-3 font-medium">L</th>
-                      <th className="text-right px-3 py-3 font-medium">GP</th>
+                      <th className="text-right px-3 py-3 font-medium">PCT</th>
                       <th className="text-right px-3 py-3 font-medium">PF</th>
                       <th className="text-right px-3 py-3 font-medium">PA</th>
-                      <th className="text-right px-3 py-3 font-medium">%</th>
+                      <th className="text-right px-3 py-3 font-medium">DIFF</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border">
-                    {standings.map((team, index) => (
+                    {standings.map((team) => (
                       <tr key={team.id} className="hover:bg-muted/30">
-                        <td className="px-3 py-3 text-muted-foreground">{index + 1}</td>
+                        <td className="px-3 py-3 text-muted-foreground">{team.rank}</td>
                         <td className="px-3 py-3">
                           <Link href={`/teams/${team.id}`} className="text-accent hover:underline font-medium">
                             {team.name}
@@ -128,10 +128,12 @@ export default async function GradePage({ params }: { params: Promise<{ id: stri
                         </td>
                         <td className="px-3 py-3 text-right tabular-nums font-semibold text-green-400">{team.wins}</td>
                         <td className="px-3 py-3 text-right tabular-nums text-red-400">{team.losses}</td>
-                        <td className="px-3 py-3 text-right tabular-nums">{team.games_played}</td>
+                        <td className="px-3 py-3 text-right tabular-nums font-semibold">{team.pct.toFixed(3)}</td>
                         <td className="px-3 py-3 text-right tabular-nums">{team.points_for}</td>
                         <td className="px-3 py-3 text-right tabular-nums">{team.points_against}</td>
-                        <td className="px-3 py-3 text-right tabular-nums">{team.percentage}</td>
+                        <td className={`px-3 py-3 text-right tabular-nums font-semibold ${team.diff > 0 ? "text-green-400" : team.diff < 0 ? "text-red-400" : ""}`}>
+                          {team.diff > 0 ? "+" : ""}{team.diff}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

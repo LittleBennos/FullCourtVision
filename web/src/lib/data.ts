@@ -1181,6 +1181,113 @@ export async function searchGrades(options: {
 }
 
 
+// Standings with PCT and DIFF
+export type StandingsEntry = {
+  rank: number;
+  id: string;
+  name: string;
+  organisation_id: string;
+  org_name: string;
+  wins: number;
+  losses: number;
+  pct: number;
+  points_for: number;
+  points_against: number;
+  diff: number;
+};
+
+export async function getGradeStandings(gradeId: string): Promise<StandingsEntry[]> {
+  // Get the season for this grade
+  const { data: gradeData } = await supabase
+    .from("grades")
+    .select("season_id")
+    .eq("id", gradeId)
+    .single();
+
+  if (!gradeData) return [];
+
+  // Get teams that have players in this grade (via player_stats)
+  const { data: gradeTeams } = await supabase
+    .from("player_stats")
+    .select("team_name")
+    .eq("grade_id", gradeId);
+
+  if (!gradeTeams || gradeTeams.length === 0) return [];
+
+  const teamNames = [...new Set(gradeTeams.map(t => t.team_name).filter(Boolean))];
+
+  // Get teams in this season matching those names
+  const { data: teams } = await supabase
+    .from("teams")
+    .select("id, name, organisation_id, organisations(name)")
+    .eq("season_id", gradeData.season_id)
+    .in("name", teamNames);
+
+  if (!teams) return [];
+
+  // Get all completed games for this grade
+  const { data: games } = await supabase
+    .from("games")
+    .select("home_team_id, away_team_id, home_score, away_score")
+    .eq("grade_id", gradeId)
+    .not("home_score", "is", null)
+    .not("away_score", "is", null);
+
+  // Build stats map
+  const statsMap = new Map<string, { wins: number; losses: number; pf: number; pa: number; name: string; org_id: string; org_name: string }>();
+
+  for (const team of teams) {
+    statsMap.set(team.id, {
+      wins: 0, losses: 0, pf: 0, pa: 0,
+      name: team.name,
+      org_id: team.organisation_id,
+      org_name: (team.organisations as any)?.name || "",
+    });
+  }
+
+  if (games) {
+    for (const game of games) {
+      const home = statsMap.get(game.home_team_id);
+      const away = statsMap.get(game.away_team_id);
+      if (home && away) {
+        const hs = game.home_score || 0;
+        const as_ = game.away_score || 0;
+        home.pf += hs; home.pa += as_;
+        away.pf += as_; away.pa += hs;
+        if (hs > as_) { home.wins++; away.losses++; }
+        else { away.wins++; home.losses++; }
+      }
+    }
+  }
+
+  // Build entries, sort by PCT desc then DIFF desc
+  const entries: StandingsEntry[] = Array.from(statsMap.entries()).map(([id, s]) => {
+    const gp = s.wins + s.losses;
+    return {
+      rank: 0,
+      id,
+      name: s.name,
+      organisation_id: s.org_id,
+      org_name: s.org_name,
+      wins: s.wins,
+      losses: s.losses,
+      pct: gp > 0 ? +(s.wins / gp).toFixed(3) : 0,
+      points_for: s.pf,
+      points_against: s.pa,
+      diff: s.pf - s.pa,
+    };
+  });
+
+  entries.sort((a, b) => {
+    if (a.pct !== b.pct) return b.pct - a.pct;
+    return b.diff - a.diff;
+  });
+
+  entries.forEach((e, i) => { e.rank = i + 1; });
+
+  return entries;
+}
+
 // Global search types and function for navbar search
 export type GlobalSearchResults = {
   players: Array<{ id: string; name: string }>;
@@ -1414,6 +1521,257 @@ export async function getTeamTopScorers(teamId: string): Promise<Array<{
     games_played: s.games_played || 0,
     ppg: s.games_played > 0 ? +((s.total_points || 0) / s.games_played).toFixed(1) : 0,
   }));
+}
+
+// ==================== Season Awards ====================
+
+export type AwardWinner = {
+  id: string;
+  name: string;
+  stat_label: string;
+  stat_value: string;
+  team_name: string;
+  type: "player" | "team";
+};
+
+export type SeasonAwards = {
+  mvp: AwardWinner | null;
+  top_scorer: AwardWinner | null;
+  most_improved: AwardWinner | null;
+  sharpshooter: AwardWinner | null;
+  iron_man: AwardWinner | null;
+  best_team: AwardWinner | null;
+};
+
+export async function getAwardSeasons(): Promise<{ id: string; name: string }[]> {
+  const { data } = await supabase
+    .from("seasons")
+    .select("id, name")
+    .order("start_date", { ascending: false });
+
+  if (!data) return [];
+
+  // Deduplicate by season name (multiple competitions share the same season name)
+  const seen = new Map<string, string>();
+  for (const s of data) {
+    if (!seen.has(s.name)) seen.set(s.name, s.id);
+  }
+  return Array.from(seen.entries()).map(([name, id]) => ({ id, name }));
+}
+
+export async function getSeasonAwards(seasonName: string): Promise<SeasonAwards> {
+  // Get all season IDs matching this name
+  const { data: seasons } = await supabase
+    .from("seasons")
+    .select("id, name")
+    .eq("name", seasonName);
+
+  const seasonIds = (seasons || []).map(s => s.id);
+  if (seasonIds.length === 0) return { mvp: null, top_scorer: null, most_improved: null, sharpshooter: null, iron_man: null, best_team: null };
+
+  // Get all grades for these seasons
+  const { data: grades } = await supabase
+    .from("grades")
+    .select("id")
+    .in("season_id", seasonIds);
+
+  const gradeIds = (grades || []).map(g => g.id);
+  if (gradeIds.length === 0) return { mvp: null, top_scorer: null, most_improved: null, sharpshooter: null, iron_man: null, best_team: null };
+
+  // Get all player stats for these grades
+  const allStats: any[] = [];
+  const PAGE = 1000;
+  let from = 0;
+  while (true) {
+    const { data: batch } = await supabase
+      .from("player_stats")
+      .select("player_id, team_name, games_played, total_points, three_point, players!inner(first_name, last_name)")
+      .in("grade_id", gradeIds)
+      .range(from, from + PAGE - 1);
+    if (!batch || batch.length === 0) break;
+    allStats.push(...batch);
+    if (batch.length < PAGE) break;
+    from += PAGE;
+  }
+
+  // Aggregate by player
+  const playerMap = new Map<string, {
+    id: string; first_name: string; last_name: string; team_name: string;
+    games: number; points: number; threes: number;
+  }>();
+
+  for (const s of allStats) {
+    const pid = s.player_id;
+    const ex = playerMap.get(pid);
+    if (ex) {
+      ex.games += s.games_played || 0;
+      ex.points += s.total_points || 0;
+      ex.threes += s.three_point || 0;
+    } else {
+      playerMap.set(pid, {
+        id: pid,
+        first_name: (s.players as any)?.first_name || "",
+        last_name: (s.players as any)?.last_name || "",
+        team_name: s.team_name || "",
+        games: s.games_played || 0,
+        points: s.total_points || 0,
+        threes: s.three_point || 0,
+      });
+    }
+  }
+
+  const players = Array.from(playerMap.values());
+
+  // MVP: highest PPG, min 10 games
+  const mvpCandidates = players.filter(p => p.games >= 10).sort((a, b) => (b.points / b.games) - (a.points / a.games));
+  const mvp = mvpCandidates[0] ? {
+    id: mvpCandidates[0].id,
+    name: `${mvpCandidates[0].first_name} ${mvpCandidates[0].last_name}`,
+    stat_label: "PPG",
+    stat_value: (mvpCandidates[0].points / mvpCandidates[0].games).toFixed(1),
+    team_name: mvpCandidates[0].team_name,
+    type: "player" as const,
+  } : null;
+
+  // Top Scorer: most total points
+  const scorers = [...players].sort((a, b) => b.points - a.points);
+  const top_scorer = scorers[0] ? {
+    id: scorers[0].id,
+    name: `${scorers[0].first_name} ${scorers[0].last_name}`,
+    stat_label: "Total Points",
+    stat_value: scorers[0].points.toLocaleString(),
+    team_name: scorers[0].team_name,
+    type: "player" as const,
+  } : null;
+
+  // Sharpshooter: highest 3PT per game, min 5 GP
+  const shooters = players.filter(p => p.games >= 5).sort((a, b) => (b.threes / b.games) - (a.threes / a.games));
+  const sharpshooter = shooters[0] ? {
+    id: shooters[0].id,
+    name: `${shooters[0].first_name} ${shooters[0].last_name}`,
+    stat_label: "3PT/Game",
+    stat_value: (shooters[0].threes / shooters[0].games).toFixed(1),
+    team_name: shooters[0].team_name,
+    type: "player" as const,
+  } : null;
+
+  // Iron Man: most games played
+  const ironCandidates = [...players].sort((a, b) => b.games - a.games);
+  const iron_man = ironCandidates[0] ? {
+    id: ironCandidates[0].id,
+    name: `${ironCandidates[0].first_name} ${ironCandidates[0].last_name}`,
+    stat_label: "Games Played",
+    stat_value: ironCandidates[0].games.toString(),
+    team_name: ironCandidates[0].team_name,
+    type: "player" as const,
+  } : null;
+
+  // Most Improved: biggest PPG increase from previous season
+  // Get the previous season name for comparison
+  const { data: allSeasons } = await supabase
+    .from("seasons")
+    .select("name, start_date")
+    .order("start_date", { ascending: false });
+
+  let most_improved: AwardWinner | null = null;
+  if (allSeasons) {
+    const uniqueNames = [...new Set(allSeasons.map(s => s.name))];
+    const currentIdx = uniqueNames.indexOf(seasonName);
+    if (currentIdx >= 0 && currentIdx < uniqueNames.length - 1) {
+      const prevSeasonName = uniqueNames[currentIdx + 1];
+      // Get previous season stats
+      const { data: prevSeasons } = await supabase
+        .from("seasons")
+        .select("id")
+        .eq("name", prevSeasonName);
+      const prevIds = (prevSeasons || []).map(s => s.id);
+      if (prevIds.length > 0) {
+        const { data: prevGrades } = await supabase
+          .from("grades")
+          .select("id")
+          .in("season_id", prevIds);
+        const prevGradeIds = (prevGrades || []).map(g => g.id);
+        if (prevGradeIds.length > 0) {
+          const prevStats: any[] = [];
+          let pFrom = 0;
+          while (true) {
+            const { data: batch } = await supabase
+              .from("player_stats")
+              .select("player_id, games_played, total_points")
+              .in("grade_id", prevGradeIds)
+              .range(pFrom, pFrom + PAGE - 1);
+            if (!batch || batch.length === 0) break;
+            prevStats.push(...batch);
+            if (batch.length < PAGE) break;
+            pFrom += PAGE;
+          }
+          const prevMap = new Map<string, { games: number; points: number }>();
+          for (const s of prevStats) {
+            const ex = prevMap.get(s.player_id);
+            if (ex) { ex.games += s.games_played || 0; ex.points += s.total_points || 0; }
+            else prevMap.set(s.player_id, { games: s.games_played || 0, points: s.total_points || 0 });
+          }
+
+          let bestImprovement = -Infinity;
+          let bestPlayer: typeof players[0] | null = null;
+          let bestPrevPpg = 0;
+          let bestCurrPpg = 0;
+          for (const p of players) {
+            if (p.games < 5) continue;
+            const prev = prevMap.get(p.id);
+            if (!prev || prev.games < 5) continue;
+            const currPpg = p.points / p.games;
+            const prevPpg = prev.points / prev.games;
+            const improvement = currPpg - prevPpg;
+            if (improvement > bestImprovement) {
+              bestImprovement = improvement;
+              bestPlayer = p;
+              bestPrevPpg = prevPpg;
+              bestCurrPpg = currPpg;
+            }
+          }
+          if (bestPlayer && bestImprovement > 0) {
+            most_improved = {
+              id: bestPlayer.id,
+              name: `${bestPlayer.first_name} ${bestPlayer.last_name}`,
+              stat_label: "PPG Increase",
+              stat_value: `+${bestImprovement.toFixed(1)} (${bestPrevPpg.toFixed(1)} → ${bestCurrPpg.toFixed(1)})`,
+              team_name: bestPlayer.team_name,
+              type: "player",
+            };
+          }
+        }
+      }
+    }
+  }
+
+  // Best Team: highest win percentage, min 10 games
+  const { data: teamAggs } = await supabase
+    .from("team_aggregates")
+    .select("team_id, name, organisation_name, season_id, wins, losses, gp")
+    .in("season_id", seasonIds);
+
+  let best_team: AwardWinner | null = null;
+  if (teamAggs) {
+    const qualified = teamAggs.filter(t => t.gp >= 10).sort((a, b) => {
+      const aPct = a.wins / a.gp;
+      const bPct = b.wins / b.gp;
+      return bPct - aPct;
+    });
+    if (qualified[0]) {
+      const pct = ((qualified[0].wins / qualified[0].gp) * 100).toFixed(0);
+      best_team = {
+        id: qualified[0].team_id,
+        name: qualified[0].name,
+        stat_label: "Win %",
+        stat_value: `${pct}% (${qualified[0].wins}W-${qualified[0].losses}L)`,
+        team_name: qualified[0].organisation_name || "",
+        type: "team",
+      };
+    }
+  }
+
+  return { mvp, top_scorer, most_improved, sharpshooter, iron_man, best_team };
 }
 
 export async function getGameDetails(gameId: string) {
