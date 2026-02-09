@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Users } from "lucide-react";
 import { HeadToHeadSelector } from "@/components/head-to-head-selector";
+import { FavouriteButton } from "@/components/favourite-button";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -61,7 +62,10 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
       <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">{team.name}</h1>
+            <div className="flex items-center gap-2">
+              <h1 className="text-3xl md:text-4xl font-bold mb-2">{team.name}</h1>
+              <FavouriteButton id={id} type="team" />
+            </div>
             <p className="text-muted-foreground mb-1">
               {team.org_name ? (
                 <Link href={`/organisations/${team.organisation_id}`} className="text-accent hover:underline">
@@ -134,9 +138,12 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
                 {players.map((p) => (
                   <tr key={p.id} className="hover:bg-muted/30 transition-colors">
                     <td className="px-4 py-3">
-                      <Link href={`/players/${p.id}`} className="text-accent hover:underline font-medium">
-                        {p.first_name} {p.last_name}
-                      </Link>
+                      <div className="flex items-center gap-1.5">
+                        <FavouriteButton id={p.id} type="player" />
+                        <Link href={`/players/${p.id}`} className="text-accent hover:underline font-medium">
+                          {p.first_name} {p.last_name}
+                        </Link>
+                      </div>
                     </td>
                     <td className="px-4 py-3 text-right tabular-nums">{p.games_played}</td>
                     <td className="px-4 py-3 text-right tabular-nums font-semibold">{p.total_points}</td>

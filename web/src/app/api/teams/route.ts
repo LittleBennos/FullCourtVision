@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const search = params.get("search") || "";
   const org = params.get("org") || "";
+  const ids = params.get("ids");
   const limit = parseIntParam(params.get("limit"), 25, 100);
   const offset = parseIntParam(params.get("offset"), 0);
 
@@ -20,10 +21,13 @@ export async function GET(req: NextRequest) {
     .from("team_aggregates")
     .select("team_id, name, organisation_id, season_id, organisation_name, season_name, wins, losses, gp", { count: "exact" });
 
-  if (search) {
+  if (ids) {
+    const idList = ids.split(",").filter(Boolean);
+    query = query.in("team_id", idList);
+  } else if (search) {
     query = query.ilike("name", `%${search}%`);
   }
-  if (org) {
+  if (!ids && org) {
     query = query.eq("organisation_id", org);
   }
 

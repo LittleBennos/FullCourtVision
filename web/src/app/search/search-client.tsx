@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { Search, Users, Activity, Building2, Loader2 } from "lucide-react";
+import { FavouriteButton } from "@/components/favourite-button";
 
 type PlayerResult = { id: string; name: string; total_games: number; ppg: number };
 type TeamResult = { id: string; name: string; organisation_name?: string };
@@ -77,10 +78,13 @@ export function SearchClient() {
           </h2>
           <div className="bg-card rounded-xl border border-border divide-y divide-border">
             {results.players.map((p) => (
-              <Link key={p.id} href={`/players/${p.id}`} className="flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors">
-                <span className="font-medium">{p.name}</span>
-                <span className="text-sm text-muted-foreground">{p.total_games} games · {p.ppg} PPG</span>
-              </Link>
+              <div key={p.id} className="flex items-center px-4 py-3 hover:bg-muted/30 transition-colors">
+                <FavouriteButton id={p.id} type="player" className="mr-2" />
+                <Link href={`/players/${p.id}`} className="flex items-center justify-between flex-1">
+                  <span className="font-medium">{p.name}</span>
+                  <span className="text-sm text-muted-foreground">{p.total_games} games · {p.ppg} PPG</span>
+                </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -93,10 +97,13 @@ export function SearchClient() {
           </h2>
           <div className="bg-card rounded-xl border border-border divide-y divide-border">
             {results.teams.map((t) => (
-              <Link key={t.id} href={`/teams/${t.id}`} className="flex items-center justify-between px-4 py-3 hover:bg-muted/30 transition-colors">
-                <span className="font-medium">{t.name}</span>
-                <span className="text-sm text-muted-foreground">{t.organisation_name || ""}</span>
-              </Link>
+              <div key={t.id} className="flex items-center px-4 py-3 hover:bg-muted/30 transition-colors">
+                <FavouriteButton id={t.id} type="team" className="mr-2" />
+                <Link href={`/teams/${t.id}`} className="flex items-center justify-between flex-1">
+                  <span className="font-medium">{t.name}</span>
+                  <span className="text-sm text-muted-foreground">{t.organisation_name || ""}</span>
+                </Link>
+              </div>
             ))}
           </div>
         </div>

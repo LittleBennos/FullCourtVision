@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Season } from "@/lib/data";
+import { FavouriteButton } from "@/components/favourite-button";
 
 const tabs = [
   { key: "ppg", label: "Points Per Game", valueKey: "ppg", valueLabel: "PPG" },
@@ -115,9 +116,12 @@ export function LeaderboardsClient({ leaderboards, seasons, selectedSeasonId }: 
                   )}
                 </td>
                 <td className="px-4 py-3">
-                  <Link href={`/players/${p.id}`} className="text-accent hover:underline font-medium">
-                    {p.first_name} {p.last_name}
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <FavouriteButton id={p.id} type="player" />
+                    <Link href={`/players/${p.id}`} className="text-accent hover:underline font-medium">
+                      {p.first_name} {p.last_name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{p.total_games}</td>
                 <td className="px-4 py-3 text-right tabular-nums font-bold text-lg">

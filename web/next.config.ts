@@ -22,6 +22,7 @@ const nextConfig: NextConfig = {
     },
   ],
   // Fix turbopack workspace root warning
+  turbopack: {},
   output: "standalone",
   outputFileTracingRoot: process.cwd(),
 };

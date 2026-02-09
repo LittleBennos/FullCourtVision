@@ -12,6 +12,7 @@ const supabase = createClient(
 export async function GET(req: NextRequest) {
   const params = req.nextUrl.searchParams;
   const search = params.get("search") || "";
+  const ids = params.get("ids");
   const limit = parseIntParam(params.get("limit"), 25, 100);
   const offset = parseIntParam(params.get("offset"), 0);
 
@@ -19,7 +20,10 @@ export async function GET(req: NextRequest) {
     .from("player_aggregates")
     .select("player_id, first_name, last_name, total_games, total_points, ppg", { count: "exact" });
 
-  if (search) {
+  if (ids) {
+    const idList = ids.split(",").filter(Boolean);
+    query = query.in("player_id", idList);
+  } else if (search) {
     const words = search.trim().split(/\s+/);
     if (words.length >= 2) {
       // Multi-word: first word matches first_name, last word matches last_name

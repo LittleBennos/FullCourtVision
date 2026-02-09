@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info } from "lucide-react";
+import { Activity, Users, Trophy, BarChart3, Menu, X, ArrowLeftRight, Building2, TrendingUp, MapPin, Target, ChevronDown, Calendar, Award, PieChart, Info, Heart } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { GlobalSearch } from "./global-search";
+import { useFavourites } from "@/hooks/useFavourites";
 
 const primaryLinks = [
   { href: "/players", label: "Players", icon: Users },
@@ -32,6 +33,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [moreOpen, setMoreOpen] = useState(false);
   const moreRef = useRef<HTMLDivElement>(null);
+  const { totalCount } = useFavourites();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -110,6 +112,23 @@ export function Navbar() {
 
         {/* Search and Mobile toggle */}
         <div className="flex items-center gap-2">
+          <Link
+            href="/favourites"
+            className={`relative p-2 rounded-lg transition-colors ${
+              pathname === "/favourites"
+                ? "bg-accent text-white"
+                : "text-muted-foreground hover:text-foreground hover:bg-muted"
+            }`}
+            aria-label="Favourites"
+            title="Favourites"
+          >
+            <Heart className="w-5 h-5" />
+            {totalCount > 0 && (
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] flex items-center justify-center bg-blue-400 text-white text-[10px] font-bold rounded-full px-1">
+                {totalCount}
+              </span>
+            )}
+          </Link>
           <GlobalSearch />
           <button className="md:hidden p-2" onClick={() => setMobileOpen(!mobileOpen)} aria-label={mobileOpen ? "Close menu" : "Open menu"}>
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useMemo } from "react";
 import { Search } from "lucide-react";
 import type { Team } from "@/lib/data";
+import { FavouriteButton } from "@/components/favourite-button";
 
 export function TeamsClient({ teams: teamsData }: { teams: Team[] }) {
   const [query, setQuery] = useState("");
@@ -52,9 +53,12 @@ export function TeamsClient({ teams: teamsData }: { teams: Team[] }) {
             {paged.map((t) => (
               <tr key={t.id} className="hover:bg-muted/30 transition-colors">
                 <td className="px-4 py-3">
-                  <Link href={`/teams/${t.id}`} className="text-accent hover:underline font-medium">
-                    {t.name}
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <FavouriteButton id={t.id} type="team" />
+                    <Link href={`/teams/${t.id}`} className="text-accent hover:underline font-medium">
+                      {t.name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-muted-foreground">{t.org_name || "-"}</td>
                 <td className="px-4 py-3 text-muted-foreground">{t.season_name || "-"}</td>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { Search, ChevronUp, ChevronDown, ChevronsUpDown, Loader2 } from "lucide-react";
+import { FavouriteButton } from "./favourite-button";
 
 type Player = {
   id: string;
@@ -188,13 +189,16 @@ export function PlayerTable({ initialPlayers, initialTotal }: { initialPlayers?:
                   {page * perPage + i + 1}
                 </th>
                 <td className="px-4 py-3">
-                  <Link 
-                    href={`/players/${p.id}`} 
-                    className="text-accent hover:underline font-medium"
-                    aria-label={`View profile for ${p.first_name} ${p.last_name}`}
-                  >
-                    {p.first_name} {p.last_name}
-                  </Link>
+                  <div className="flex items-center gap-1.5">
+                    <FavouriteButton id={p.id} type="player" />
+                    <Link 
+                      href={`/players/${p.id}`} 
+                      className="text-accent hover:underline font-medium"
+                      aria-label={`View profile for ${p.first_name} ${p.last_name}`}
+                    >
+                      {p.first_name} {p.last_name}
+                    </Link>
+                  </div>
                 </td>
                 <td className="px-4 py-3 text-right tabular-nums" aria-label={`${p.total_games} games played`}>
                   {p.total_games}
