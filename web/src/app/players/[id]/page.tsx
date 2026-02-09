@@ -1,4 +1,5 @@
-import { getPlayerDetails, getAvailableSeasons } from "@/lib/data";
+import { getPlayerDetails, getAvailableSeasons, getSimilarPlayers } from "@/lib/data";
+import Link from "next/link";
 import { StatCard } from "@/components/stat-card";
 import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
@@ -61,7 +62,10 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
   }
 
   const { player, stats } = playerData;
-  const seasons = await getAvailableSeasons();
+  const [seasons, similarPlayers] = await Promise.all([
+    getAvailableSeasons(),
+    getSimilarPlayers(id),
+  ]);
 
   // Calculate total stats across all seasons
   const totalStats = stats.reduce(
@@ -221,6 +225,42 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           </p>
         )}
       </div>
+
+      {/* Similar Players */}
+      {similarPlayers.length > 0 && (
+        <div className="mt-8 bg-card rounded-xl border border-border p-6">
+          <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <Users className="w-5 h-5 text-blue-400" />
+            Similar Players
+          </h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Based on cosine similarity of per-game stats (PPG, fouls, 2PT, 3PT)
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {similarPlayers.map((sp) => (
+              <Link
+                key={sp.id}
+                href={`/players/${sp.id}`}
+                className="group block rounded-lg border border-border bg-slate-950 p-4 transition-all hover:border-blue-400/50 hover:bg-slate-900"
+              >
+                <div className="font-semibold text-sm group-hover:text-blue-400 transition-colors truncate">
+                  {sp.first_name} {sp.last_name}
+                </div>
+                <div className="mt-2 text-2xl font-bold text-blue-400">
+                  {sp.similarity}%
+                </div>
+                <div className="text-xs text-muted-foreground mt-1">similarity</div>
+                <div className="mt-3 grid grid-cols-2 gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                  <span>PPG: <span className="text-foreground">{sp.ppg}</span></span>
+                  <span>FPG: <span className="text-foreground">{sp.foulsPg}</span></span>
+                  <span>2PT: <span className="text-foreground">{sp.twoPtPg}</span></span>
+                  <span>3PT: <span className="text-foreground">{sp.threePtPg}</span></span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

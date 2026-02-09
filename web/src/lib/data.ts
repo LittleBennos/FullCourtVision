@@ -154,6 +154,86 @@ export async function getTopPlayers(): Promise<TopPlayer[]> {
   }));
 }
 
+export interface SimilarPlayer {
+  id: string;
+  first_name: string;
+  last_name: string;
+  similarity: number; // 0-100
+  ppg: number;
+  foulsPg: number;
+  twoPtPg: number;
+  threePtPg: number;
+}
+
+export async function getSimilarPlayers(playerId: string, limit = 5): Promise<SimilarPlayer[]> {
+  // Fetch all player stats rows
+  const allStats = await fetchAllRows(
+    "player_stats",
+    "player_id, games_played, total_points, two_point, three_point, total_fouls"
+  );
+
+  // Also need player names
+  const allPlayers = await fetchAllRows("players", "id, first_name, last_name");
+  const playerMap = new Map(allPlayers.map((p: any) => [p.id, p]));
+
+  // Aggregate per player
+  const agg = new Map<string, { games: number; points: number; twoPt: number; threePt: number; fouls: number }>();
+  for (const s of allStats) {
+    const pid = s.player_id;
+    const cur = agg.get(pid) || { games: 0, points: 0, twoPt: 0, threePt: 0, fouls: 0 };
+    cur.games += s.games_played || 0;
+    cur.points += s.total_points || 0;
+    cur.twoPt += s.two_point || 0;
+    cur.threePt += s.three_point || 0;
+    cur.fouls += s.total_fouls || 0;
+    agg.set(pid, cur);
+  }
+
+  // Build per-game vectors for players with >= 3 games
+  const vectors = new Map<string, [number, number, number, number]>();
+  for (const [pid, a] of agg) {
+    if (a.games < 3) continue;
+    vectors.set(pid, [
+      a.points / a.games,
+      a.fouls / a.games,
+      a.twoPt / a.games,
+      a.threePt / a.games,
+    ]);
+  }
+
+  const target = vectors.get(playerId);
+  if (!target) return [];
+
+  // Compute cosine similarity
+  const dot = (a: number[], b: number[]) => a.reduce((s, v, i) => s + v * b[i], 0);
+  const mag = (a: number[]) => Math.sqrt(a.reduce((s, v) => s + v * v, 0));
+  const targetMag = mag(target);
+  if (targetMag === 0) return [];
+
+  const results: SimilarPlayer[] = [];
+  for (const [pid, vec] of vectors) {
+    if (pid === playerId) continue;
+    const m = mag(vec);
+    if (m === 0) continue;
+    const sim = dot(target, vec) / (targetMag * m);
+    const p = playerMap.get(pid);
+    if (!p) continue;
+    results.push({
+      id: pid,
+      first_name: p.first_name,
+      last_name: p.last_name,
+      similarity: Math.round(sim * 1000) / 10,
+      ppg: +(vec[0].toFixed(1)),
+      foulsPg: +(vec[1].toFixed(1)),
+      twoPtPg: +(vec[2].toFixed(1)),
+      threePtPg: +(vec[3].toFixed(1)),
+    });
+  }
+
+  results.sort((a, b) => b.similarity - a.similarity);
+  return results.slice(0, limit);
+}
+
 export async function getPlayerDetails(id: string) {
   const { data: player } = await supabase
     .from("players")
