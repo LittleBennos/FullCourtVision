@@ -1,9 +1,10 @@
 import { getTeamById, getTeamPlayers } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, Users } from "lucide-react";
+import { Users } from "lucide-react";
 import { HeadToHeadSelector } from "@/components/head-to-head-selector";
 import { FavouriteButton } from "@/components/favourite-button";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -41,9 +42,10 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <Link href="/teams" className="inline-flex items-center gap-1 text-accent hover:underline text-sm mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back to Teams
-      </Link>
+      <Breadcrumbs items={[
+        { label: "Teams", href: "/teams" },
+        { label: team.name },
+      ]} />
 
       <script
         type="application/ld+json"

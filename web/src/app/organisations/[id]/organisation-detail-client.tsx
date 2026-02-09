@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Building2, MapPin, Globe, Users, Trophy, Target, Crown } from "lucide-react";
 import type { Organisation, Team } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 interface OrganisationDetailProps {
   organisation: Organisation;
@@ -36,6 +37,11 @@ export function OrganisationDetailClient({
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
+      <Breadcrumbs items={[
+        { label: "Organisations", href: "/organisations" },
+        { label: organisation.name },
+      ]} />
+
       {/* Header */}
       <div className="mb-8">
         <div className="flex items-start gap-4 mb-4">

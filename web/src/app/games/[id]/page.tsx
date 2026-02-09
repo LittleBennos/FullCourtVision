@@ -1,8 +1,9 @@
 import { getGameDetails } from "@/lib/data";
 import { StatCard } from "@/components/stat-card";
-import { Calendar, MapPin, Users, Trophy, ArrowLeft } from "lucide-react";
+import { Calendar, MapPin, Users, Trophy } from "lucide-react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -79,14 +80,10 @@ export default async function GameDetailPage({ params }: { params: Promise<{ id:
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-8">
-      {/* Back Link */}
-      <Link 
-        href="/games"
-        className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors mb-6"
-      >
-        <ArrowLeft className="w-4 h-4" />
-        Back to Game Log
-      </Link>
+      <Breadcrumbs items={[
+        { label: "Games", href: "/games" },
+        { label: `${game.home_team?.name || "Home"} vs ${game.away_team?.name || "Away"}` },
+      ]} />
 
       {/* Game Header */}
       <div className="bg-card rounded-xl border border-border p-8 mb-8">

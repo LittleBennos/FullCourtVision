@@ -1,7 +1,8 @@
 import { getGradeById, getGradeStandings, getGradeTopScorers, getGradeFixtures } from "@/lib/data";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Trophy, Target, Calendar } from "lucide-react";
+import { Trophy, Target, Calendar } from "lucide-react";
 import Link from "next/link";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export const revalidate = 3600;
 
@@ -54,9 +55,10 @@ export default async function GradePage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <Link href="/grades" className="inline-flex items-center gap-1 text-accent hover:underline text-sm mb-6">
-        <ArrowLeft className="w-4 h-4" /> Back to Grades
-      </Link>
+      <Breadcrumbs items={[
+        { label: "Grades", href: "/grades" },
+        { label: grade.name },
+      ]} />
 
       {/* Header */}
       <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">

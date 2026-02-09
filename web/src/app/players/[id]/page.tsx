@@ -4,6 +4,7 @@ import { Users, TrendingUp, Target, AlertTriangle } from "lucide-react";
 import { notFound } from "next/navigation";
 import dynamic from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // Dynamically import the heavy chart component to reduce initial bundle size
 const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
@@ -98,6 +99,11 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
           }),
         }}
       />
+      <Breadcrumbs items={[
+        { label: "Players", href: "/players" },
+        { label: playerName },
+      ]} />
+
       {/* Player Header */}
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-2">
