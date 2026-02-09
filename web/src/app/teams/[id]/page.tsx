@@ -2,6 +2,7 @@ import { getTeamById, getTeamPlayers } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, Users } from "lucide-react";
+import { HeadToHeadSelector } from "@/components/head-to-head-selector";
 import type { Metadata } from "next";
 
 export const revalidate = 3600;
@@ -58,18 +59,25 @@ export default async function TeamPage({ params }: { params: Promise<{ id: strin
       />
       {/* Header */}
       <div className="bg-card rounded-xl border border-border p-6 md:p-8 mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold mb-2">{team.name}</h1>
-        <p className="text-muted-foreground mb-1">
-          {team.org_name ? (
-            <Link href={`/organisations/${team.organisation_id}`} className="text-accent hover:underline">
-              {team.org_name}
-            </Link>
-          ) : "Unknown Organisation"}
-          {" · "}{team.season_name || "Unknown Season"}
-        </p>
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold mb-2">{team.name}</h1>
+            <p className="text-muted-foreground mb-1">
+              {team.org_name ? (
+                <Link href={`/organisations/${team.organisation_id}`} className="text-accent hover:underline">
+                  {team.org_name}
+                </Link>
+              ) : "Unknown Organisation"}
+              {" · "}{team.season_name || "Unknown Season"}
+            </p>
+          </div>
+          <div>
+            <HeadToHeadSelector teamId={id} teamName={team.name} />
+          </div>
+        </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-6 gap-6 mt-6">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-6">
           <div>
             <p className="text-2xl md:text-3xl font-bold text-green-400">{team.wins}</p>
             <p className="text-sm text-muted-foreground">Wins</p>

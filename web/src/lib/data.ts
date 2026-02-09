@@ -1234,3 +1234,239 @@ export async function globalSearch(query: string, limit: number = 5): Promise<Gl
     })),
   };
 }
+
+// Head-to-Head types and functions
+export type HeadToHeadRecord = {
+  team1_wins: number;
+  team2_wins: number;
+  total_games: number;
+};
+
+export type HeadToHeadGame = {
+  id: string;
+  date: string;
+  team1_score: number;
+  team2_score: number;
+  team1_home: boolean;
+  venue: string | null;
+  season_name: string;
+};
+
+export type HeadToHeadPlayerComparison = {
+  team1_top_scorers: Array<{
+    player_id: string;
+    first_name: string;
+    last_name: string;
+    total_points: number;
+    games_played: number;
+    ppg: number;
+  }>;
+  team2_top_scorers: Array<{
+    player_id: string;
+    first_name: string;
+    last_name: string;
+    total_points: number;
+    games_played: number;
+    ppg: number;
+  }>;
+};
+
+export type HeadToHeadData = {
+  record: HeadToHeadRecord;
+  recent_games: HeadToHeadGame[];
+  player_comparison: HeadToHeadPlayerComparison;
+  average_differential: {
+    team1_avg: number;
+    team2_avg: number;
+    differential: number;
+  };
+};
+
+export async function getHeadToHeadData(team1Id: string, team2Id: string): Promise<HeadToHeadData | null> {
+  // Get all games between these two teams
+  const { data: games } = await supabase
+    .from("games")
+    .select(`
+      id, date, home_team_id, away_team_id, home_score, away_score, venue,
+      seasons(name)
+    `)
+    .or(`and(home_team_id.eq.${team1Id},away_team_id.eq.${team2Id}),and(home_team_id.eq.${team2Id},away_team_id.eq.${team1Id})`)
+    .not("home_score", "is", null)
+    .not("away_score", "is", null)
+    .order("date", { ascending: false });
+
+  if (!games || games.length === 0) {
+    return {
+      record: { team1_wins: 0, team2_wins: 0, total_games: 0 },
+      recent_games: [],
+      player_comparison: { team1_top_scorers: [], team2_top_scorers: [] },
+      average_differential: { team1_avg: 0, team2_avg: 0, differential: 0 },
+    };
+  }
+
+  // Calculate record and process games
+  let team1Wins = 0, team2Wins = 0;
+  let team1TotalScore = 0, team2TotalScore = 0;
+  const recentGames: HeadToHeadGame[] = [];
+
+  for (const game of games) {
+    const team1IsHome = game.home_team_id === team1Id;
+    const team1Score = team1IsHome ? game.home_score : game.away_score;
+    const team2Score = team1IsHome ? game.away_score : game.home_score;
+
+    if (team1Score > team2Score) team1Wins++;
+    else team2Wins++;
+
+    team1TotalScore += team1Score;
+    team2TotalScore += team2Score;
+
+    recentGames.push({
+      id: game.id,
+      date: game.date,
+      team1_score: team1Score,
+      team2_score: team2Score,
+      team1_home: team1IsHome,
+      venue: game.venue,
+      season_name: (game.seasons as any)?.name || '',
+    });
+  }
+
+  // Get recent 5 games
+  const recent5Games = recentGames.slice(0, 5);
+
+  // Get top scorers for each team
+  const [team1Players, team2Players] = await Promise.all([
+    getTeamTopScorers(team1Id),
+    getTeamTopScorers(team2Id),
+  ]);
+
+  // Calculate averages
+  const totalGames = games.length;
+  const team1Avg = totalGames > 0 ? +(team1TotalScore / totalGames).toFixed(1) : 0;
+  const team2Avg = totalGames > 0 ? +(team2TotalScore / totalGames).toFixed(1) : 0;
+
+  return {
+    record: {
+      team1_wins: team1Wins,
+      team2_wins: team2Wins,
+      total_games: totalGames,
+    },
+    recent_games: recent5Games,
+    player_comparison: {
+      team1_top_scorers: team1Players,
+      team2_top_scorers: team2Players,
+    },
+    average_differential: {
+      team1_avg: team1Avg,
+      team2_avg: team2Avg,
+      differential: +(team1Avg - team2Avg).toFixed(1),
+    },
+  };
+}
+
+export async function getTeamTopScorers(teamId: string): Promise<Array<{
+  player_id: string;
+  first_name: string;
+  last_name: string;
+  total_points: number;
+  games_played: number;
+  ppg: number;
+}>> {
+  // Get the team to find its season and name
+  const { data: team } = await supabase
+    .from("teams")
+    .select("name, season_id")
+    .eq("id", teamId)
+    .single();
+
+  if (!team) return [];
+
+  // Get grades for this season
+  const { data: grades } = await supabase
+    .from("grades")
+    .select("id")
+    .eq("season_id", team.season_id);
+
+  if (!grades || grades.length === 0) return [];
+
+  const gradeIds = grades.map(g => g.id);
+
+  // Get player stats for this team
+  const { data: stats } = await supabase
+    .from("player_stats")
+    .select(`
+      player_id, games_played, total_points,
+      players!inner(first_name, last_name)
+    `)
+    .eq("team_name", team.name)
+    .in("grade_id", gradeIds)
+    .gte("games_played", 3)
+    .order("total_points", { ascending: false })
+    .limit(5);
+
+  if (!stats) return [];
+
+  return stats.map(s => ({
+    player_id: s.player_id,
+    first_name: (s.players as any)?.first_name || '',
+    last_name: (s.players as any)?.last_name || '',
+    total_points: s.total_points || 0,
+    games_played: s.games_played || 0,
+    ppg: s.games_played > 0 ? +((s.total_points || 0) / s.games_played).toFixed(1) : 0,
+  }));
+}
+
+export async function getGameDetails(gameId: string) {
+  const { data: game } = await supabase
+    .from("games")
+    .select(`
+      id,
+      home_team_id,
+      away_team_id,
+      home_score,
+      away_score,
+      venue,
+      date,
+      time,
+      round:rounds(
+        id, 
+        name, 
+        grade:grades(
+          id, 
+          name, 
+          season:seasons(
+            id, 
+            name,
+            competition:competitions(
+              id,
+              name,
+              organisation:organisations(id, name)
+            )
+          )
+        )
+      )
+    `)
+    .eq("id", gameId)
+    .single();
+
+  if (!game) return null;
+
+  // Get team details separately to avoid foreign key constraint issues
+  const { data: homeTeam } = await supabase
+    .from("teams")
+    .select("id, name, season_id")
+    .eq("id", game.home_team_id)
+    .single();
+
+  const { data: awayTeam } = await supabase
+    .from("teams")
+    .select("id, name, season_id")
+    .eq("id", game.away_team_id)
+    .single();
+
+  return {
+    ...game,
+    home_team: homeTeam,
+    away_team: awayTeam,
+  };
+}
