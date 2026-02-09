@@ -10,12 +10,12 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, classification_report, r2_score
-from .data_loader import load_games, load_player_stats, query, DB_PATH
+from data_loader import load_games, load_player_stats, query, DB_PATH
 
 
 def scoring_trend_regression(player_id: str, db_path: str = DB_PATH) -> dict:
     """Fit linear regression on a player's PPG over seasons to predict trajectory."""
-    stats = load_player_stats(db_path)
+    stats = load_player_stats()
     player = stats[stats['player_id'] == player_id].sort_values('season_start')
 
     if len(player) < 2:
@@ -49,7 +49,7 @@ def scoring_trend_regression(player_id: str, db_path: str = DB_PATH) -> dict:
 
 def build_game_features(db_path: str = DB_PATH) -> pd.DataFrame:
     """Build feature matrix for game outcome prediction from team-level aggregates."""
-    games = load_games(db_path)
+    games = load_games()
     completed = games[games['status'] == 'FINAL'].copy()
 
     if completed.empty:
@@ -151,13 +151,13 @@ def predict_matchup(home_team_id: str, away_team_id: str, model_result: dict = N
                     db_path: str = DB_PATH) -> dict:
     """Predict outcome of a matchup between two teams."""
     if model_result is None or model_result.get('status') != 'ok':
-        model_result = train_game_predictor(db_path)
+        model_result = train_game_predictor()
 
     if model_result.get('status') != 'ok':
         return {'status': 'model_unavailable'}
 
     # Get team features
-    games = load_games(db_path)
+    games = load_games()
     completed = games[games['status'] == 'FINAL']
 
     def team_feat(tid):

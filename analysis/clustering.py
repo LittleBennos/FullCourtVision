@@ -7,7 +7,7 @@ import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
-from .data_loader import load_player_stats, DB_PATH
+from data_loader import load_player_stats, DB_PATH
 
 
 ARCHETYPE_NAMES = {
@@ -23,7 +23,7 @@ FEATURE_COLS = ['ppg', 'ft_pg', 'fg2_pg', 'fg3_pg', 'fpg']
 
 def cluster_players(min_games: int = 5, n_clusters: int = 5, db_path: str = DB_PATH) -> pd.DataFrame:
     """Cluster players into archetypes using K-means on per-game stats."""
-    stats = load_player_stats(db_path)
+    stats = load_player_stats()
 
     # Aggregate per player
     agg = stats.groupby(['player_id', 'first_name', 'last_name']).agg({
@@ -85,7 +85,7 @@ def get_player_archetype(player_id: str, clustered_df: pd.DataFrame = None,
                          db_path: str = DB_PATH) -> dict:
     """Get a specific player's archetype."""
     if clustered_df is None:
-        clustered_df = cluster_players(db_path=db_path)
+        clustered_df = cluster_players()
 
     row = clustered_df[clustered_df['player_id'] == player_id]
     if row.empty:
@@ -108,7 +108,7 @@ def get_player_archetype(player_id: str, clustered_df: pd.DataFrame = None,
 def archetype_summary(clustered_df: pd.DataFrame = None, db_path: str = DB_PATH) -> pd.DataFrame:
     """Summary statistics per archetype."""
     if clustered_df is None:
-        clustered_df = cluster_players(db_path=db_path)
+        clustered_df = cluster_players()
 
     summary = clustered_df.groupby('archetype').agg(
         count=('player_id', 'count'),

@@ -1,0 +1,19 @@
+{
+  "timestamp": "2026-02-10T10:54:40.734829",
+  "model_type": "RandomForestClassifier",
+  "training_samples": 21248,
+  "test_samples": 5312,
+  "accuracy": 0.6805346385542169,
+  "cv_mean": 0.6983059771888634,
+  "cv_std": 0.0096564879114551,
+  "feature_importance": {
+    "home_avg_pf": 0.11744912989850752,
+    "home_avg_pa": 0.10333863142336186,
+    "home_win_rate": 0.18234378395059334,
+    "home_scoring_std": 0.09966093983348452,
+    "away_avg_pf": 0.12167063259907905,
+    "away_avg_pa": 0.10662002817110305,
+    "away_win_rate": 0.1652049897624416,
+    "away_scoring_std": 0.10371186436142915
+  }
+}
