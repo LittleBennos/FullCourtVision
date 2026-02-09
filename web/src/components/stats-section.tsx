@@ -24,14 +24,16 @@ const FALLBACK_STATS: Stats = {
 };
 
 export function StatsSection({ initialStats = FALLBACK_STATS }: StatsSectionProps) {
-  const [stats, setStats] = useState<Stats>(initialStats);
-  const [isLoading, setIsLoading] = useState(!initialStats);
+  const [stats, setStats] = useState<Stats>(initialStats || FALLBACK_STATS);
+  const [isLoading, setIsLoading] = useState(false); // Start with fallback, no loading state
 
   useEffect(() => {
-    // Only fetch if we don't have initial stats
+    // Only fetch if we don't have initial stats  
     if (initialStats !== FALLBACK_STATS) return;
 
+    // Use longer delay to prioritize LCP rendering
     const timer = setTimeout(() => {
+      setIsLoading(true);
       fetch('/api/stats')
         .then(res => res.json())
         .then((data: Stats) => {
@@ -42,7 +44,7 @@ export function StatsSection({ initialStats = FALLBACK_STATS }: StatsSectionProp
           console.error('Failed to load stats:', err);
           setIsLoading(false);
         });
-    }, 100); // Small delay to prioritize LCP
+    }, 1000); // Longer delay to prioritize LCP
 
     return () => clearTimeout(timer);
   }, [initialStats]);

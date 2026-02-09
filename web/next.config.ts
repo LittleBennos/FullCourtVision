@@ -15,6 +15,41 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   compress: true,
   poweredByHeader: false,
+  // Better bundle splitting
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      // Split chunks more aggressively for better caching
+      config.optimization = {
+        ...config.optimization,
+        splitChunks: {
+          chunks: 'all',
+          cacheGroups: {
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              chunks: 'all',
+              name: 'vendor',
+              priority: 10,
+              enforce: true,
+            },
+            recharts: {
+              test: /[\\/]node_modules[\\/](recharts|d3-).*[\\/]/,
+              chunks: 'async',
+              name: 'recharts',
+              priority: 20,
+              enforce: true,
+            },
+            common: {
+              chunks: 'all',
+              minChunks: 2,
+              priority: 5,
+              enforce: true,
+            }
+          }
+        }
+      };
+    }
+    return config;
+  },
   // Set default cache headers for static assets
   headers: async () => [
     {

@@ -63,11 +63,36 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Resource hints for performance */}
+        {/* Critical resource preloads for LCP optimization */}
+        <link rel="preload" href="/_next/static/css/d0d2296772cf30ab.css" as="style" />
+        <link rel="preload" as="font" href="/fonts/geist-sans.woff2" type="font/woff2" crossOrigin="anonymous" />
+        
+        {/* Preconnect to critical domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fcizsxlgckwjnuhlqhwc.supabase.co" />
+        
+        {/* DNS prefetch for other resources */}
         <link rel="dns-prefetch" href="https://fullcourtvision.vercel.app" />
+        <link rel="dns-prefetch" href="https://vercel.com" />
+        
+        {/* Module preload for critical JavaScript */}
+        <link rel="modulepreload" href="/_next/static/chunks/main-app.js" />
+        
+        {/* Prevent layout shift with early style injection */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            html { font-family: system-ui, sans-serif; }
+            body { margin: 0; }
+            .lcp-text { 
+              font-size: 1.125rem; 
+              line-height: 1.75rem; 
+              color: rgb(100 116 139); 
+              margin-bottom: 2rem; 
+              max-width: 42rem;
+            }
+          `
+        }} />
         
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
