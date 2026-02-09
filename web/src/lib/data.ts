@@ -1887,3 +1887,261 @@ export async function getGameDetails(gameId: string) {
     } : null,
   };
 }
+
+// ==================== Recent Activity Feed ====================
+
+export type RecentGame = {
+  id: string;
+  home_team_name: string;
+  away_team_name: string;
+  home_score: number;
+  away_score: number;
+  date: string;
+  grade_name: string;
+  competition_name: string;
+  is_close_game: boolean; // margin <= 5 points
+  margin: number;
+};
+
+export type FeaturedGame = {
+  id: string;
+  home_team_name: string;
+  away_team_name: string;
+  home_score: number;
+  away_score: number;
+  date: string;
+  grade_name: string;
+  competition_name: string;
+  margin: number;
+  type: 'blowout' | 'close';
+};
+
+export type DailyGameCount = {
+  date: string;      // e.g. "Mon", "Tue"
+  fullDate: string;   // e.g. "2026-02-03"
+  games: number;
+  points: number;
+};
+
+export type WeeklyNumbers = {
+  total_games: number;
+  total_points: number;
+  avg_margin: number;
+  close_game_pct: number; // percentage of games within 5 points
+  daily_breakdown: DailyGameCount[];
+  highest_scorer: {
+    player_name: string;
+    points: number;
+    team_name: string;
+  } | null;
+};
+
+export async function getRecentGames(limit: number = 20): Promise<RecentGame[]> {
+  const { data: games } = await supabase
+    .from("games")
+    .select(`
+      id,
+      home_score,
+      away_score,
+      date,
+      home_teams:teams!home_team_id(name),
+      away_teams:teams!away_team_id(name),
+      grades!inner(name, seasons!inner(competitions!inner(name)))
+    `)
+    .not("home_score", "is", null)
+    .not("away_score", "is", null)
+    .order("date", { ascending: false })
+    .limit(limit);
+
+  if (!games) return [];
+
+  return games.map((game: any) => {
+    const homeScore = game.home_score || 0;
+    const awayScore = game.away_score || 0;
+    const margin = Math.abs(homeScore - awayScore);
+    
+    return {
+      id: game.id,
+      home_team_name: game.home_teams?.name || "TBD",
+      away_team_name: game.away_teams?.name || "TBD",
+      home_score: homeScore,
+      away_score: awayScore,
+      date: game.date,
+      grade_name: (game.grades as any)?.name || "",
+      competition_name: (game.grades as any)?.seasons?.competitions?.name || "",
+      is_close_game: margin <= 5,
+      margin,
+    };
+  });
+}
+
+export async function getWeeklyFeaturedGames(): Promise<{ closest: FeaturedGame | null; blowout: FeaturedGame | null }> {
+  // Get games from the last 7 days
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const weekStart = oneWeekAgo.toISOString().split('T')[0];
+
+  const { data: weeklyGames } = await supabase
+    .from("games")
+    .select(`
+      id,
+      home_score,
+      away_score,
+      date,
+      home_teams:teams!home_team_id(name),
+      away_teams:teams!away_team_id(name),
+      grades!inner(name, seasons!inner(competitions!inner(name)))
+    `)
+    .not("home_score", "is", null)
+    .not("away_score", "is", null)
+    .gte("date", weekStart)
+    .order("date", { ascending: false });
+
+  if (!weeklyGames || weeklyGames.length === 0) {
+    return { closest: null, blowout: null };
+  }
+
+  let closestGame: FeaturedGame | null = null;
+  let blowoutGame: FeaturedGame | null = null;
+  let minMargin = Infinity;
+  let maxMargin = 0;
+
+  for (const game of weeklyGames) {
+    const homeScore = game.home_score || 0;
+    const awayScore = game.away_score || 0;
+    const margin = Math.abs(homeScore - awayScore);
+
+    const featuredGame: FeaturedGame = {
+      id: game.id,
+      home_team_name: (game.home_teams as any)?.name || "TBD",
+      away_team_name: (game.away_teams as any)?.name || "TBD",
+      home_score: homeScore,
+      away_score: awayScore,
+      date: game.date,
+      grade_name: (game.grades as any)?.name || "",
+      competition_name: (game.grades as any)?.seasons?.competitions?.name || "",
+      margin,
+      type: margin <= 5 ? 'close' : 'blowout',
+    };
+
+    // Track closest game
+    if (margin < minMargin) {
+      minMargin = margin;
+      closestGame = { ...featuredGame, type: 'close' };
+    }
+
+    // Track biggest blowout
+    if (margin > maxMargin) {
+      maxMargin = margin;
+      blowoutGame = { ...featuredGame, type: 'blowout' };
+    }
+  }
+
+  return { closest: closestGame, blowout: blowoutGame };
+}
+
+export async function getThisWeekInNumbers(): Promise<WeeklyNumbers> {
+  // Get games from the last 7 days
+  const oneWeekAgo = new Date();
+  oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+  const weekStart = oneWeekAgo.toISOString().split('T')[0];
+
+  // Get all scores for total points and daily breakdown
+  const { data: gamesWithScores } = await supabase
+    .from("games")
+    .select("home_score, away_score, date")
+    .not("home_score", "is", null)
+    .not("away_score", "is", null)
+    .gte("date", weekStart);
+
+  const allGames = gamesWithScores || [];
+  const totalGames = allGames.length;
+
+  let totalPoints = 0;
+  let totalMargin = 0;
+  let closeGames = 0;
+
+  // Build daily breakdown map
+  const dailyMap = new Map<string, { games: number; points: number }>();
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  // Initialise all 7 days
+  for (let i = 0; i < 7; i++) {
+    const d = new Date(oneWeekAgo);
+    d.setDate(d.getDate() + i);
+    const key = d.toISOString().split('T')[0];
+    dailyMap.set(key, { games: 0, points: 0 });
+  }
+
+  for (const game of allGames) {
+    const hs = game.home_score || 0;
+    const as_ = game.away_score || 0;
+    const pts = hs + as_;
+    const margin = Math.abs(hs - as_);
+    totalPoints += pts;
+    totalMargin += margin;
+    if (margin <= 5) closeGames++;
+
+    const dateKey = game.date;
+    const existing = dailyMap.get(dateKey);
+    if (existing) {
+      existing.games++;
+      existing.points += pts;
+    } else {
+      dailyMap.set(dateKey, { games: 1, points: pts });
+    }
+  }
+
+  const daily_breakdown: DailyGameCount[] = Array.from(dailyMap.entries())
+    .sort(([a], [b]) => a.localeCompare(b))
+    .map(([dateStr, v]) => {
+      const d = new Date(dateStr + 'T00:00:00');
+      return {
+        date: dayNames[d.getDay()],
+        fullDate: dateStr,
+        games: v.games,
+        points: v.points,
+      };
+    });
+
+  // Get highest individual scorer this week
+  const { data: weeklyPlayerStats } = await supabase
+    .from("player_stats")
+    .select(`
+      player_id,
+      total_points,
+      team_name,
+      players!inner(first_name, last_name),
+      grades!inner(
+        id,
+        games!inner(date)
+      )
+    `)
+    .gte("grades.games.date", weekStart);
+
+  let highestScorer: WeeklyNumbers['highest_scorer'] = null;
+  
+  if (weeklyPlayerStats && weeklyPlayerStats.length > 0) {
+    let maxPoints = 0;
+    for (const stat of weeklyPlayerStats) {
+      const points = stat.total_points || 0;
+      if (points > maxPoints) {
+        maxPoints = points;
+        highestScorer = {
+          player_name: `${(stat.players as any)?.first_name || ""} ${(stat.players as any)?.last_name || ""}`.trim(),
+          points,
+          team_name: stat.team_name || "",
+        };
+      }
+    }
+  }
+
+  return {
+    total_games: totalGames,
+    total_points: totalPoints,
+    avg_margin: totalGames > 0 ? +(totalMargin / totalGames).toFixed(1) : 0,
+    close_game_pct: totalGames > 0 ? +((closeGames / totalGames) * 100).toFixed(0) : 0,
+    daily_breakdown,
+    highest_scorer: highestScorer,
+  };
+}

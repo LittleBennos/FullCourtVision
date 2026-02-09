@@ -1,12 +1,18 @@
 import Link from "next/link";
 import { Users, Gamepad2, Building2, Trophy, ArrowRight, TrendingUp } from "lucide-react";
 import { StatCard } from "@/components/stat-card";
-import { getStats } from "@/lib/data";
+import { RecentActivity } from "@/components/recent-activity";
+import { getStats, getRecentGames, getWeeklyFeaturedGames, getThisWeekInNumbers } from "@/lib/data";
 
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function Home() {
-  const stats = await getStats();
+  const [stats, recentGames, featuredGames, weeklyNumbers] = await Promise.all([
+    getStats(),
+    getRecentGames(20),
+    getWeeklyFeaturedGames(),
+    getThisWeekInNumbers(),
+  ]);
 
   return (
     <div>
@@ -56,6 +62,13 @@ export default async function Home() {
           <StatCard label="Competitions" value={stats.competitions} icon={Trophy} />
         </div>
       </section>
+
+      {/* Recent Activity Feed */}
+      <RecentActivity 
+        games={recentGames}
+        featuredGames={featuredGames}
+        weeklyNumbers={weeklyNumbers}
+      />
 
       {/* Quick Links */}
       <section className="max-w-7xl mx-auto px-4 mb-16">
