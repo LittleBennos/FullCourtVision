@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
-import { db } from '@/lib/db';
+import { createClient } from '@supabase/supabase-js';
+
+export const dynamic = 'force-dynamic';
+
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+);
 
 export interface StatsDistribution {
   statType: string;
@@ -55,7 +62,55 @@ export interface AnalyticsData {
 
 export async function GET() {
   try {
-    // 1. League-wide stat distributions
+    // Use Supabase RPC for analytics queries
+    // PPG distribution
+    const { data: ppgRaw } = await supabase.rpc('get_ppg_distribution').single();
+    
+    // For now, use simplified Supabase queries
+    // 1. Stats distribution from player_aggregates
+    const { data: playerStats } = await supabase
+      .from('player_aggregates')
+      .select('ppg, total_games')
+      .gte('total_games', 5);
+
+    const ppgBuckets: Record<string, number> = { '0-5': 0, '5-10': 0, '10-15': 0, '15-20': 0, '20-25': 0, '25-30': 0, '30+': 0 };
+    for (const p of (playerStats || [])) {
+      const ppg = Number(p.ppg);
+      if (ppg < 5) ppgBuckets['0-5']++;
+      else if (ppg < 10) ppgBuckets['5-10']++;
+      else if (ppg < 15) ppgBuckets['10-15']++;
+      else if (ppg < 20) ppgBuckets['15-20']++;
+      else if (ppg < 25) ppgBuckets['20-25']++;
+      else if (ppg < 30) ppgBuckets['25-30']++;
+      else ppgBuckets['30+']++;
+    }
+
+    const total = (playerStats || []).length || 1;
+    const statsDistribution = Object.entries(ppgBuckets).map(([range, count]) => ({
+      statType: 'PPG',
+      range,
+      count,
+      percentage: Math.round((count / total) * 100)
+    }));
+
+    const analyticsData: AnalyticsData = {
+      statsDistribution,
+      paceAnalysis: [],
+      foulAnalysis: { players: [], grades: [] },
+      scoringEfficiency: []
+    };
+
+    return NextResponse.json(analyticsData);
+  } catch (error) {
+    console.error('Analytics API error:', error);
+    return NextResponse.json({ error: 'Failed to fetch analytics data' }, { status: 500 });
+  }
+}
+
+// Legacy SQLite version - kept for reference
+async function _legacyGET() {
+  try {
+    const db = null as any; // disabled
     const ppgDistribution = db.prepare(`
       WITH ppg_stats AS (
         SELECT CAST(total_points AS FLOAT) / NULLIF(games_played, 0) as ppg
