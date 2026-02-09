@@ -55,6 +55,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="FCV" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+        <meta name="theme-color" content="#0f172a" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

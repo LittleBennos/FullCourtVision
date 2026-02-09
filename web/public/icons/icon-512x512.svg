@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <rect width="512" height="512" rx="64" fill="#0f172a"/>
+  <circle cx="256" cy="240" r="160" fill="none" stroke="#2563eb" stroke-width="10"/>
+  <line x1="96" y1="240" x2="416" y2="240" stroke="#2563eb" stroke-width="6"/>
+  <path d="M256 80 C224 150, 224 330, 256 400" fill="none" stroke="#2563eb" stroke-width="6"/>
+  <path d="M256 80 C288 150, 288 330, 256 400" fill="none" stroke="#2563eb" stroke-width="6"/>
+  <text x="256" y="470" text-anchor="middle" font-family="Arial,sans-serif" font-weight="bold" font-size="48" fill="#f1f5f9">FullCourtVision</text>
+</svg>
