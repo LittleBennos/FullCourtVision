@@ -1,10 +1,22 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
-import { CommandPalette } from "@/components/command-palette";
-import { BackToTop } from "@/components/back-to-top";
+// Use optimized navbar for better LCP
+import { NavbarOptimized as Navbar } from "@/components/navbar-optimized";
+// Lazy load non-critical layout components
+import dynamic from "next/dynamic";
+
+const Footer = dynamic(() => import("@/components/footer").then(m => ({ default: m.Footer })), {
+  loading: () => <div className="h-20 bg-background" />,
+});
+
+const CommandPalette = dynamic(() => import("@/components/command-palette").then(m => ({ default: m.CommandPalette })), {
+  loading: () => null,
+});
+
+const BackToTop = dynamic(() => import("@/components/back-to-top").then(m => ({ default: m.BackToTop })), {
+  loading: () => null,
+});
 import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = Geist({
@@ -12,6 +24,8 @@ const geistSans = Geist({
   subsets: ["latin"],
   display: 'swap',
   preload: true,
+  adjustFontFallback: false, // Better fallback handling
+  fallback: ['system-ui', '-apple-system', 'sans-serif'],
 });
 
 const geistMono = Geist_Mono({
@@ -19,6 +33,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
   display: 'swap',
   preload: false, // Only preload primary font
+  adjustFontFallback: false,
+  fallback: ['Consolas', 'Monaco', 'monospace'],
 });
 
 export const metadata: Metadata = {
@@ -66,28 +82,49 @@ export default function RootLayout({
         {/* Critical resource preloads for LCP optimization */}
         <link rel="preload" as="font" href="/_next/static/media/geist-sans.woff2" type="font/woff2" crossOrigin="anonymous" />
         
-        {/* Preconnect to critical domains */}
+        {/* Preconnect to critical domains only - moved Supabase to dns-prefetch for better LCP */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link rel="preconnect" href="https://fcizsxlgckwjnuhlqhwc.supabase.co" />
         
-        {/* DNS prefetch for other resources */}
+        {/* DNS prefetch for non-critical resources */}
+        <link rel="dns-prefetch" href="https://fcizsxlgckwjnuhlqhwc.supabase.co" />
         <link rel="dns-prefetch" href="https://fullcourtvision.vercel.app" />
         <link rel="dns-prefetch" href="https://vercel.com" />
         
-        {/* Module preloads are now handled by Next.js automatically */}
+        {/* Early hints for critical resources */}
+        <link rel="modulepreload" href="/_next/static/chunks/main.js" />
         
-        {/* Prevent layout shift with early style injection */}
+        {/* Critical styles for LCP - enhanced for better performance */}
         <style dangerouslySetInnerHTML={{
           __html: `
-            html { font-family: system-ui, sans-serif; }
-            body { margin: 0; }
+            html { 
+              font-family: system-ui, -apple-system, sans-serif; 
+              font-display: swap;
+            }
+            body { 
+              margin: 0; 
+              line-height: 1.5;
+              -webkit-font-smoothing: antialiased;
+              -moz-osx-font-smoothing: grayscale;
+            }
+            .hero-heading { 
+              font-size: clamp(2.25rem, 5vw, 3.75rem); 
+              font-weight: 700; 
+              letter-spacing: -0.025em; 
+              margin-bottom: 1.5rem; 
+              line-height: 1.1;
+              contain: layout style;
+            }
             .lcp-text { 
               font-size: 1.125rem; 
               line-height: 1.75rem; 
               color: rgb(100 116 139); 
               margin-bottom: 2rem; 
               max-width: 42rem;
+              contain: layout style;
+            }
+            @media (min-width: 768px) { 
+              .hero-heading { font-size: clamp(3.75rem, 8vw, 6rem); }
             }
           `
         }} />

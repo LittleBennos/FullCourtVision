@@ -1,20 +1,23 @@
 import Link from "next/link";
 import { ArrowRight, TrendingUp } from "lucide-react";
-import { StatsSection } from "@/components/stats-section";
 import { DataFreshnessBadge } from "@/components/data-freshness-badge";
-import { getStats, type Stats } from "@/lib/data";
 import dynamic from "next/dynamic";
 
-// Dynamically import non-critical components to reduce initial bundle
+// Lazy load ALL non-critical components to maximize LCP performance
+const StatsSection = dynamic(() => import("@/components/stats-section").then(m => ({ default: m.StatsSection })), {
+  loading: () => <div className="h-20 bg-transparent" />,
+});
+
 const RecentActivityLazy = dynamic(() => import("@/components/recent-activity-lazy").then(m => ({ default: m.RecentActivityLazy })), {
-  loading: () => <div className="h-32 animate-pulse bg-muted rounded" />
+  loading: () => <div className="h-32 bg-transparent" />,
 });
 
 const QuickLinksLazy = dynamic(() => import("@/components/quick-links-lazy").then(m => ({ default: m.QuickLinksLazy })), {
-  loading: () => <div className="h-24 animate-pulse bg-muted rounded" />
+  loading: () => <div className="h-24 bg-transparent" />,
 });
 
 export const revalidate = 3600; // Revalidate every hour
+// Static generation for optimal LCP performance
 
 export async function generateMetadata() {
   // Use static values for metadata to avoid blocking on database
@@ -39,24 +42,13 @@ export async function generateMetadata() {
   };
 }
 
-export default async function Home() {
-  // Reduce server-side processing for faster TTFB and LCP
-  let serverStats = undefined;
-  try {
-    // Reduce timeout to 200ms for faster initial render
-    const statsPromise = getStats();
-    const timeoutPromise = new Promise((_, reject) => 
-      setTimeout(() => reject(new Error('Timeout')), 200)
-    );
-    serverStats = await Promise.race([statsPromise, timeoutPromise]) as Awaited<ReturnType<typeof getStats>>;
-  } catch {
-    // If stats are slow, use fallback and load client-side
-    serverStats = undefined;
-  }
+export default function Home() {
+  // Remove all server-side data fetching for optimal LCP
+  // All dynamic data will be loaded client-side after LCP
 
   return (
     <div>
-      {/* Critical inline styles for LCP optimization */}
+      {/* Critical inline styles for LCP optimization - Enhanced for better performance */}
       <style dangerouslySetInnerHTML={{
         __html: `
           .lcp-text { 
@@ -65,6 +57,7 @@ export default async function Home() {
             color: rgb(100 116 139); 
             margin-bottom: 2rem; 
             max-width: 42rem;
+            contain: layout style;
           }
           .hero-heading { 
             font-size: clamp(2.25rem, 5vw, 3.75rem); 
@@ -72,16 +65,37 @@ export default async function Home() {
             letter-spacing: -0.025em; 
             margin-bottom: 1.5rem; 
             line-height: 1.1;
+            contain: layout style;
+            will-change: auto;
+          }
+          .hero-section {
+            contain: layout style;
+            position: relative;
+            overflow: hidden;
+          }
+          .hero-gradient {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, transparent 50%, transparent 100%);
+            pointer-events: none;
+          }
+          .hero-content {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 5rem 1rem 8rem;
+            position: relative;
+            z-index: 1;
           }
           @media (min-width: 768px) { 
-            .hero-heading { font-size: clamp(3.75rem, 8vw, 6rem); } 
+            .hero-heading { font-size: clamp(3.75rem, 8vw, 6rem); }
+            .hero-content { padding: 8rem 1rem; }
           }`
       }} />
       
-      {/* Hero */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-accent/20 via-transparent to-transparent" />
-        <div className="max-w-7xl mx-auto px-4 py-20 md:py-32 relative">
+      {/* Hero - LCP optimized */}
+      <section className="hero-section">
+        <div className="hero-gradient" />
+        <div className="hero-content">
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-accent/10 text-accent px-3 py-1 rounded-full text-sm font-medium mb-6">
               <TrendingUp className="w-4 h-4" />
@@ -95,7 +109,7 @@ export default async function Home() {
               Comprehensive analytics covering 57,000+ players, 89,000+ games, and 150+ organisations
               across Victorian basketball.
             </p>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 mb-6">
               <Link
                 href="/players"
                 className="inline-flex items-center gap-2 bg-accent hover:bg-accent-hover text-white px-6 py-3 rounded-lg font-medium transition-colors"
@@ -110,9 +124,7 @@ export default async function Home() {
                 Leaderboards
               </Link>
             </div>
-            <div className="mt-6">
-              <DataFreshnessBadge />
-            </div>
+            <DataFreshnessBadge />
           </div>
         </div>
       </section>
@@ -135,10 +147,10 @@ export default async function Home() {
         }}
       />
 
-      {/* Deferred loading of non-critical components for LCP optimization */}
+      {/* Deferred loading of ALL non-critical components for optimal LCP */}
       <div suppressHydrationWarning>
-        {/* Stats - Load after LCP */}
-        <StatsSection initialStats={serverStats} />
+        {/* Stats - Load after LCP, no server-side data */}
+        <StatsSection />
 
         {/* Recent Activity Feed - Load after LCP */}
         <RecentActivityLazy />

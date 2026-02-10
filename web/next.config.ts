@@ -10,11 +10,15 @@ const withSerwist = withSerwistInit({
 const nextConfig: NextConfig = {
   // Optimize package imports to reduce bundle size
   experimental: {
-    optimizePackageImports: ["recharts", "lucide-react", "@supabase/supabase-js"],
+    optimizePackageImports: ["recharts", "lucide-react"],
+    optimizeCss: true,
   },
-  // Performance optimizations
+  // External packages for server components
+  serverExternalPackages: ["@supabase/supabase-js"],
+  // Performance optimizations for LCP
   compress: true,
   poweredByHeader: false,
+  reactStrictMode: true,
   // Better bundle splitting
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -50,12 +54,22 @@ const nextConfig: NextConfig = {
     }
     return config;
   },
-  // Set default cache headers for static assets
+  // Enhanced cache headers and performance optimizations
   headers: async () => [
     {
       source: "/api/:path*",
       headers: [
         { key: "Cache-Control", value: "public, s-maxage=300, stale-while-revalidate=600" },
+      ],
+    },
+    {
+      source: "/",
+      headers: [
+        { key: "X-DNS-Prefetch-Control", value: "on" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+        { key: "Referrer-Policy", value: "origin-when-cross-origin" },
+        // Early hints for critical resources (LCP optimization)
+        { key: "Link", value: "</api/stats>; rel=preload; as=fetch; crossorigin=anonymous" },
       ],
     },
     {
@@ -68,6 +82,13 @@ const nextConfig: NextConfig = {
       source: "/(.*)\\.(ico|png|jpg|jpeg|gif|webp|svg)",
       headers: [
         { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        { key: "X-Content-Type-Options", value: "nosniff" },
+      ],
+    },
+    {
+      source: "/(.*)\\.(js|css|woff|woff2)",
+      headers: [
+        { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
       ],
     },
   ],
