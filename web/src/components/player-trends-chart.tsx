@@ -265,12 +265,10 @@ export function PlayerTrendsChart({ playerStats, seasons, playerId: _playerId }:
                 maxWidth: 280
               }}
               labelStyle={{ color: "#f1f5f9", fontWeight: 600 }}
-              formatter={(value: any, name: string | undefined) => {
-                return [
-                  typeof value === 'number' ? value.toFixed(1) : value,
-                  name || 'Unknown'
-                ];
-              }}
+              formatter={(value: any, name: any) => [
+                typeof value === 'number' ? value.toFixed(1) : value,
+                name || 'Unknown'
+              ]}
               labelFormatter={(label) => {
                 const dataPoint = chartData.find(d => d.dateString === label);
                 if (!dataPoint) return label;

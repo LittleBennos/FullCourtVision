@@ -15,7 +15,7 @@ import {
   CartesianGrid,
   Tooltip,
   Legend,
-} from "recharts";
+} from "@/components/charts/dynamic-recharts";
 import { TrendingUp, TrendingDown, Download, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 

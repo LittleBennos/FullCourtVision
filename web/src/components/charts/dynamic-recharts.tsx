@@ -104,3 +104,29 @@ export const ReferenceDot = dynamic(() =>
   import('recharts').then(mod => ({ default: mod.ReferenceDot })), {
   ssr: false
 });
+
+export const RadarChart = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.RadarChart })), {
+  loading: () => <ChartLoadingFallback />,
+  ssr: false
+});
+
+export const PolarGrid = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.PolarGrid })), {
+  ssr: false
+});
+
+export const PolarAngleAxis = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.PolarAngleAxis })), {
+  ssr: false
+});
+
+export const PolarRadiusAxis = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.PolarRadiusAxis })), {
+  ssr: false
+});
+
+export const Radar = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.Radar })), {
+  ssr: false
+});

@@ -203,7 +203,7 @@ export function SeasonProgressionChart({ playerId }: SeasonProgressionChartProps
                 fontSize: 12,
               }}
               labelStyle={{ color: "#e2e8f0", fontWeight: 600 }}
-              formatter={(value: number | undefined, name: string | undefined) => [
+              formatter={(value: any, name: any) => [
                 value != null ? value.toFixed(1) : "0",
                 name === "ppg" ? "PPG" : name === "movingAvg" ? "Trend (3-entry MA)" : (name || ""),
               ]}
