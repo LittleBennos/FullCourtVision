@@ -5,11 +5,33 @@ Team win rates, scoring patterns, home/away performance.
 
 import pandas as pd
 import numpy as np
-from .data_loader import load_games, query, DB_PATH
+from typing import Dict, Union, Optional
+from data_loader import load_games, query, DB_PATH
 
 
-def team_record(team_id: str, db_path: str = DB_PATH) -> dict:
-    """Get win/loss record for a team."""
+def team_record(team_id: str, db_path: str = DB_PATH) -> Dict[str, Union[int, float]]:
+    """Get comprehensive win/loss record and scoring stats for a team.
+    
+    Calculates wins, losses, draws, win percentage, and scoring statistics
+    across all completed games for the specified team.
+    
+    Args:
+        team_id (str): Unique identifier for the team
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Union[int, float]]: Team performance metrics including:
+            - wins: Number of wins
+            - losses: Number of losses  
+            - draws: Number of draws
+            - played: Total games played
+            - win_pct: Win percentage (0-100)
+            - pts_for: Total points scored
+            - pts_against: Total points allowed
+            - avg_pf: Average points per game scored
+            - avg_pa: Average points per game allowed
+            - point_diff: Total point differential (+ is better)
+    """
     games = query("""
         SELECT home_team_id, away_team_id, home_score, away_score
         FROM games
@@ -48,8 +70,21 @@ def team_record(team_id: str, db_path: str = DB_PATH) -> dict:
     }
 
 
-def home_away_split(team_id: str, db_path: str = DB_PATH) -> dict:
-    """Home vs away performance split."""
+def home_away_split(team_id: str, db_path: str = DB_PATH) -> Dict[str, Dict[str, Union[int, float]]]:
+    """Analyze team performance split between home and away games.
+    
+    Separates team statistics into home vs away performance to identify
+    any home field advantage or travel-related performance differences.
+    
+    Args:
+        team_id (str): Unique identifier for the team
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Dict[str, Union[int, float]]]: Performance split containing:
+            - home: Home game statistics (games, wins, win_pct, avg_pf, avg_pa)
+            - away: Away game statistics (games, wins, win_pct, avg_pf, avg_pa)
+    """
     games = query("""
         SELECT home_team_id, away_team_id, home_score, away_score
         FROM games
@@ -76,7 +111,21 @@ def home_away_split(team_id: str, db_path: str = DB_PATH) -> dict:
 
 
 def grade_standings(grade_id: str, db_path: str = DB_PATH) -> pd.DataFrame:
-    """Calculate standings for a grade."""
+    """Calculate league standings for all teams in a specific grade.
+    
+    Computes win-loss records, points for/against, point differential,
+    and total points (typically 2 points per win) for all teams in the grade.
+    
+    Args:
+        grade_id (str): Unique identifier for the grade/division
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        pd.DataFrame: Standings table sorted by points then point differential.
+                     Columns: team, P (played), W (wins), L (losses), 
+                             PF (points for), PA (points against), 
+                             PD (point differential), PTS (league points)
+    """
     return query("""
         WITH team_results AS (
             SELECT home_team_id as team_id,
@@ -100,8 +149,27 @@ def grade_standings(grade_id: str, db_path: str = DB_PATH) -> pd.DataFrame:
     """, [grade_id, grade_id], db_path)
 
 
-def team_scoring_patterns(team_id: str, db_path: str = DB_PATH) -> dict:
-    """Analyse scoring patterns for a team."""
+def team_scoring_patterns(team_id: str, db_path: str = DB_PATH) -> Dict[str, Union[str, int, float, None]]:
+    """Analyze scoring patterns and player contributions for a team.
+    
+    Examines roster composition, top scorer contributions, scoring balance,
+    and shot type distribution (3PT, 2PT, FT) across all team members.
+    
+    Args:
+        team_id (str): Unique identifier for the team  
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Union[str, int, float, None]]: Scoring pattern analysis including:
+            - top_scorer: Name of leading scorer (or None if no data)
+            - top_scorer_pts: Points scored by top scorer
+            - top_scorer_share: Percentage of team scoring by top scorer
+            - depth: Number of players on roster
+            - total_team_pts: Total team points across all players
+            - team_3pt: Total 3-pointers made by team
+            - team_2pt: Total 2-pointers made by team  
+            - team_ft: Total free throws made by team
+    """
     roster = query("""
         SELECT ps.player_id, p.first_name || ' ' || p.last_name as name,
                ps.games_played, ps.total_points, ps.one_point, ps.two_point, ps.three_point

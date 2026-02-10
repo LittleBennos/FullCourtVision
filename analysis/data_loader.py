@@ -8,6 +8,7 @@ import re
 import sqlite3
 import pandas as pd
 import numpy as np
+from typing import List, Optional
 
 _BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DB_PATH = os.path.join(_BASE_DIR, "data", "playhq.db")
@@ -51,7 +52,19 @@ def load_players() -> pd.DataFrame:
 
 
 def load_player_stats() -> pd.DataFrame:
-    """Load player stats with derived per-game metrics."""
+    """Load player statistics with enriched per-game metrics and contextual data.
+    
+    Loads raw player statistics and joins with grades, seasons, and player info
+    to create a comprehensive dataset. Automatically calculates per-game metrics
+    and extracts age group classifications.
+    
+    Returns:
+        pd.DataFrame: Enriched player statistics including:
+            - Raw stats: games_played, total_points, one_point, two_point, three_point, total_fouls
+            - Derived metrics: ppg, fpg, ft_pg, fg2_pg, fg3_pg (all per-game)
+            - Context: grade_name, season_name, season_start, first_name, last_name
+            - Classification: age_group (extracted from grade_name, e.g., 'U14', 'Senior')
+    """
     if _use_sqlite():
         df = query("""
             SELECT ps.*, g.name as grade_name, s.name as season_name, s.start_date as season_start,
@@ -82,7 +95,19 @@ def load_player_stats() -> pd.DataFrame:
 
 
 def load_games() -> pd.DataFrame:
-    """Load all games with team names."""
+    """Load game data with team names and calculated game metrics.
+    
+    Loads raw game records and enriches with team names, grade/season context,
+    and derived metrics like point margins and total scores.
+    
+    Returns:
+        pd.DataFrame: Enriched game data including:
+            - Raw data: home_team_id, away_team_id, home_score, away_score, date, status
+            - Team names: home_team_name, away_team_name
+            - Context: grade_name, season_name
+            - Derived metrics: margin (home - away), total_score (home + away)
+            - Parsed date: Converted to datetime format
+    """
     if _use_sqlite():
         df = query("""
             SELECT g.*, ht.name as home_team_name, at.name as away_team_name,
@@ -133,7 +158,22 @@ def load_organisations() -> pd.DataFrame:
 
 
 def aggregate_player_career(stats_df: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate player stats across all seasons into career totals."""
+    """Aggregate player statistics across all seasons into career totals.
+    
+    Takes season-by-season player statistics and combines them into
+    career-spanning totals and averages. Useful for career analysis
+    and cross-player comparisons.
+    
+    Args:
+        stats_df (pd.DataFrame): Season-level player statistics from load_player_stats()
+        
+    Returns:
+        pd.DataFrame: Career-aggregated statistics including:
+            - Totals: games_played, total_points, one_point, two_point, three_point, total_fouls
+            - Career averages: ppg, fpg, fg3_pg (calculated from career totals)
+            - Breadth metrics: num_grades, num_seasons (diversity of experience)
+            - Identity: player_id, first_name, last_name, player_name
+    """
     career = stats_df.groupby(['player_id', 'first_name', 'last_name']).agg({
         'games_played': 'sum',
         'total_points': 'sum',

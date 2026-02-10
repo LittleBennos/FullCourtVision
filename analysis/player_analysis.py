@@ -5,11 +5,25 @@ Per-player career stats, PPG trends, shooting percentages, consistency metrics.
 
 import numpy as np
 import pandas as pd
-from .data_loader import load_player_stats, aggregate_player_career, DB_PATH
+from typing import Dict, List, Optional, Union
+from data_loader import load_player_stats, aggregate_player_career, DB_PATH
 
 
-def get_player_profile(player_id: str, db_path: str = DB_PATH) -> dict:
-    """Get comprehensive player profile with career stats and trends."""
+def get_player_profile(player_id: str, db_path: str = DB_PATH) -> Optional[Dict[str, Union[str, List[str], Dict[str, Union[int, float]], List[Dict]]]]:
+    """Get comprehensive player profile with career stats and trends.
+    
+    Args:
+        player_id (str): Unique identifier for the player
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Optional[Dict]: Player profile containing career stats, teams, seasons, and breakdowns.
+                       Returns None if player not found.
+        
+    Example:
+        >>> profile = get_player_profile("f1fa18fc-a93f-45b9-ac91-f70652744dd7")
+        >>> print(profile['name'], profile['career']['ppg'])
+    """
     stats = load_player_stats(db_path)
     player_stats = stats[stats['player_id'] == player_id].sort_values('season_start')
 
@@ -56,7 +70,29 @@ def get_player_profile(player_id: str, db_path: str = DB_PATH) -> dict:
 
 
 def scoring_trend(player_id: str, db_path: str = DB_PATH) -> pd.DataFrame:
-    """Get season-over-season scoring trend for a player."""
+    """Get season-over-season scoring trend for a player.
+    
+    Calculates per-game stats for each season and determines if the player's
+    scoring is improving, declining, or stable across seasons.
+    
+    Args:
+        player_id (str): Unique identifier for the player
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        pd.DataFrame: Season-by-season stats with trend analysis.
+                     Empty DataFrame if player not found or insufficient data.
+                     
+    Columns:
+        - season_name: Name of the season
+        - season_start: Season start date
+        - games_played: Games played in season
+        - total_points: Total points scored in season
+        - ppg: Points per game for season
+        - fpg: Fouls per game for season
+        - fg3_pg: 3-pointers per game for season
+        - trend: 'improving', 'declining', 'stable', or 'insufficient_data'
+    """
     stats = load_player_stats(db_path)
     player_stats = stats[stats['player_id'] == player_id].sort_values('season_start')
 
@@ -85,8 +121,25 @@ def scoring_trend(player_id: str, db_path: str = DB_PATH) -> pd.DataFrame:
     return trend
 
 
-def consistency_metrics(player_id: str, db_path: str = DB_PATH) -> dict:
-    """Calculate consistency metrics across seasons."""
+def consistency_metrics(player_id: str, db_path: str = DB_PATH) -> Dict[str, Union[float, str, None]]:
+    """Calculate consistency metrics across seasons.
+    
+    Measures how consistent a player's scoring is across different seasons
+    using coefficient of variation and standard deviation.
+    
+    Args:
+        player_id (str): Unique identifier for the player
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Union[float, str, None]]: Consistency metrics including:
+            - mean_ppg: Average points per game across all seasons
+            - std_ppg: Standard deviation of PPG
+            - cv: Coefficient of variation (std/mean)
+            - min_ppg: Lowest PPG in any season
+            - max_ppg: Highest PPG in any season
+            - consistency_rating: 'very_consistent', 'consistent', 'variable', or 'insufficient_data'
+    """
     stats = load_player_stats(db_path)
     player_stats = stats[stats['player_id'] == player_id]
 
@@ -108,8 +161,25 @@ def consistency_metrics(player_id: str, db_path: str = DB_PATH) -> dict:
     }
 
 
-def percentile_rank(player_id: str, db_path: str = DB_PATH) -> dict:
-    """Rank a player against peers in their primary age group."""
+def percentile_rank(player_id: str, db_path: str = DB_PATH) -> Optional[Dict[str, Union[str, int]]]:
+    """Rank a player against peers in their primary age group.
+    
+    Compares the player's performance metrics against all other players
+    in the same age group, returning percentile rankings.
+    
+    Args:
+        player_id (str): Unique identifier for the player
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Optional[Dict[str, Union[str, int]]]: Percentile rankings including:
+            - age_group: Primary age group (e.g., 'U14', 'Senior')
+            - peer_count: Number of players in comparison group
+            - ppg_percentile: Percentile rank for points per game (0-100)
+            - fg3_percentile: Percentile rank for 3-pointers per game
+            - discipline_percentile: Percentile rank for discipline (lower fouls = higher rank)
+        Returns None if player not found or insufficient peer data.
+    """
     stats = load_player_stats(db_path)
     player_stats = stats[stats['player_id'] == player_id]
 

@@ -10,11 +10,31 @@ from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score, classification_report, r2_score
+from typing import Dict, Union, Optional
 from data_loader import load_games, load_player_stats, query, DB_PATH
 
 
-def scoring_trend_regression(player_id: str, db_path: str = DB_PATH) -> dict:
-    """Fit linear regression on a player's PPG over seasons to predict trajectory."""
+def scoring_trend_regression(player_id: str, db_path: str = DB_PATH) -> Dict[str, Union[str, float, int]]:
+    """Fit linear regression on a player's PPG over seasons to predict scoring trajectory.
+    
+    Analyzes season-by-season scoring patterns using linear regression to predict
+    future performance and classify trend direction (improving/declining/stable).
+    
+    Args:
+        player_id (str): Unique identifier for the player
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Union[str, float, int]]: Regression analysis results including:
+            - status: 'ok' if successful, 'insufficient_data' if < 2 seasons
+            - slope: Linear regression slope (points per season)
+            - intercept: Linear regression y-intercept  
+            - r_squared: Model fit quality (0-1)
+            - current_ppg: Most recent season PPG
+            - predicted_next_ppg: Predicted PPG for next season
+            - trend: 'improving', 'declining', or 'stable'
+            - seasons_count: Number of seasons analyzed
+    """
     stats = load_player_stats()
     player = stats[stats['player_id'] == player_id].sort_values('season_start')
 
@@ -48,7 +68,26 @@ def scoring_trend_regression(player_id: str, db_path: str = DB_PATH) -> dict:
 
 
 def build_game_features(db_path: str = DB_PATH) -> pd.DataFrame:
-    """Build feature matrix for game outcome prediction from team-level aggregates."""
+    """Build feature matrix for game outcome prediction from team-level aggregates.
+    
+    Creates machine learning features for each completed game by calculating
+    team strength metrics (average scoring, win rate, consistency) for both
+    home and away teams at the time of each game.
+    
+    Args:
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        pd.DataFrame: Feature matrix with columns:
+            - home_avg_pf, home_avg_pa: Home team average points for/against
+            - home_win_rate: Home team win percentage
+            - home_scoring_std: Home team scoring standard deviation
+            - away_avg_pf, away_avg_pa: Away team average points for/against  
+            - away_win_rate: Away team win percentage
+            - away_scoring_std: Away team scoring standard deviation
+            - home_win: Target variable (1 if home team won, 0 if away won)
+            - margin: Point margin (home score - away score)
+    """
     games = load_games()
     completed = games[games['status'] == 'FINAL'].copy()
 
@@ -100,8 +139,30 @@ def build_game_features(db_path: str = DB_PATH) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
-def train_game_predictor(db_path: str = DB_PATH) -> dict:
-    """Train a Random Forest to predict game outcomes. Returns model + metrics."""
+def train_game_predictor(db_path: str = DB_PATH) -> Dict[str, Union[str, float, int, Dict, object]]:
+    """Train Random Forest models to predict game outcomes and point margins.
+    
+    Builds and trains both classification (win/loss) and regression (point margin)
+    models using team strength features. Includes cross-validation and feature
+    importance analysis.
+    
+    Args:
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Union[str, float, int, Dict, object]]: Training results including:
+            - status: 'ok' if successful, 'insufficient_data' if < 50 games
+            - classifier: Trained RandomForestClassifier for win/loss prediction
+            - regressor: Trained RandomForestRegressor for margin prediction
+            - feature_cols: List of feature column names
+            - accuracy: Test set classification accuracy
+            - cv_accuracy: Cross-validation mean accuracy
+            - cv_std: Cross-validation standard deviation
+            - r2_margin: R² score for margin prediction
+            - feature_importance: Dictionary of feature importance scores
+            - training_samples: Number of training samples
+            - test_samples: Number of test samples
+    """
     df = build_game_features(db_path)
     if len(df) < 50:
         return {'status': 'insufficient_data'}
@@ -147,9 +208,30 @@ def train_game_predictor(db_path: str = DB_PATH) -> dict:
     }
 
 
-def predict_matchup(home_team_id: str, away_team_id: str, model_result: dict = None,
-                    db_path: str = DB_PATH) -> dict:
-    """Predict outcome of a matchup between two teams."""
+def predict_matchup(home_team_id: str, away_team_id: str, model_result: Optional[Dict] = None,
+                    db_path: str = DB_PATH) -> Dict[str, Union[str, float]]:
+    """Predict outcome of a matchup between two specific teams.
+    
+    Uses trained Random Forest models to predict win probabilities and point
+    margin for a hypothetical game between two teams based on their historical
+    performance metrics.
+    
+    Args:
+        home_team_id (str): Unique identifier for the home team
+        away_team_id (str): Unique identifier for the away team  
+        model_result (Optional[Dict]): Pre-trained model results from train_game_predictor().
+                                     If None, will train model automatically.
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Dict[str, Union[str, float]]: Prediction results including:
+            - status: 'ok', 'model_unavailable', or 'insufficient_team_data'
+            - home_win_prob: Probability of home team winning (0-100%)
+            - away_win_prob: Probability of away team winning (0-100%)
+            - predicted_margin: Expected point margin (positive = home favored)
+            - home_avg_score: Home team's average scoring
+            - away_avg_score: Away team's average scoring
+    """
     if model_result is None or model_result.get('status') != 'ok':
         model_result = train_game_predictor()
 

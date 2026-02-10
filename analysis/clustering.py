@@ -7,6 +7,7 @@ import pandas as pd
 import numpy as np
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
+from typing import Dict, Union, Optional
 from data_loader import load_player_stats, DB_PATH
 
 
@@ -22,7 +23,27 @@ FEATURE_COLS = ['ppg', 'ft_pg', 'fg2_pg', 'fg3_pg', 'fpg']
 
 
 def cluster_players(min_games: int = 5, n_clusters: int = 5, db_path: str = DB_PATH) -> pd.DataFrame:
-    """Cluster players into archetypes using K-means on per-game stats."""
+    """Cluster players into basketball archetypes using K-means on per-game stats.
+    
+    Applies K-means clustering to player statistics (PPG, shot types, fouls) to
+    identify distinct playing styles. Automatically assigns meaningful archetype
+    names based on cluster characteristics.
+    
+    Args:
+        min_games (int): Minimum games played to include player in analysis
+        n_clusters (int): Number of clusters for K-means (default 5 for 5 archetypes)
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        pd.DataFrame: Clustered players with columns:
+            - player_id: Unique player identifier
+            - first_name, last_name: Player names
+            - games_played: Total games played
+            - ppg, ft_pg, fg2_pg, fg3_pg, fpg: Per-game statistics  
+            - cluster: Numeric cluster assignment (0-4)
+            - archetype: Named archetype (Sharpshooter, Inside Scorer, etc.)
+            - player_name: Full name (first + last)
+    """
     stats = load_player_stats()
 
     # Aggregate per player
@@ -81,9 +102,29 @@ def cluster_players(min_games: int = 5, n_clusters: int = 5, db_path: str = DB_P
     return agg
 
 
-def get_player_archetype(player_id: str, clustered_df: pd.DataFrame = None,
-                         db_path: str = DB_PATH) -> dict:
-    """Get a specific player's archetype."""
+def get_player_archetype(player_id: str, clustered_df: Optional[pd.DataFrame] = None,
+                         db_path: str = DB_PATH) -> Optional[Dict[str, Union[str, Dict]]]:
+    """Get a specific player's archetype information and statistics.
+    
+    Returns detailed archetype information for a single player including
+    their classification, description, visual styling, and key statistics.
+    
+    Args:
+        player_id (str): Unique identifier for the player
+        clustered_df (Optional[pd.DataFrame]): Pre-computed clustering results.
+                                              If None, will run clustering automatically.
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        Optional[Dict[str, Union[str, Dict]]]: Player archetype information including:
+            - player_name: Full player name
+            - archetype: Archetype name (e.g., "Sharpshooter")
+            - icon: Emoji icon for the archetype
+            - color: Hex color code for visualization
+            - description: Text description of the archetype
+            - stats: Dictionary of key per-game statistics
+        Returns None if player not found in clustering results.
+    """
     if clustered_df is None:
         clustered_df = cluster_players()
 
@@ -105,8 +146,27 @@ def get_player_archetype(player_id: str, clustered_df: pd.DataFrame = None,
     }
 
 
-def archetype_summary(clustered_df: pd.DataFrame = None, db_path: str = DB_PATH) -> pd.DataFrame:
-    """Summary statistics per archetype."""
+def archetype_summary(clustered_df: Optional[pd.DataFrame] = None, db_path: str = DB_PATH) -> pd.DataFrame:
+    """Generate summary statistics for each player archetype.
+    
+    Computes aggregate statistics across all players in each archetype to
+    understand the defining characteristics of each cluster.
+    
+    Args:
+        clustered_df (Optional[pd.DataFrame]): Pre-computed clustering results.
+                                              If None, will run clustering automatically.
+        db_path (str): Path to the SQLite database file
+        
+    Returns:
+        pd.DataFrame: Summary statistics with columns:
+            - archetype: Archetype name
+            - count: Number of players in archetype  
+            - avg_ppg: Average points per game
+            - avg_fg3: Average 3-pointers per game
+            - avg_fg2: Average 2-pointers per game
+            - avg_ft: Average free throws per game
+            - avg_fpg: Average fouls per game
+    """
     if clustered_df is None:
         clustered_df = cluster_players()
 
