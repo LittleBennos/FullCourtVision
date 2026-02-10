@@ -64,8 +64,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         {/* Critical resource preloads for LCP optimization */}
-        <link rel="preload" href="/_next/static/css/d0d2296772cf30ab.css" as="style" />
-        <link rel="preload" as="font" href="/fonts/geist-sans.woff2" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" as="font" href="/_next/static/media/geist-sans.woff2" type="font/woff2" crossOrigin="anonymous" />
         
         {/* Preconnect to critical domains */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -76,8 +75,7 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://fullcourtvision.vercel.app" />
         <link rel="dns-prefetch" href="https://vercel.com" />
         
-        {/* Module preload for critical JavaScript */}
-        <link rel="modulepreload" href="/_next/static/chunks/main-app.js" />
+        {/* Module preloads are now handled by Next.js automatically */}
         
         {/* Prevent layout shift with early style injection */}
         <style dangerouslySetInnerHTML={{

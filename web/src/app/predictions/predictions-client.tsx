@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Search, Trophy, TrendingUp, Users, Target, BarChart3 } from "lucide-react";
-import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
+import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "@/components/charts/dynamic-recharts";
 
 /* ── Types ─────────────────────────────────────────────────────── */
 

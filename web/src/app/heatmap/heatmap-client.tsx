@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { 
-  Treemap, 
   ResponsiveContainer, 
   Cell, 
   BarChart, 
@@ -10,12 +9,33 @@ import {
   XAxis, 
   YAxis, 
   CartesianGrid, 
-  Tooltip, 
-  Legend,
-  ScatterChart,
-  Scatter,
-  ZAxis
-} from "recharts";
+  Tooltip
+} from "@/components/charts/dynamic-recharts";
+
+// Dynamic import for less commonly used chart types
+import dynamic from "next/dynamic";
+
+const Treemap = dynamic(() => import('recharts').then(mod => ({ default: mod.Treemap })), { 
+  ssr: false,
+  loading: () => <div className="h-[400px] bg-muted/50 rounded animate-pulse" />
+});
+
+const Legend = dynamic(() => import('recharts').then(mod => ({ default: mod.Legend })), { 
+  ssr: false
+});
+
+const ScatterChart = dynamic(() => import('recharts').then(mod => ({ default: mod.ScatterChart })), { 
+  ssr: false,
+  loading: () => <div className="h-[400px] bg-muted/50 rounded animate-pulse" />
+});
+
+const Scatter = dynamic(() => import('recharts').then(mod => ({ default: mod.Scatter })), { 
+  ssr: false
+});
+
+const ZAxis = dynamic(() => import('recharts').then(mod => ({ default: mod.ZAxis })), { 
+  ssr: false
+});
 import { HeatmapRegion } from "@/lib/data";
 
 const COLORS = [
