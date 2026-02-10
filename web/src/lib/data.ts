@@ -313,7 +313,7 @@ export async function getPlayerDetails(id: string) {
     }
 
     // Create a lookup for grade information
-    const gradeMap = new Map((grades || []).map(g => [
+    const gradeMap = new Map((grades || []).map((g: any) => [
       g.id,
       {
         name: g.name,

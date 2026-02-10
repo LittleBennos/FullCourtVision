@@ -111,8 +111,25 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
       ])
     ]);
 
-    const finalSeasons = seasons.status === 'fulfilled' ? seasons.value : [];
-    const finalSimilarPlayers = similarPlayers.status === 'fulfilled' ? similarPlayers.value : [];
+    const finalSeasons = (seasons.status === 'fulfilled' ? seasons.value : []) as Array<{
+      id: string;
+      competition_id: string;
+      name: string;
+      start_date: string | null;
+      end_date: string | null;
+      status: string | null;
+      competition_name: string;
+    }>;
+    const finalSimilarPlayers = (similarPlayers.status === 'fulfilled' ? similarPlayers.value : []) as Array<{
+      id: string;
+      first_name: string;
+      last_name: string;
+      similarity: number;
+      ppg: number;
+      foulsPg: number;
+      twoPtPg: number;
+      threePtPg: number;
+    }>;
     
     if (seasons.status === 'rejected') {
       console.error('[Player Detail] getAvailableSeasons failed:', seasons.reason);
@@ -121,7 +138,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
       console.error('[Player Detail] getSimilarPlayers failed:', similarPlayers.reason);
     }
 
-    console.log(`[Player Detail] Similar players count: ${finalSimilarPlayers.length}`);
+    console.log(`[Player Detail] Similar players count: ${finalSimilarPlayers?.length || 0}`);
 
     // Calculate total stats across all seasons
     const totalStats = stats.reduce(
