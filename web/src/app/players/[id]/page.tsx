@@ -84,39 +84,66 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export const revalidate = 3600; // 1 hour - player stats don't change frequently
 
 export default async function PlayerDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params;
-  const playerData = await getPlayerDetails(id);
+  try {
+    const { id } = await params;
+    console.log(`[Player Detail] Loading player: ${id}`);
+    
+    const playerData = await getPlayerDetails(id);
+    console.log(`[Player Detail] Player data loaded:`, !!playerData);
 
-  if (!playerData) {
-    notFound();
-  }
+    if (!playerData) {
+      console.log(`[Player Detail] Player not found: ${id}`);
+      notFound();
+    }
 
-  const { player, stats } = playerData;
-  const [seasons, similarPlayers] = await Promise.all([
-    getAvailableSeasons(),
-    getSimilarPlayers(id),
-  ]);
+    const { player, stats } = playerData;
+    console.log(`[Player Detail] Stats count: ${stats.length}`);
+    
+    // Load seasons and similar players with timeout protection
+    const [seasons, similarPlayers] = await Promise.allSettled([
+      Promise.race([
+        getAvailableSeasons(),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('getAvailableSeasons timeout')), 10000))
+      ]),
+      Promise.race([
+        getSimilarPlayers(id),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('getSimilarPlayers timeout')), 10000))
+      ])
+    ]);
 
-  // Calculate total stats across all seasons
-  const totalStats = stats.reduce(
-    (acc, stat) => ({
-      games: acc.games + (stat.games_played || 0),
-      points: acc.points + (stat.total_points || 0),
-      twoPoint: acc.twoPoint + (stat.two_point || 0),
-      threePoint: acc.threePoint + (stat.three_point || 0),
-      fouls: acc.fouls + (stat.total_fouls || 0),
-    }),
-    { games: 0, points: 0, twoPoint: 0, threePoint: 0, fouls: 0 }
-  );
+    const finalSeasons = seasons.status === 'fulfilled' ? seasons.value : [];
+    const finalSimilarPlayers = similarPlayers.status === 'fulfilled' ? similarPlayers.value : [];
+    
+    if (seasons.status === 'rejected') {
+      console.error('[Player Detail] getAvailableSeasons failed:', seasons.reason);
+    }
+    if (similarPlayers.status === 'rejected') {
+      console.error('[Player Detail] getSimilarPlayers failed:', similarPlayers.reason);
+    }
 
-  const averages = {
-    ppg: totalStats.games > 0 ? +(totalStats.points / totalStats.games).toFixed(1) : 0,
-    twoPtPg: totalStats.games > 0 ? +(totalStats.twoPoint / totalStats.games).toFixed(1) : 0,
-    threePtPg: totalStats.games > 0 ? +(totalStats.threePoint / totalStats.games).toFixed(1) : 0,
-    foulsPg: totalStats.games > 0 ? +(totalStats.fouls / totalStats.games).toFixed(1) : 0,
-  };
+    console.log(`[Player Detail] Similar players count: ${finalSimilarPlayers.length}`);
 
-  const playerName = `${player.first_name} ${player.last_name}`;
+    // Calculate total stats across all seasons
+    const totalStats = stats.reduce(
+      (acc, stat) => ({
+        games: acc.games + (stat.games_played || 0),
+        points: acc.points + (stat.total_points || 0),
+        twoPoint: acc.twoPoint + (stat.two_point || 0),
+        threePoint: acc.threePoint + (stat.three_point || 0),
+        fouls: acc.fouls + (stat.total_fouls || 0),
+      }),
+      { games: 0, points: 0, twoPoint: 0, threePoint: 0, fouls: 0 }
+    );
+
+    const averages = {
+      ppg: totalStats.games > 0 ? +(totalStats.points / totalStats.games).toFixed(1) : 0,
+      twoPtPg: totalStats.games > 0 ? +(totalStats.twoPoint / totalStats.games).toFixed(1) : 0,
+      threePtPg: totalStats.games > 0 ? +(totalStats.threePoint / totalStats.games).toFixed(1) : 0,
+      foulsPg: totalStats.games > 0 ? +(totalStats.fouls / totalStats.games).toFixed(1) : 0,
+    };
+
+    const playerName = `${player.first_name} ${player.last_name}`;
+    console.log(`[Player Detail] Rendering page for: ${playerName}`);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -244,7 +271,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
         <h2 className="text-2xl font-bold mb-6">Performance Trends</h2>
         <PlayerTrendsChart 
           playerStats={stats} 
-          seasons={seasons}
+          seasons={finalSeasons}
           playerId={id}
         />
       </div>
@@ -326,7 +353,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
       </div>
 
       {/* Similar Players */}
-      {similarPlayers.length > 0 && (
+      {finalSimilarPlayers.length > 0 && (
         <div className="mt-8 bg-card rounded-xl border border-border p-6">
           <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <Users className="w-5 h-5 text-blue-400" />
@@ -336,7 +363,7 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
             Based on cosine similarity of per-game stats (PPG, fouls, 2PT, 3PT)
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-            {similarPlayers.map((sp) => (
+            {finalSimilarPlayers.map((sp) => (
               <Link
                 key={sp.id}
                 href={`/players/${sp.id}`}
@@ -362,4 +389,8 @@ export default async function PlayerDetailPage({ params }: { params: Promise<{ i
       )}
     </div>
   );
+  } catch (error) {
+    console.error('[Player Detail] Fatal error:', error);
+    notFound();
+  }
 }

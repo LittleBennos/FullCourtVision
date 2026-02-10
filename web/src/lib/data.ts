@@ -166,15 +166,31 @@ export interface SimilarPlayer {
 }
 
 export async function getSimilarPlayers(playerId: string, limit = 5): Promise<SimilarPlayer[]> {
-  // Fetch all player stats rows
-  const allStats = await fetchAllRows(
-    "player_stats",
-    "player_id, games_played, total_points, two_point, three_point, total_fouls"
-  );
+  try {
+    console.log(`[getSimilarPlayers] Starting for player: ${playerId}`);
+    
+    // Add timeout protection for data fetching
+    const timeout = 8000; // 8 seconds max
+    
+    const statsPromise = fetchAllRows(
+      "player_stats",
+      "player_id, games_played, total_points, two_point, three_point, total_fouls"
+    );
+    
+    const playersPromise = fetchAllRows("players", "id, first_name, last_name");
+    
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('getSimilarPlayers timeout')), timeout)
+    );
 
-  // Also need player names
-  const allPlayers = await fetchAllRows("players", "id, first_name, last_name");
-  const playerMap = new Map(allPlayers.map((p: any) => [p.id, p]));
+    // Race against timeout
+    const [allStats, allPlayers] = await Promise.race([
+      Promise.all([statsPromise, playersPromise]),
+      timeoutPromise
+    ]) as [any[], any[]];
+
+    console.log(`[getSimilarPlayers] Fetched ${allStats.length} stats, ${allPlayers.length} players`);
+    const playerMap = new Map(allPlayers.map((p: any) => [p.id, p]));
 
   // Aggregate per player
   const agg = new Map<string, { games: number; points: number; twoPt: number; threePt: number; fouls: number }>();
@@ -231,47 +247,109 @@ export async function getSimilarPlayers(playerId: string, limit = 5): Promise<Si
   }
 
   results.sort((a, b) => b.similarity - a.similarity);
-  return results.slice(0, limit);
+  const finalResults = results.slice(0, limit);
+  console.log(`[getSimilarPlayers] Returning ${finalResults.length} similar players`);
+  return finalResults;
+  } catch (error) {
+    console.error('[getSimilarPlayers] Error:', error);
+    return []; // Return empty array instead of failing
+  }
 }
 
 export async function getPlayerDetails(id: string) {
-  const { data: player } = await supabase
-    .from("players")
-    .select("id, first_name, last_name, updated_at")
-    .eq("id", id)
-    .single();
+  try {
+    const { data: player, error: playerError } = await supabase
+      .from("players")
+      .select("id, first_name, last_name, updated_at")
+      .eq("id", id)
+      .single();
 
-  if (!player) return null;
+    if (playerError || !player) return null;
 
-  const { data: stats } = await supabase
-    .from("player_stats")
-    .select(`
-      id, player_id, grade_id, team_name, games_played, total_points,
-      one_point, two_point, three_point, total_fouls, ranking,
-      grades!inner(name, type, seasons!inner(name, competitions!inner(name)))
-    `)
-    .eq("player_id", id);
+    // First, get basic player stats without nested joins
+    const { data: stats, error: statsError } = await supabase
+      .from("player_stats")
+      .select(`
+        id, player_id, grade_id, team_name, games_played, total_points,
+        one_point, two_point, three_point, total_fouls, ranking
+      `)
+      .eq("player_id", id);
 
-  const mappedStats = (stats || []).map((s: any) => ({
-    id: s.id,
-    player_id: s.player_id,
-    grade_id: s.grade_id,
-    team_name: s.team_name,
-    games_played: s.games_played,
-    total_points: s.total_points,
-    one_point: s.one_point,
-    two_point: s.two_point,
-    three_point: s.three_point,
-    total_fouls: s.total_fouls,
-    ranking: s.ranking,
-    grade_name: s.grades?.name,
-    grade_type: s.grades?.type,
-    season_name: s.grades?.seasons?.name,
-    competition_name: s.grades?.seasons?.competitions?.name,
-    start_date: null,
-  }));
+    if (statsError) {
+      console.error("Error fetching player stats:", statsError);
+      return { player, stats: [] };
+    }
 
-  return { player, stats: mappedStats };
+    // Get unique grade IDs from stats
+    const gradeIds = [...new Set((stats || []).map(s => s.grade_id))];
+    
+    if (gradeIds.length === 0) {
+      return { player, stats: [] };
+    }
+
+    // Then get grade information separately 
+    const { data: grades, error: gradesError } = await supabase
+      .from("grades")
+      .select(`
+        id, name, type, season_id,
+        seasons!inner(name, competition_id, competitions!inner(name))
+      `)
+      .in("id", gradeIds);
+
+    if (gradesError) {
+      console.error("Error fetching grades:", gradesError);
+      // Return stats without grade info rather than failing completely
+      return { 
+        player, 
+        stats: (stats || []).map(s => ({
+          ...s,
+          grade_name: null,
+          grade_type: null,
+          season_name: null,
+          competition_name: null,
+          start_date: null,
+        }))
+      };
+    }
+
+    // Create a lookup for grade information
+    const gradeMap = new Map((grades || []).map(g => [
+      g.id,
+      {
+        name: g.name,
+        type: g.type,
+        season_name: g.seasons?.name,
+        competition_name: g.seasons?.competitions?.name,
+      }
+    ]));
+
+    const mappedStats = (stats || []).map((s: any) => {
+      const gradeInfo = gradeMap.get(s.grade_id);
+      return {
+        id: s.id,
+        player_id: s.player_id,
+        grade_id: s.grade_id,
+        team_name: s.team_name,
+        games_played: s.games_played,
+        total_points: s.total_points,
+        one_point: s.one_point,
+        two_point: s.two_point,
+        three_point: s.three_point,
+        total_fouls: s.total_fouls,
+        ranking: s.ranking,
+        grade_name: gradeInfo?.name || null,
+        grade_type: gradeInfo?.type || null,
+        season_name: gradeInfo?.season_name || null,
+        competition_name: gradeInfo?.competition_name || null,
+        start_date: null,
+      };
+    });
+
+    return { player, stats: mappedStats };
+  } catch (error) {
+    console.error("Error in getPlayerDetails:", error);
+    return null;
+  }
 }
 
 export async function getTeams(): Promise<Team[]> {
