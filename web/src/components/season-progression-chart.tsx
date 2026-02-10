@@ -3,7 +3,7 @@
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer,
   ReferenceDot, Legend
-} from "recharts";
+} from "@/components/charts/dynamic-recharts";
 import { useState, useEffect, useCallback } from "react";
 
 type ProgressionEntry = {

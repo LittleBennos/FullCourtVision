@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "@/components/charts/dynamic-recharts";
 import type { StatsDistribution, PaceAnalysis, FoulAnalysis, GradeFoulAnalysis, ScoringEfficiency, AnalyticsData } from "@/app/api/analytics/route";
 
 const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff7300', '#00ff88', '#ff6b6b', '#4ecdc4', '#ffe66d'];

@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend,
-} from "recharts";
+} from "@/components/charts/dynamic-recharts";
 import { TrendingUp, TrendingDown, Minus } from "lucide-react";
 
 type SeasonAgg = {

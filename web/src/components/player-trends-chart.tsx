@@ -2,7 +2,7 @@
 
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend
-} from "recharts";
+} from "@/components/charts/dynamic-recharts";
 import { useState, useMemo } from "react";
 
 type PlayerStat = {

@@ -94,3 +94,13 @@ export const ComposedChart = dynamic(() =>
   loading: () => <ChartLoadingFallback />,
   ssr: false
 });
+
+export const Legend = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.Legend })), {
+  ssr: false
+});
+
+export const ReferenceDot = dynamic(() => 
+  import('recharts').then(mod => ({ default: mod.ReferenceDot })), {
+  ssr: false
+});
