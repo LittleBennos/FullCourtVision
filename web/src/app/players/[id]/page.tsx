@@ -3,7 +3,7 @@ import Link from "next/link";
 import { StatCard } from "@/components/stat-card";
 import { Users, TrendingUp, Target, AlertTriangle, ClipboardList, Crosshair } from "lucide-react";
 import { notFound } from "next/navigation";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { ArchetypeBadge } from "@/components/archetype-badge";
 import { AnomalyBadges } from "@/components/anomaly-badges";
 import { Breadcrumbs } from "@/components/breadcrumbs";
@@ -14,7 +14,7 @@ import { PlayerFoulCard } from "@/components/player-foul-card";
 import { PERBadge } from "@/components/per-badge";
 
 // Dynamically import chart components to reduce initial bundle size
-const SeasonProgressionChart = dynamic(() => import("@/components/season-progression-chart").then(mod => ({ default: mod.SeasonProgressionChart })), {
+const SeasonProgressionChart = dynamicImport(() => import("@/components/season-progression-chart").then(mod => ({ default: mod.SeasonProgressionChart })), {
   loading: () => (
     <div className="h-80 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-center">
       <div className="text-center text-slate-400">
@@ -25,7 +25,7 @@ const SeasonProgressionChart = dynamic(() => import("@/components/season-progres
   )
 });
 
-const MultiSeasonComparison = dynamic(() => import("@/components/multi-season-comparison").then(mod => ({ default: mod.MultiSeasonComparison })), {
+const MultiSeasonComparison = dynamicImport(() => import("@/components/multi-season-comparison").then(mod => ({ default: mod.MultiSeasonComparison })), {
   loading: () => (
     <div className="h-64 bg-slate-950 rounded-xl border border-amber-500/20 flex items-center justify-center">
       <div className="text-center text-slate-400">
@@ -36,7 +36,7 @@ const MultiSeasonComparison = dynamic(() => import("@/components/multi-season-co
   )
 });
 
-const PlayerTrendsChart = dynamic(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
+const PlayerTrendsChart = dynamicImport(() => import("@/components/player-trends-chart").then(mod => ({ default: mod.PlayerTrendsChart })), {
   loading: () => (
     <div className="h-80 bg-card rounded-xl border border-border flex items-center justify-center">
       <div className="text-center text-muted-foreground">
@@ -81,7 +81,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export const revalidate = 3600; // 1 hour - player stats don't change frequently
+export const dynamic = 'force-dynamic';
 
 export default async function PlayerDetailPage({ params }: { params: Promise<{ id: string }> }) {
   try {

@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   };
 }
 
-export const revalidate = 3600;
+export const dynamic = 'force-dynamic';
 
 export default async function ScoutingReportPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
